@@ -1,25 +1,8 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-    <head>
-        <!--
+
+<head>
+  <!--
         Customize this policy to fit your own app's needs. For more guidance, see:
             https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
         Some notes:
@@ -28,22 +11,102 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
+
+  <!-- Cordova -->
+  <!-- security meta tag changed because not everything worked. source: https://stackoverflow.com/questions/31211359/refused-to-load-the-script-because-it-violates-the-following-content-security-po -->
+  <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
+  <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+
+  <!-- Materializecss -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <!-- logo font -->
+  <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet"> 
+
+  <title>Com-Pong</title>
+
+  <style>
+    .login {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo center">World of Pong</a>
+    </div>
+  </nav> -->
+
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo logo">WoP</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">Javascript</a></li>
+        <li><a href="mobile.html">Mobile</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="sidenav" id="mobile-demo">
+    <li><a href="sass.html">Sass</a></li>
+    <li><a href="badges.html">Components</a></li>
+    <li><a href="collapsible.html">Javascript</a></li>
+    <li><a href="mobile.html">Mobile</a></li>
+  </ul>
+
+
+
+  <div class="container">
+
+
+    <div class="home">
+      <div class="row">
+        <div class="col s12 center-align">
+
+          <div class="section">
+            <h5>Welcome to the magical <br> <span class="logo">World</span> of <span class="logo">Pong</span></h5>
+            <p>Please log in or create an account..</p>
+          </div>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-    </body>
+
+        <div class="section">
+          <div class="center-align">
+            <button class="red lighten-1 waves-effect waves-light btn">Register</button>
+            <button class="red lighten-1 waves-effect waves-light btn">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    <div class="login">
+      <div class="row">
+        <div class="col s12">
+          <h1 class="center-align">Hello!</h1>
+        </div>
+        <div class="col s6 center-align"><button>Solo</button></div>
+        <div class="col s6 center-align"><button>Multi</button></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <!-- <script type="text/javascript" src="cordova.js"></script> -->
+  <script type="text/javascript" src="js/index.js"></script>
+</body>
+
 </html>
