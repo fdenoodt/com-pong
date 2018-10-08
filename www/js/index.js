@@ -43,6 +43,3 @@ var app = {
 };
 app.initialize();
 
-const yourCallbackFunction = () => {
-    console.log('no internet')
-}
