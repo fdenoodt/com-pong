@@ -1,4 +1,0 @@
-#Thu Oct 04 18:54:14 CEST 2018
-base.0=C\:\\Code\\Github\\com-pong\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-path.0=classes.dex
-renamed.0=classes.dex
