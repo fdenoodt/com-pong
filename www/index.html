@@ -19,7 +19,6 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="msapplication-tap-highlight" content="no">
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-  <link rel="stylesheet" type="text/css" href="css/index.css">
 
   <!-- Materializecss -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -28,8 +27,8 @@
   <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+  <link rel="stylesheet" type="text/css" href="css/index.css">
   <title>Com-Pong</title>
-
 </head>
 
 <body>
@@ -190,17 +189,13 @@
       </div>
     </div>
 
-    <div class="multi">
-      <!-- <div class="row"> -->
-      <!-- <div class="col s12 center-align"> -->
-      <div class="section center-align">
-        <canvas id="myCanvas" class="myCanvas red lighten-2" height="900" width="600">
+    <div class="multi  center-align">
+      <div class="section">
+        <canvas id="myCanvas" class="myCanvas red lighten-2" width="1500" height="2500">
 
         </canvas>
-
       </div>
     </div>
-    <!-- </div> -->
   </div>
 
 
@@ -211,58 +206,11 @@
   <!-- <script type="text/javascript" src="cordova.js"></script> -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>
+
+  <!-- Web socket -->
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
-
-
-  <script>
-
-    const goTo = (page) => {
-      console.log(page);
-      location.href = '?page=' + page
-    }
-
-    $(document).ready(function () {
-      $('.sidenav').sidenav();
-      $('.datepicker').datepicker();
-    });
-
-    //Method copied from online
-    const getUrlVars = () => {
-      var vars = {};
-      var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-        vars[key] = value;
-      });
-      return vars;
-    }
-
-
-
-    const lsPages = ['home', 'login', 'register', 'profile', 'scoreboard', 'solo', 'multi'];
-    lsPages.forEach(element => {
-      document.querySelector('.' + element).style.display = 'none';
-    });
-
-    const pageToDisplay = getUrlVars().page;
-    document.querySelector('.' + pageToDisplay).style.display = 'block';
-
-    const register = () => {
-      const email = document.querySelector('#register_inp_email').value;
-      const user = document.querySelector('#register_inp_username').value;
-      const password = document.querySelector('#register_inp_password').value;
-      const date = document.querySelector('#register_inp_date').value;
-
-      console.log(email, user, password, date);
-    }
-
-
-    const login = () => {
-      const user = document.querySelector('#login_inp_username').value;
-      const password = document.querySelector('#login_inp_password').value;
-      
-      console.log(user, password);
-    }
-
-  </script>
+  <script type="text/javascript" src="js/routing.js"></script>
 
 </body>
 

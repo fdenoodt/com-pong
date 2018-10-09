@@ -4,11 +4,11 @@ class Canvas {
   }
 
   static get W() {
-    return 600;
+    return 1500;
   }
 
   static get H() {
-    return 600;
+    return 2500;
   }
 
 }

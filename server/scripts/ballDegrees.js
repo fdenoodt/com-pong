@@ -26,7 +26,6 @@ class BallDegrees {
   set Degrees(value) { this._degrees = value }
 
   move() {
-
     let rad = this.degToRad(this.Degrees);
     let hypotenuse = this.JumpSize;
 
