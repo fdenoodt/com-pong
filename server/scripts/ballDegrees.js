@@ -5,9 +5,9 @@ class BallDegrees {
   constructor(x = Canvas.W / 2, y = Canvas.H / 2) {
     this.X = x;
     this.Y = y;
-    this.R = 10;
+    this.R = 50;
     
-    this.JumpSize = 0.1;
+    this.JumpSize = 0.5;
     this.Degrees = -110;
     this.JumpsPerMove = 10;
   }

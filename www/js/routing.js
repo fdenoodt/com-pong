@@ -18,7 +18,9 @@ lsPages.forEach(element => {
   document.querySelector('.' + element).style.display = 'none';
 });
 
-const pageToDisplay = getUrlVars().page;
+let pageToDisplay = getUrlVars().page;
+if (pageToDisplay == null)
+  pageToDisplay = 'home';
 document.querySelector('.' + pageToDisplay).style.display = 'block';
 if (pageToDisplay == 'multi') {
   initalizeMultiGame();

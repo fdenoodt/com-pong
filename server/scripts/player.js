@@ -13,11 +13,11 @@ class Player {
   }
 
   static get H() {
-    return 20;
+    return 40;
   }
 
   static get W() {
-    return 150;
+    return 300;
   }
 
   get Socket() { return this._socket; }
@@ -28,7 +28,7 @@ class Player {
   get Wins() { return this._wins; }
   get Losses() { return this._losses; }
   get WantsReset() { return this._wantsReset; }
-  get JumpsPerMove() { return 10; }
+  get JumpsPerMove() { return 50; }
   get JumpSize() {return 0.5}
   get X() { return this._x; }
   get Y() { return this._y; }

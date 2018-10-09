@@ -1,6 +1,5 @@
 const Canvas = require('./canvas.js');
 const Player = require('./player.js');
-const Ball = require('./ball.js');
 const BallDegrees = require('./ballDegrees.js');
 
 
@@ -121,10 +120,7 @@ class Game {
 
   givePlayersValues() {
     if (this.Player1 != null) {
-      console.log(Canvas.W, Player.W);
-
       this.Player1.X = Canvas.W / 2 - Player.W;
-      console.log(this.Player1.X);
       this.Player1.Y = 20;
     }
 

@@ -46,16 +46,11 @@ app.initialize();
 
 
 
-
-
-
-
-
-
 //Materializercss: make navbar swipe + datepicker on registration
 $(document).ready(function () {
   $('.sidenav').sidenav();
   $('.datepicker').datepicker();
+  $('.modal').modal();
 });
 
 
@@ -73,6 +68,13 @@ const login = () => {
   const user = document.querySelector('#login_inp_username').value;
   const password = document.querySelector('#login_inp_password').value;
   console.log(user, password);
+}
+
+
+const warn = (title = "", message = "") => {
+  document.querySelector('.warnTitle').innerHTML = title;
+  document.querySelector('.warnMessage').innerHTML = message;
+  $('.modal').modal('open');
 }
 
 
@@ -126,10 +128,7 @@ const drawPlayer = (player) => {
 
     context.lineWidth = 3;
 
-    context.strokeStyle = `gray`;
-    context.stroke();
-
-    context.fillStyle = 'rgb(100, 255, 200)';
+    context.fillStyle = 'rgb(255, 255, 255)';
     context.fill();
   }
 
@@ -138,7 +137,7 @@ const drawPlayer = (player) => {
 const drawBall = () => {
   if (ball.X != undefined && ball.Y != undefined) {
     context.beginPath();
-    context.arc(ball.X, ball.Y, 10, 0, 2 * Math.PI);
+    context.arc(ball.X, ball.Y, ball.R, 0, 2 * Math.PI);
     context.lineWidth = 1;
     context.strokeStyle = `rgb(${Ball.RColor},${Ball.GColor},${Ball.BColor})`;
     context.stroke();
@@ -262,12 +261,9 @@ class Ball extends Figure {
     return this.r;
   }
 
-  static get RColor() { return 230 }
-  static get GColor() { return 50 }
-  static get BColor() { return 255 }
-  // static get RColor() { return 139 }
-  // static get GColor() { return 0 }
-  // static get BColor() { return 139 }
+  static get RColor() { return 255 /*230*/ }
+  static get GColor() { return 255 /*50*/ }
+  static get BColor() { return 255 /*255*/ }
 
 }
 
@@ -277,10 +273,12 @@ const reset = () => {
 }
 
 const showWarnMessage = (message) => {
-  document.getElementById('warning').innerHTML = message;
+  warn('Warning', message)
+  // document.getElementById('warning').innerHTML = message;
 }
 const updateScoreboard = () => {
-  document.getElementById('score').innerHTML = `Wins: ${score.wins} \nLosses: ${score.losses}`;
+  warn('Score', `Wins: ${score.wins} \nLosses: ${score.losses}`);
+  // document.getElementById('score').innerHTML = `Wins: ${score.wins} \nLosses: ${score.losses}`;
 }
 
 
@@ -374,7 +372,7 @@ socket.on('enemyX', (x) => {
 socket.on('gameover', (winOrLoss) => {
   winOrLoss == "win" ? score.wins++ : score.losses++;
   updateScoreboard();
-  document.getElementById('btnReset').style.display = 'block';
+  // document.getElementById('btnReset').style.display = 'block';
 })
 
 
