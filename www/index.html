@@ -42,7 +42,7 @@
         <li><a href="?page=profile">Profile</a></li>
         <li><a href="?page=scoreboard">Scoreboard</a></li>
         <li><a href="?page=solo">Solo</a></li>
-        <li><a href="?page=multiplayer">Multiplayer</a></li>
+        <li><a href="?page=multi">Multiplayer</a></li>
       </ul>
     </div>
   </nav>
@@ -50,7 +50,7 @@
     <li><a href="?page=profile">Profile</a></li>
     <li><a href="?page=scoreboard">Scoreboard</a></li>
     <li><a href="?page=solo">Solo</a></li>
-    <li><a href="?page=multiplayer">Multiplayer</a></li>
+    <li><a href="?page=multi">Multiplayer</a></li>
   </ul>
 
 
@@ -67,7 +67,7 @@
           <div class="center-align">
             <p>Please log in or create an account..</p>
             <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('register')">Register</button>
-            <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('register')">Login</button>
+            <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('login')">Login</button>
           </div>
         </div>
       </div>
@@ -87,16 +87,16 @@
         </div>
 
         <div class="row">
-          <input id="inp_username" type="text" class="validate redUnderline">
-          <label class="active " for="inp_username">Username</label>
+          <input id="login_inp_username" type="text" class="validate redUnderline">
+          <label class="active " for="login_inp_username">Username</label>
         </div>
         <div class="row">
-          <input id="inp_password" type="text" class="validate">
-          <label class="active" for="inp_password">Passord</label>
+          <input id="login_inp_password" type="text" class="validate">
+          <label class="active" for="login_inp_password">Passord</label>
         </div>
         <!-- Add send icon -->
         <div class="row center-align">
-          <button class="red lighten-1 waves-effect waves-light btn">Send</button>
+          <button class="red lighten-1 waves-effect waves-light btn" onclick="login()">Send</button>
         </div>
       </div>
     </div>
@@ -115,24 +115,24 @@
         </div>
 
         <div class="row">
-          <input id="inp_username" type="text" class="validate redUnderline">
-          <label class="active " for="inp_username">Username</label>
+          <input id="register_inp_username" type="text" class="validate redUnderline">
+          <label class="active " for="register_inp_username">Username</label>
         </div>
         <div class="row">
-          <input id="inp_email" type="text" class="validate">
-          <label class="active" for="inp_email">E-mail</label>
+          <input id="register_inp_email" type="text" class="validate">
+          <label class="active" for="register_inp_email">E-mail</label>
         </div>
         <div class="row">
-          <input id="inp_password" type="text" class="validate">
-          <label class="active" for="inp_password">Passord</label>
+          <input id="register_inp_password" type="text" class="validate">
+          <label class="active" for="register_inp_password">Passord</label>
         </div>
         <div class="row">
-          <input type="text" id="inp_date" class="datepicker">
-          <label class="active" for="inp_date">Date of birth</label>
+          <input type="text" id="register_inp_date" class="datepicker">
+          <label class="active" for="register_inp_date">Date of birth</label>
         </div>
         <!-- add arrow icon -->
         <div class="row center-align">
-          <button class="red lighten-1 waves-effect waves-light btn">Send</button>
+          <button class="red lighten-1 waves-effect waves-light btn" onclick="register()">Send</button>
         </div>
       </div>
     </div>
@@ -164,6 +164,37 @@
             <!-- <p>Please log in or create an account..</p> -->
             <!-- <button class="red lighten-1 waves-effect waves-light btn">Register</button> -->
             <!-- <button class="red lighten-1 waves-effect waves-light btn">Login</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="scoreboard">
+      <div class="row">
+        <div class="col s12 center-align">
+          <div class="section">
+            <h5>Scoreboard</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="solo">
+      <div class="row">
+        <div class="col s12 center-align">
+          <div class="section">
+            <h5>Solo</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="multi">
+      <div class="row">
+        <div class="col s12 center-align">
+          <div class="section">
+            <h5>Multi</h5>
           </div>
         </div>
       </div>
@@ -207,13 +238,35 @@
 
 
 
-    const lsPages = ['home', 'login', 'register', 'profile'];
+    const lsPages = ['home', 'login', 'register', 'profile', 'scoreboard', 'solo', 'multi'];
     lsPages.forEach(element => {
       document.querySelector('.' + element).style.display = 'none';
     });
 
     const pageToDisplay = getUrlVars().page;
     document.querySelector('.' + pageToDisplay).style.display = 'block';
+
+
+
+
+
+
+    const register = () => {
+      const email = document.querySelector('#register_inp_email').value;
+      const user = document.querySelector('#register_inp_username').value;
+      const password = document.querySelector('#register_inp_password').value;
+      const date = document.querySelector('#register_inp_date').value;
+
+      console.log(email, user, password, date);
+    }
+
+
+    const login = () => {
+      const user = document.querySelector('#login_inp_username').value;
+      const password = document.querySelector('#login_inp_password').value;
+      console.log(user, password);
+    }
+
   </script>
 
 </body>
