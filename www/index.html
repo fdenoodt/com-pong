@@ -191,14 +191,17 @@
     </div>
 
     <div class="multi">
-      <div class="row">
-        <div class="col s12 center-align">
-          <div class="section">
-            <h5>Multi</h5>
-          </div>
-        </div>
+      <!-- <div class="row"> -->
+      <!-- <div class="col s12 center-align"> -->
+      <div class="section center-align">
+        <canvas id="myCanvas" class="myCanvas red lighten-2" height="900" width="600">
+
+        </canvas>
+
       </div>
     </div>
+    <!-- </div> -->
+  </div>
 
 
   </div>
@@ -213,14 +216,10 @@
 
   <script>
 
-
-
-
     const goTo = (page) => {
       console.log(page);
       location.href = '?page=' + page
     }
-
 
     $(document).ready(function () {
       $('.sidenav').sidenav();
@@ -246,11 +245,6 @@
     const pageToDisplay = getUrlVars().page;
     document.querySelector('.' + pageToDisplay).style.display = 'block';
 
-
-
-
-
-
     const register = () => {
       const email = document.querySelector('#register_inp_email').value;
       const user = document.querySelector('#register_inp_username').value;
@@ -264,6 +258,7 @@
     const login = () => {
       const user = document.querySelector('#login_inp_username').value;
       const password = document.querySelector('#login_inp_password').value;
+      
       console.log(user, password);
     }
 
