@@ -95,6 +95,9 @@ let score = {
   losses: 0
 }
 
+const findGame = () => {
+}
+
 const initalizeMultiGame = () => {
   canvas = document.getElementById('myCanvas');
   context = canvas.getContext('2d');

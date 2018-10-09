@@ -3,7 +3,7 @@
   font-weight: bold;
 }
 
-.profile, .login, .register, .home, .solo, .multi, .scoreboard {
+.profile, .login, .register, .home, .solo, .multi, .scoreboard, .waitinglobby {
   display: none;
 }
 

@@ -13,7 +13,7 @@ const getUrlVars = () => {
   return vars;
 }
 
-const lsPages = ['home', 'login', 'register', 'profile', 'scoreboard', 'solo', 'multi'];
+const lsPages = ['home', 'login', 'register', 'profile', 'scoreboard', 'solo', 'multi', 'waitinglobby'];
 lsPages.forEach(element => {
   document.querySelector('.' + element).style.display = 'none';
 });
@@ -21,7 +21,12 @@ lsPages.forEach(element => {
 let pageToDisplay = getUrlVars().page;
 if (pageToDisplay == null)
   pageToDisplay = 'home';
+
 document.querySelector('.' + pageToDisplay).style.display = 'block';
+
+//Page events:
 if (pageToDisplay == 'multi') {
   initalizeMultiGame();
+} else if(pageToDisplay == 'waitinglobby') {
+  findGame();
 }
