@@ -73,7 +73,7 @@ const matchSockets = () => {
 }
 
 const createGame = (duo) => {
-  console.log('creating game with:' + duo[0].id + 'and ' + duo[1].id);
+  // console.log('creating game with:' + duo[0].id + 'and ' + duo[1].id);
   lsGames.push(new Game(duo));
 }
 

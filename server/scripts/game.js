@@ -4,17 +4,58 @@ const BallDegrees = require('./ballDegrees.js');
 
 
 class Game {
+
+
+  get LsPlayers() {
+    return _lsPlayers;
+  }
+
+  set LsPlayers(value) {
+    _lsPlayers = value;
+  }
+
   constructor(duoSocket) {
 
+    this.LsPlayers = [];
     for (const person of duoSocket) {
       person.emit('foundGame');
+      this.LsPlayers.push(new Player(person));
     }
 
-    // this.Player1 = pers1;
-    // this.Player2 = pers2;
-    // this.canStart = false;
-    // this._ball;
-    // this.canBeDeleted = false;
+    this._canBeDeleted = false;
+    this.givePlayersValues();
+    this._ball = new BallDegrees();
+
+
+    this.sendPlayer(player, 'meInit', this.Player1.X, this.Player1.Y, Player.W, Player.H)
+    this.sendPlayer(player, 'meInit', this.Player1.X, this.Player1.Y, Player.W, Player.H)
+
+
+
+    // this.Player1.Socket.emit('meInit', this.Player1.X, this.Player1.Y, Player.W, Player.H);
+    if (this.Player2 != null)
+      this.Player1.Socket.emit('enemyInit', this.Player2.X, this.Player2.Y, Player.W, Player.H);
+    this.Player1.Socket.emit('ballInit', this._ball.X, this._ball.Y, this._ball.R);
+
+
+    if (this.Player2 != null) {
+      this.Player2.Socket.emit('meInit', this.Player2.X, this.Player2.Y, Player.W, Player.H);
+      if (this.Player1 != null)
+        this.Player2.Socket.emit('enemyInit', this.Player1.X, this.Player1.Y, Player.W, Player.H);
+      this.Player2.Socket.emit('ballInit', this._ball.X, this._ball.Y, this._ball.R);
+    }
+
+    this.initPingReplies();
+
+    if (this.isFull()) {
+      this.canStart = true;
+      this.receiveMessages();
+    }
+
+  }
+
+  sendPlayer(player, key, ...data) {
+    player.Socket.emit(key, ...data);
   }
 
   receiveMessages() {
@@ -69,33 +110,33 @@ class Game {
     }
   }
 
-  prepare() {
-    this.givePlayersValues();
-    this._ball = new BallDegrees();
+  // prepare() {
+  //   this.givePlayersValues();
+  //   this._ball = new BallDegrees();
 
-    if (this.Player1 != null) {
-      console.log(this.Player1.X, this.Player1.Y, this.Player1.W);
-      this.Player1.Socket.emit('meInit', this.Player1.X, this.Player1.Y, Player.W, Player.H);
-      if (this.Player2 != null)
-        this.Player1.Socket.emit('enemyInit', this.Player2.X, this.Player2.Y, Player.W, Player.H);
-      this.Player1.Socket.emit('ballInit', this._ball.X, this._ball.Y, this._ball.R);
-    }
+  //   if (this.Player1 != null) {
+  //     console.log(this.Player1.X, this.Player1.Y, this.Player1.W);
+  //     this.Player1.Socket.emit('meInit', this.Player1.X, this.Player1.Y, Player.W, Player.H);
+  //     if (this.Player2 != null)
+  //       this.Player1.Socket.emit('enemyInit', this.Player2.X, this.Player2.Y, Player.W, Player.H);
+  //     this.Player1.Socket.emit('ballInit', this._ball.X, this._ball.Y, this._ball.R);
+  //   }
 
-    if (this.Player2 != null) {
-      this.Player2.Socket.emit('meInit', this.Player2.X, this.Player2.Y, Player.W, Player.H);
-      if (this.Player1 != null)
-        this.Player2.Socket.emit('enemyInit', this.Player1.X, this.Player1.Y, Player.W, Player.H);
-      this.Player2.Socket.emit('ballInit', this._ball.X, this._ball.Y, this._ball.R);
-    }
+  //   if (this.Player2 != null) {
+  //     this.Player2.Socket.emit('meInit', this.Player2.X, this.Player2.Y, Player.W, Player.H);
+  //     if (this.Player1 != null)
+  //       this.Player2.Socket.emit('enemyInit', this.Player1.X, this.Player1.Y, Player.W, Player.H);
+  //     this.Player2.Socket.emit('ballInit', this._ball.X, this._ball.Y, this._ball.R);
+  //   }
 
-    this.initPingReplies();
+  //   this.initPingReplies();
 
-    if (this.isFull()) {
-      this.canStart = true;
-      this.receiveMessages();
-    }
+  //   if (this.isFull()) {
+  //     this.canStart = true;
+  //     this.receiveMessages();
+  //   }
 
-  }
+  // }
 
   isFull() {
     return this.Player1 != null && this.Player2 != null;
@@ -267,10 +308,10 @@ class Game {
   }
 
   handleDisconnection(pAfk, pLeftOver) {
-    if (!this.canBeDeleted) {
+    if (!this._canBeDeleted) {
       console.log('Game is over due to afk');
       this.gameover(pLeftOver, pAfk);
-      this.canBeDeleted = true;
+      this._canBeDeleted = true;
     }
   }
 
