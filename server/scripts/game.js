@@ -4,12 +4,17 @@ const BallDegrees = require('./ballDegrees.js');
 
 
 class Game {
-  constructor(pers1 = null, pers2 = null) {
-    this.Player1 = pers1;
-    this.Player2 = pers2;
-    this.canStart = false;
-    this._ball;
-    this.canBeDeleted = false;
+  constructor(duoSocket) {
+
+    for (const person of duoSocket) {
+      person.emit('foundGame');
+    }
+
+    // this.Player1 = pers1;
+    // this.Player2 = pers2;
+    // this.canStart = false;
+    // this._ball;
+    // this.canBeDeleted = false;
   }
 
   receiveMessages() {

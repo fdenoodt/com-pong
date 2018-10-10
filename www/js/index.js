@@ -77,9 +77,6 @@ const warn = (title = "", message = "") => {
   $('.modal').modal('open');
 }
 
-
-
-
 const socket = io.connect('http://localhost:3000');
 let canvas;
 let context;
@@ -95,8 +92,21 @@ let score = {
   losses: 0
 }
 
+
+
+
 const findGame = () => {
+  socket.emit('findGame');
 }
+
+const joinGame = () => {
+  console.log('game found.. redirting');
+  goTo('multi');
+}
+
+socket.on('foundGame', joinGame)
+
+
 
 const initalizeMultiGame = () => {
   canvas = document.getElementById('myCanvas');
