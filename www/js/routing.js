@@ -26,7 +26,7 @@ document.querySelector('.' + pageToDisplay).style.display = 'block';
 
 //Page events:
 if (pageToDisplay == 'multi') {
-  initalizeMultiGame();
+  initMulti();
 } else if(pageToDisplay == 'waitinglobby') {
-  findGame();
+  initWaitingLobby();
 }

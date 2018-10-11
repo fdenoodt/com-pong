@@ -4,58 +4,47 @@ const BallDegrees = require('./ballDegrees.js');
 
 
 class Game {
-
-
-  get LsPlayers() {
-    return _lsPlayers;
-  }
-
-  set LsPlayers(value) {
-    _lsPlayers = value;
-  }
-
   constructor(duoSocket) {
 
-    this.LsPlayers = [];
+    this._lsPlayers = [];
     for (const person of duoSocket) {
       person.emit('foundGame');
-      this.LsPlayers.push(new Player(person));
+      this._lsPlayers.push(new Player(person));
     }
 
     this._canBeDeleted = false;
     this.givePlayersValues();
     this._ball = new BallDegrees();
 
-
-    this.sendPlayer(player, 'meInit', this.Player1.X, this.Player1.Y, Player.W, Player.H)
-    this.sendPlayer(player, 'meInit', this.Player1.X, this.Player1.Y, Player.W, Player.H)
-
-
-
-    // this.Player1.Socket.emit('meInit', this.Player1.X, this.Player1.Y, Player.W, Player.H);
-    if (this.Player2 != null)
-      this.Player1.Socket.emit('enemyInit', this.Player2.X, this.Player2.Y, Player.W, Player.H);
-    this.Player1.Socket.emit('ballInit', this._ball.X, this._ball.Y, this._ball.R);
-
-
-    if (this.Player2 != null) {
-      this.Player2.Socket.emit('meInit', this.Player2.X, this.Player2.Y, Player.W, Player.H);
-      if (this.Player1 != null)
-        this.Player2.Socket.emit('enemyInit', this.Player1.X, this.Player1.Y, Player.W, Player.H);
-      this.Player2.Socket.emit('ballInit', this._ball.X, this._ball.Y, this._ball.R);
+    for (const p of this._lsPlayers) {
+      this.sendData(p, 'meInit', p.X, p.Y, Player.W, Player.H);
+      this.sendData(p, 'ballInit', this._ball.X, this._ball.Y, this._ball.R);
+      const other = p == this._lsPlayers[0] ? this._lsPlayers[1] : this._lsPlayers[0];
+      this.sendData(other, 'enemyInit', other.X, other.Y, Player.W, Player.H);
     }
 
-    this.initPingReplies();
+    this._lsPlayers[0].Socket.on('isReady', () => {
+      this._lsPlayers[0].Socket.emit('lolol');
+      console.log('done', this._lsPlayers[0].Socket.id);
+    });
 
-    if (this.isFull()) {
-      this.canStart = true;
-      this.receiveMessages();
-    }
+    this._lsPlayers[1].Socket.on('isReady', () => {
+      this._lsPlayers[1].Socket.emit('lolol');
+      console.log('done');
+    });
+
+    // this.initPingReplies();
+
+    // if (this.isFull()) {
+    //   this.canStart = true;
+    //   this.receiveMessages();
+    // }
 
   }
 
-  sendPlayer(player, key, ...data) {
-    player.Socket.emit(key, ...data);
+  sendData(player, key, ...data) {
+    // console.log(player.Socket);
+    // player.Socket.emit('lolol', 'hello');
   }
 
   receiveMessages() {

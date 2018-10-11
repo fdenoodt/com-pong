@@ -1,1 +1,33 @@
+.logo {
+  font-family: 'Russo One', sans-serif;
+  font-weight: bold;
+}
 
+.profile, .login, .register, .home, .solo, .multi, .scoreboard, .waitinglobby {
+  display: none;
+}
+
+
+
+#warning {
+  color: tomato;
+}
+
+#btnReset {
+  display: none;
+}
+
+.myCanvas {
+  max-width: 100%;;
+  max-height: calc(100vh - 6.4em);
+}
+
+
+.multi {
+  margin: 0; padding: 0;
+}
+
+
+nav {
+  height: 4em;
+}
