@@ -3,9 +3,7 @@ const initWaitingLobby = () => {
 }
 
 const joinGame = () => {
-  // goTo('multi');
-  console.log(socket.id)
-  socket.emit('isReady');
+  goTo('multi');
 }
 
 socket.on('foundGame', joinGame)

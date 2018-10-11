@@ -5,86 +5,72 @@ const BallDegrees = require('./ballDegrees.js');
 
 class Game {
   constructor(duoSocket) {
-
-    this._lsPlayers = [];
-    for (const person of duoSocket) {
-      person.emit('foundGame');
-      this._lsPlayers.push(new Player(person));
-    }
-
     this._canBeDeleted = false;
-    this.givePlayersValues();
+    this._lsPlayers = [];
     this._ball = new BallDegrees();
 
+    this.createPlayers(duoSocket);
+    this.givePlayersValues();
+    this.sendInitalValues();
+    this.setupMessageReplies();
+  }
+
+  createPlayers(duoSocket) {
+    for (const person of duoSocket) {
+      const pl = new Player(person);
+      this._lsPlayers.push(pl);
+      this.sendData(pl, 'foundGame');
+    }
+  }
+
+  givePlayersValues() {
+    this._lsPlayers[0].X = Canvas.W / 2 - Player.W;
+    this._lsPlayers[0].Y = 20;
+
+    this._lsPlayers[1].X = Canvas.W / 2 - Player.W;
+    this._lsPlayers[1].Y = Canvas.H - Player.H - 20;
+  }
+
+  sendInitalValues() {
     for (const p of this._lsPlayers) {
       this.sendData(p, 'meInit', p.X, p.Y, Player.W, Player.H);
       this.sendData(p, 'ballInit', this._ball.X, this._ball.Y, this._ball.R);
-      const other = p == this._lsPlayers[0] ? this._lsPlayers[1] : this._lsPlayers[0];
-      this.sendData(other, 'enemyInit', other.X, other.Y, Player.W, Player.H);
+      const other = this.getOther(p);
+      this.sendData(p, 'enemyInit', other.X, other.Y, Player.W, Player.H);
     }
+  }
 
-    this._lsPlayers[0].Socket.on('isReady', () => {
-      this._lsPlayers[0].Socket.emit('lolol');
-      console.log('done', this._lsPlayers[0].Socket.id);
-    });
-
-    this._lsPlayers[1].Socket.on('isReady', () => {
-      this._lsPlayers[1].Socket.emit('lolol');
-      console.log('done');
-    });
-
-    // this.initPingReplies();
-
-    // if (this.isFull()) {
-    //   this.canStart = true;
-    //   this.receiveMessages();
-    // }
-
+  getOther(p) {
+    return p == this._lsPlayers[0] ? this._lsPlayers[1] : this._lsPlayers[0];
   }
 
   sendData(player, key, ...data) {
-    // console.log(player.Socket);
-    // player.Socket.emit('lolol', 'hello');
+    player.Socket.emit(key, ...data);
   }
 
-  receiveMessages() {
-    this.Player1.Socket.on('move', (isLeft) => {
-      this.movePlayer(this.Player1, isLeft);
-      this.Player1.Socket.emit('meX', this.Player1.X);
-      this.Player2.Socket.emit('enemyX', this.Player1.X);
-    });
+  setupMessageReplies() {
+    for (const pl of this._lsPlayers) {
+      pl.Socket.on('pingReply', () => {
+        this.handlePingReply(pl);
+      });
 
-    this.Player2.Socket.on('move', (isLeft) => {
-      this.movePlayer(this.Player2, isLeft)
-      this.Player2.Socket.emit('meX', this.Player2.X);
-      this.Player1.Socket.emit('enemyX', this.Player2.X);
-    });
+      pl.Socket.on('move', (isLeft) => {
+        this.movePlayer(pl, isLeft);
+        pl.Socket.emit('meX', pl.X);
+        this.getOther(pl).Socket.emit('enemyX', pl.X);
+      });
 
+      pl.Socket.on('preciseMove', (x) => {
+        pl.X = x;
+        pl.Socket.emit('meX', pl.X);
+        this.getOther(pl).Socket.emit('enemyX', pl.X);
+      });
 
-    this.Player1.Socket.on('preciseMove', (x) => {
-      this.Player1.X = x;
-      this.Player1.Socket.emit('meX', this.Player1.X);
-      this.Player2.Socket.emit('enemyX', this.Player1.X);
-    });
-
-    this.Player2.Socket.on('preciseMove', (x) => {
-      this.Player2.X = x;
-
-      this.Player2.Socket.emit('meX', this.Player2.X);
-      this.Player1.Socket.emit('enemyX', this.Player2.X);
-    });
-
-
-    this.Player1.Socket.on('reset', () => {
-      this.Player1.WantsReset = true;
-      this.reset();
-    });
-
-    this.Player2.Socket.on('reset', () => {
-      this.Player2.WantsReset = true;
-      this.reset();
-    })
-
+      pl.Socket.on('reset', () => {
+        pl.WantsReset = true;
+        this.reset();
+      });
+    }
   }
 
   movePlayer(player, isLeft) {
@@ -92,103 +78,29 @@ class Game {
     for (let i = 0; i < JumpsPerMove; i++) {
       if (!this.isTouchingBall(player)) {
         isLeft ? player.X -= player.JumpSize : player.X += player.JumpSize;
-        this.playerCollissionCheck(this.Player1);
-        this.playerCollissionCheck(this.Player2);
+
+        for (const pl of this._lsPlayers) {
+          this.playerCollissionCheck(pl);
+        }
       }
 
-    }
-  }
-
-  // prepare() {
-  //   this.givePlayersValues();
-  //   this._ball = new BallDegrees();
-
-  //   if (this.Player1 != null) {
-  //     console.log(this.Player1.X, this.Player1.Y, this.Player1.W);
-  //     this.Player1.Socket.emit('meInit', this.Player1.X, this.Player1.Y, Player.W, Player.H);
-  //     if (this.Player2 != null)
-  //       this.Player1.Socket.emit('enemyInit', this.Player2.X, this.Player2.Y, Player.W, Player.H);
-  //     this.Player1.Socket.emit('ballInit', this._ball.X, this._ball.Y, this._ball.R);
-  //   }
-
-  //   if (this.Player2 != null) {
-  //     this.Player2.Socket.emit('meInit', this.Player2.X, this.Player2.Y, Player.W, Player.H);
-  //     if (this.Player1 != null)
-  //       this.Player2.Socket.emit('enemyInit', this.Player1.X, this.Player1.Y, Player.W, Player.H);
-  //     this.Player2.Socket.emit('ballInit', this._ball.X, this._ball.Y, this._ball.R);
-  //   }
-
-  //   this.initPingReplies();
-
-  //   if (this.isFull()) {
-  //     this.canStart = true;
-  //     this.receiveMessages();
-  //   }
-
-  // }
-
-  isFull() {
-    return this.Player1 != null && this.Player2 != null;
-  }
-
-  addPlayer(player) {
-    if (!this.isFull()) {
-      this.Player1 == null ? this.Player1 = player : this.Player2 = player;
-    }
-  }
-
-  set Player1(value) {
-    this._player1 = value;
-  }
-
-  set Player2(value) {
-    this._player2 = value;
-  }
-
-  get Player1() {
-    return this._player1;
-  }
-
-  get Player2() {
-    return this._player2;
-  }
-
-  givePlayersValues() {
-    if (this.Player1 != null) {
-      this.Player1.X = Canvas.W / 2 - Player.W;
-      this.Player1.Y = 20;
-    }
-
-    if (this.Player2 != null) {
-      this.Player2.X = Canvas.W / 2 - Player.W;
-      this.Player2.Y = Canvas.H - Player.H - 20;
     }
   }
 
   playTick() {
-    if (this.Player1 != null && this.Player2 != null) {
-      if (this.Player1.IsPresent && this.Player2.IsPresent) {
-        if (this.canStart) {
-
-          for (let i = 0; i < this._ball.JumpsPerMove; i++) {
-            this._ball.move();
-            this.boarderCollissionCheck();
-            this.playerCollissionCheck(this.Player1);
-            this.playerCollissionCheck(this.Player2);
-            this.sendBallLocation();
-          }
-
-        }
-
+    for (let i = 0; i < this._ball.JumpsPerMove; i++) {
+      this._ball.move();
+      this.boarderCollissionCheck();
+      for (const pl of this._lsPlayers) {
+        this.playerCollissionCheck(pl);
       }
+      this.sendBallLocation();
     }
   }
 
   afkTick() {
     this.trackConnections();
   }
-
-
 
   boarderCollissionCheck() {
     if (this._ball.Y - this._ball.R <= 0 ||
@@ -229,7 +141,6 @@ class Game {
     this.Player2.Socket.emit('ball', this._ball.X, this._ball.Y);
   }
 
-
   gameover(winner = null, loser = null) {
     if (winner != null)
       winner.Socket.emit('gameover', 'win');
@@ -247,18 +158,8 @@ class Game {
     }
   }
 
-  initPingReplies() {
-    if (this.Player1 != null) {
-      this.Player1.Socket.on('pingReply', () => {
-        this.handlePingReply(this.Player1);
-      });
-    }
+  setupPingReplies(pl) {
 
-    if (this.Player2 != null) {
-      this.Player2.Socket.on('pingReply', () => {
-        this.handlePingReply(this.Player2);
-      });
-    }
   }
 
   trackConnections() {

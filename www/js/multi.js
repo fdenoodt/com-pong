@@ -13,25 +13,18 @@ let score = {
 }
 
 const initMulti = () => {
-  document.onreadystatechange = () => {
-    if (document.readyState === 'complete') {
-      socket.emit('isReady');
-      console.log(socket.id);
-    }
-  };
-
-
-  canvas = document.getElementById('myCanvas');
-  context = canvas.getContext('2d');
-  cw = canvas.width;
-  ch = canvas.height;
-
-  me = new Rect();
-  enemy = new Rect();
-  ball = new Ball();
-
-  socket.emit('init');
+  socket.emit('isReady');
 }
+
+
+canvas = document.getElementById('myCanvas');
+context = canvas.getContext('2d');
+cw = canvas.width;
+ch = canvas.height;
+
+me = new Rect();
+enemy = new Rect();
+ball = new Ball();
 
 const updateCanvas = () => {
 
@@ -89,9 +82,6 @@ const initPlayer = (target, x, y, h, w) => {
   Rect.H = h;
   Rect.W = w;
   updatePlayerLocation(target, x);
-
-  console.log(target, x, y, h, w)
-
 }
 
 const initBall = (x, y, r) => {
@@ -165,12 +155,7 @@ const move = () => {
 
 let timer = setInterval(move, 20);
 
-socket.on('lolol', () => {
-  console.log('lololol')
-})
-
 socket.on('meInit', (x, y, w, h) => {
-  console.log('recieving me init');
   initPlayer(me, x, y, h, w);
   updateCanvas();
 });
