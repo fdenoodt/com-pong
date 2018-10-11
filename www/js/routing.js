@@ -1,32 +1,40 @@
 // Routing
 const goTo = (page) => {
-  console.log(page);
-  location.href = '?page=' + page
+  location.href = '#page=' + page
+  updatePage();
+  $('.sidenav').sidenav();
+
 }
 
-//Method copied from online
+//Method copied from online and changed "? into #"
 const getUrlVars = () => {
   var vars = {};
-  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+  var parts = window.location.href.replace(/[#&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
     vars[key] = value;
   });
   return vars;
 }
 
 const lsPages = ['home', 'login', 'register', 'profile', 'scoreboard', 'solo', 'multi', 'waitinglobby'];
-lsPages.forEach(element => {
-  document.querySelector('.' + element).style.display = 'none';
-});
 
-let pageToDisplay = getUrlVars().page;
-if (pageToDisplay == null)
-  pageToDisplay = 'home';
+const updatePage = () => {
+  lsPages.forEach(element => {
+    document.querySelector('.' + element).style.display = 'none';
+  });
 
-document.querySelector('.' + pageToDisplay).style.display = 'block';
+  let pageToDisplay = getUrlVars().page;
+  if (pageToDisplay == null)
+    pageToDisplay = 'home';
 
-//Page events:
-if (pageToDisplay == 'multi') {
-  initMulti();
-} else if(pageToDisplay == 'waitinglobby') {
-  initWaitingLobby();
+  document.querySelector('.' + pageToDisplay).style.display = 'block';
+
+  //Page events:
+  if (pageToDisplay == 'multi') {
+    initMulti();
+  } else if (pageToDisplay == 'waitinglobby') {
+    initWaitingLobby();
+  }
 }
+
+
+updatePage();
