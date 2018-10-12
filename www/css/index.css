@@ -7,8 +7,6 @@
   display: none;
 }
 
-
-
 #warning {
   color: tomato;
 }
@@ -17,17 +15,51 @@
   display: none;
 }
 
-.myCanvas {
-  max-width: 100%;;
-  max-height: calc(100vh - 6.4em);
+body {
+  margin: 0;
+  padding: 0;
 }
-
 
 .multi {
-  margin: 0; padding: 0;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+
 }
 
+.myCanvas {
+  max-width: 100%;
+  /* 4px: 2 white lines on canvas, 2px each */
+  max-height: calc(100vh - 4px);
+  /* code for vertically center from stackoverflow
+  but lost url. */
+  /* border-top: solid 2px white; */
+  /* border-bottom: solid 2px white; */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
 
 nav {
   height: 4em;
+}
+
+.gameNav {
+  /* height: 400px; */
+  /* background-color: white; */
+  /* padding: 2em; */
+  /* position: absolute;
+  top: 10px; */
+  position: relative;
+  /* color: white;
+   */
+  /* background-color: white; */
+  top: 2.5vw;
+  left: 2.5vw;
+
+  /* left: 1vw;
+  top: 1vw; */
 }

@@ -26,6 +26,12 @@ const updatePage = () => {
   if (pageToDisplay == null)
     pageToDisplay = 'home';
 
+  if (pageToDisplay == 'multi' || pageToDisplay == 'solo')
+    document.querySelector('nav').style.display = 'none';
+  else
+    document.querySelector('nav').style.display = 'block';
+
+
   document.querySelector('.' + pageToDisplay).style.display = 'block';
 
   //Page events:
@@ -35,6 +41,5 @@ const updatePage = () => {
     initWaitingLobby();
   }
 }
-
 
 updatePage();

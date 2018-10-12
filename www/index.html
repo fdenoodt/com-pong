@@ -39,224 +39,222 @@
       <a data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
         <li><a onclick="goTo('profile')">Profile</a></li>
-        <li><a onclick="goTo('scoreboard')"">Scoreboard</a></li>
+        <li><a onclick="goTo('scoreboard')">Scoreboard</a></li>
         <li><a onclick=" goTo('solo')"">Solo</a></li>
-        <li><a onclick="goTo('multi')"">Multiplayer</a></li>
+        <li><a onclick=" goTo('multi')"">Multiplayer</a></li>
       </ul>
     </div>
   </nav>
-  <ul class=" sidenav" id="mobile-demo">
-        <li><a onclick="goTo('profile')">Profile</a></li>
-        <li><a onclick="goTo('scoreboard')"">Scoreboard</a></li>
+
+  <ul class="sidenav" id="mobile-demo">
+    <li><a onclick="goTo('profile')">Profile</a></li>
+    <li><a onclick="goTo('scoreboard')"">Scoreboard</a></li>
     <li><a onclick=" goTo('solo')"">Solo</a></li>
-        <li><a onclick="goTo('multi')"">Multiplayer</a></li>
+    <li><a onclick="goTo('multi')"">Multiplayer</a></li>
     <li><a onclick=" goTo('waitinglobby')"">waiting lobby</a></li>
-      </ul>
+  </ul>
 
+  <div class="container">
 
-      <div class="container">
-
-        <div class="home">
-          <div class="row">
-            <div class="col s12 center-align">
-              <div class="section">
-                <h5>Welcome to the magical <br> <span class="logo">World</span> of <span class="logo">Pong</span></h5>
-              </div>
-            </div>
-            <div class="section">
-              <div class="center-align">
-                <p>Please log in or create an account..</p>
-                <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('register')">Register</button>
-                <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('login')">Login</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-
-        <div class="login">
-          <div class="row">
-            <div class="col s12 center-align">
-              <div class="section">
-                <h5><span class="logo">Log</span> in</h5>
-              </div>
-            </div>
-
-            <div class="row">
-              <input id="login_inp_username" type="text" class="validate redUnderline">
-              <label class="active " for="login_inp_username">Username</label>
-            </div>
-            <div class="row">
-              <input id="login_inp_password" type="text" class="validate">
-              <label class="active" for="login_inp_password">Passord</label>
-            </div>
-            <!-- Add send icon -->
-            <div class="row center-align">
-              <button class="red lighten-1 waves-effect waves-light btn" onclick="login()">Send</button>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-
-        <div class="register">
-          <div class="row">
-            <div class="col s12 center-align">
-              <div class="section">
-                <h5><span class="logo">Reg</span>ister</h5>
-              </div>
-            </div>
-
-            <div class="row">
-              <input id="register_inp_username" type="text" class="validate redUnderline">
-              <label class="active " for="register_inp_username">Username</label>
-            </div>
-            <div class="row">
-              <input id="register_inp_email" type="text" class="validate">
-              <label class="active" for="register_inp_email">E-mail</label>
-            </div>
-            <div class="row">
-              <input id="register_inp_password" type="text" class="validate">
-              <label class="active" for="register_inp_password">Passord</label>
-            </div>
-            <div class="row">
-              <input type="text" id="register_inp_date" class="datepicker">
-              <label class="active" for="register_inp_date">Date of birth</label>
-            </div>
-            <!-- add arrow icon -->
-            <div class="row center-align">
-              <button class="red lighten-1 waves-effect waves-light btn" onclick="register()">Send</button>
-            </div>
-          </div>
-        </div>
-
-
-
-
-        <div class="profile">
-          <div class="row">
-            <div class="col s12 center-align">
-              <div class="section">
-                <h5><span class="logo">Hello</span> XXX</h5>
-              </div>
-            </div>
-            <div class="section">
-              <div class="center-align">
-                <div class="col s6">
-                  <img width="100%" src="img/ranks/silver.png" alt="image of rank">
-                </div>
-
-                <div class="col s6">
-                  <p>
-                    <span class="logo">Statistics: </span> <br>
-                    Ranking: <span class="logo">Silver</span> <br>
-                    Wins: <span class="logo">0</span> <br>
-                    Losses: <span class="logo">0</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="scoreboard">
-          <div class="row">
-            <div class="col s12 center-align">
-              <div class="section">
-                <h5>Scoreboard</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="solo">
-          <div class="row">
-            <div class="col s12 center-align">
-              <div class="section">
-                <h5>Solo</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="waitinglobby">
-          <div class="row">
-            <div class="col s12 center-align">
-              <div class="section">
-                <h5>Finding match..</h5>
-              </div>
-              <div class="section">
-                <div class="preloader-wrapper small active">
-                  <div class="spinner-layer spinner-red-only">
-                    <div class="circle-clipper left">
-                      <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                      <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                      <div class="circle"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="section">
-                <p><button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('home')">Cancel</button></p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="multi  center-align">
+    <div class="home">
+      <div class="row">
+        <div class="col s12 center-align">
           <div class="section">
-            <canvas id="myCanvas" class="myCanvas red lighten-2" width="1500" height="2500">
-
-            </canvas>
+            <h5>Welcome to the magical <br> <span class="logo">World</span> of <span class="logo">Pong</span></h5>
           </div>
         </div>
-
-
-        <div id="modal" class="modal">
-          <div class="modal-content">
-            <h4 class="warnTitle"></h4>
-            <p class="warnMessage"></p>
-          </div>
-          <div class="modal-footer">
-            <a class="modal-close waves-effect waves-red lighten-1 btn-flat">Ok</a>
+        <div class="section">
+          <div class="center-align">
+            <p>Please log in or create an account..</p>
+            <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('register')">Register</button>
+            <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('login')">Login</button>
           </div>
         </div>
-
-
       </div>
-
-
     </div>
 
+
+
+
+
+
+    <div class="login">
+      <div class="row">
+        <div class="col s12 center-align">
+          <div class="section">
+            <h5><span class="logo">Log</span> in</h5>
+          </div>
+        </div>
+
+        <div class="row">
+          <input id="login_inp_username" type="text" class="validate redUnderline">
+          <label class="active " for="login_inp_username">Username</label>
+        </div>
+        <div class="row">
+          <input id="login_inp_password" type="text" class="validate">
+          <label class="active" for="login_inp_password">Passord</label>
+        </div>
+        <!-- Add send icon -->
+        <div class="row center-align">
+          <button class="red lighten-1 waves-effect waves-light btn" onclick="login()">Send</button>
+        </div>
+      </div>
     </div>
 
-    <!-- <script type="text/javascript" src="cordova.js"></script> -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-
-    <!-- Web socket -->
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="js/gameComponents/figure.js"></script>
-    <script type="text/javascript" src="js/gameComponents/ball.js"></script>
-    <script type="text/javascript" src="js/gameComponents/rect.js"></script>
-    <script type="text/javascript" src="js/multi.js"></script>
 
 
-    <script src="js/waitinglobby.js"></script>
-    <script type="text/javascript" src="js/routing.js"></script>
+
+
+
+    <div class="register">
+      <div class="row">
+        <div class="col s12 center-align">
+          <div class="section">
+            <h5><span class="logo">Reg</span>ister</h5>
+          </div>
+        </div>
+
+        <div class="row">
+          <input id="register_inp_username" type="text" class="validate redUnderline">
+          <label class="active " for="register_inp_username">Username</label>
+        </div>
+        <div class="row">
+          <input id="register_inp_email" type="text" class="validate">
+          <label class="active" for="register_inp_email">E-mail</label>
+        </div>
+        <div class="row">
+          <input id="register_inp_password" type="text" class="validate">
+          <label class="active" for="register_inp_password">Passord</label>
+        </div>
+        <div class="row">
+          <input type="text" id="register_inp_date" class="datepicker">
+          <label class="active" for="register_inp_date">Date of birth</label>
+        </div>
+        <!-- add arrow icon -->
+        <div class="row center-align">
+          <button class="red lighten-1 waves-effect waves-light btn" onclick="register()">Send</button>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="profile">
+      <div class="row">
+        <div class="col s12 center-align">
+          <div class="section">
+            <h5><span class="logo">Hello</span> XXX</h5>
+          </div>
+        </div>
+        <div class="section">
+          <div class="center-align">
+            <div class="col s6">
+              <img width="100%" src="img/ranks/silver.png" alt="image of rank">
+            </div>
+
+            <div class="col s6">
+              <p>
+                <span class="logo">Statistics: </span> <br>
+                Ranking: <span class="logo">Silver</span> <br>
+                Wins: <span class="logo">0</span> <br>
+                Losses: <span class="logo">0</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="scoreboard">
+      <div class="row">
+        <div class="col s12 center-align">
+          <div class="section">
+            <h5>Scoreboard</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="waitinglobby">
+      <div class="row">
+        <div class="col s12 center-align">
+          <div class="section">
+            <h5>Finding match..</h5>
+          </div>
+          <div class="section">
+            <div class="preloader-wrapper small active">
+              <div class="spinner-layer spinner-red-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="section">
+            <p><button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('home')">Cancel</button></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="multi red lighten-2">
+    <canvas id="myCanvas" class="myCanvas red lighten-2" width="1500" height="2500">
+    </canvas>
+    <div class="gameNav">
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger gameNav"><i class="material-icons   white-text">menu</i></a>
+    </div>
+  </div>
+
+  <div class="solo">
+    <div class="row">
+      <div class="col s12 center-align">
+        <div class="section">
+          <h5>Solo</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h4 class="warnTitle"></h4>
+      <p class="warnMessage"></p>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-close waves-effect waves-red lighten-1 btn-flat">Ok</a>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- <script type="text/javascript" src="cordova.js"></script> -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+
+  <!-- Web socket -->
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
+  <script type="text/javascript" src="js/gameComponents/figure.js"></script>
+  <script type="text/javascript" src="js/gameComponents/ball.js"></script>
+  <script type="text/javascript" src="js/gameComponents/rect.js"></script>
+  <script type="text/javascript" src="js/multi.js"></script>
+
+
+  <script src="js/waitinglobby.js"></script>
+  <script type="text/javascript" src="js/routing.js"></script>
 
 </body>
 

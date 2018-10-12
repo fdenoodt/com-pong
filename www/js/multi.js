@@ -13,7 +13,7 @@ const initMulti = () => {
 }
 
 const handleGameOver = () => {
-  goTo('home');
+  goTo('waitinglobby');
 }
 
 
