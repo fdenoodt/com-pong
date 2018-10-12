@@ -13,11 +13,12 @@ class Player {
   }
 
   static get H() {
+    // return 100;
     return 40;
   }
 
   static get W() {
-    return 300;
+    return 400;
   }
 
   get Socket() { return this._socket; }

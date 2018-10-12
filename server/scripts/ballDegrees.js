@@ -1,4 +1,5 @@
 const Canvas = require('./canvas.js');
+const Player = require('./player.js'); //TODO; ONLY FOR TESTING, DELETING LATER
 
 
 class BallDegrees {
@@ -8,8 +9,7 @@ class BallDegrees {
     this.R = 50;
     
     this.JumpSize = 0.5;
-    this.Degrees = -110;
-    // this.JumpsPerMove = 1;
+    this.Degrees = -111;
     this.JumpsPerMove = 10;
   }
 

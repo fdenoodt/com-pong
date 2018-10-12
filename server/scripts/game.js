@@ -119,14 +119,42 @@ class Game {
   }
 
   playerCollissionCheck(player) {
-    if (this._ball.X >= player.X && this._ball.X <= player.X + Player.W
-      && this._ball.Y + this._ball.R >= player.Y && this._ball.Y - this._ball.R <= player.Y + Player.H) {
-      this._ball.bounceVertically();
-    } else if (this._ball.X + this._ball.R >= player.X && this._ball.X - this._ball.R <= player.X + Player.W &&
-      this._ball.Y + this._ball.R > player.Y && this._ball.Y - this._ball.R <= player.Y + Player.H
-    ) {
+    if (this.isTouchingSide(player))
       this._ball.bounceSideways();
+
+    if (this.isTouchingVertically(player))
+      this._ball.bounceVertically();
+  }
+
+  isTouchingSide(p) {
+    const b = this._ball;
+
+    function isInYRangeOfPlayer() {
+      return b.Y + b.R >= p.Y && b.Y - b.R <= p.Y + Player.H ? true : false;
     }
+
+    if (Math.floor(b.X + b.R) == p.X && isInYRangeOfPlayer()) //left side bounce
+      return true;
+    else if (Math.ceil(b.X - b.R) == p.X + Player.W && isInYRangeOfPlayer()) //right side bounce
+      return true;
+    else
+      return false;
+  }
+
+  isTouchingVertically(p) {
+    const b = this._ball;
+
+    function isInXRangeOfPlayer() {
+      return b.X + b.R >= p.X && b.X - b.R <= p.X + Player.W ? true : false;
+    }
+
+    if (b.Y + b.R >= p.Y && b.Y - b.R <= p.Y + Player.H)
+      if (Math.floor(b.Y + b.R) == p.Y && isInXRangeOfPlayer())
+        return true;
+      else if (Math.ceil(b.Y - b.R) == p.Y + Player.H)
+        return true;
+      else return false;
+
   }
 
   isTouchingBall(player) {

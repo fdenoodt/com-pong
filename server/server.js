@@ -59,7 +59,7 @@ const manageGames = () => {
 
     if (lsGames[i].IsOver) {
       lsGames.splice(i, 1);
-      console.log('Game deleted');
+      // Game deleted'
     }
   }
 }
