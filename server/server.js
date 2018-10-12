@@ -46,7 +46,7 @@ const matchSockets = () => {
 const createGame = (duo) => {
   lsGames.push(new Game(duo));
   console.log('creating game');
-  
+
 }
 
 const manageGames = () => {
@@ -57,7 +57,7 @@ const manageGames = () => {
       lsGames[i].afkTick();
     }
 
-    if (lsGames[i].canBeDeleted) {
+    if (lsGames[i].IsOver) {
       lsGames.splice(i, 1);
       console.log('Game deleted');
     }

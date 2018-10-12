@@ -4,7 +4,7 @@ const BallDegrees = require('./ballDegrees.js');
 
 class Game {
   constructor(duoSocket) {
-    this._canBeDeleted = false;
+    this._isOver = false;
     this._lsPlayers = [];
     this._ball = new BallDegrees();
 
@@ -12,6 +12,10 @@ class Game {
     this.givePlayersValues();
     this.sendInitalValues();
     this.setupMessageReplies();
+  }
+
+  get IsOver() {
+    return this._isOver;
   }
 
   createPlayers(duoSocket) {
@@ -102,10 +106,12 @@ class Game {
   }
 
   boarderCollissionCheck() {
-    if (this._ball.Y - this._ball.R <= 0 ||
-      this._ball.Y + this._ball.R >= Canvas.H) {
-      this._ball.bounceVertically();
-    }
+    if (this._ball.Y - this._ball.R <= 0)
+      this.gameover('gameover', this._lsPlayers[1], this._lsPlayers[0]);
+
+    else if (this._ball.Y + this._ball.R >= Canvas.H)
+      this.gameover('gameover', this._lsPlayers[0], this._lsPlayers[1]);
+
     else if (this._ball.X - this._ball.R <= 0 ||
       this._ball.X + this._ball.R >= Canvas.W) {
       this._ball.bounceSideways();
@@ -141,26 +147,18 @@ class Game {
     }
   }
 
-  gameover(winner = null, loser = null) {
-    this.sendData(winner, 'gameover', 'win');
-    this.sendData(loser, 'gameover', 'loss');
-    this._canBeDeleted = true;
+  gameover(reason, winner = null, loser = null) {
+    this.sendData(winner, reason, 'win');
+    this.sendData(loser, reason, 'loss');
+    this._isOver = true;
   }
-
-  // reset() {
-  //   if (this.Player1.WantsReset && this.Player2.WantsReset) {
-  //     this._lsPlayers[0].WantsReset = false;
-  //     this._lsPlayers[1].WantsReset = false;
-  //     this.prepare();
-  //   }
-  // }
 
   trackConnections() {
     for (const p of this._lsPlayers) {
       p.TimeWithoutResponse++;
       p.IsPresent = false;
       if (p.TimeWithoutResponse >= 4)
-        this.gameover(this.getOther(p), p);
+        this.gameover('disonnected', this.getOther(p), p)
 
       this.sendPing(p);
     }

@@ -12,6 +12,10 @@ const initMulti = () => {
   socket.emit('isReady');
 }
 
+const handleGameOver = () => {
+  goTo('home');
+}
+
 
 canvas = document.getElementById('myCanvas');
 context = canvas.getContext('2d');
@@ -190,17 +194,18 @@ socket.on('enemyX', (x) => {
   updateCanvas();
 });
 
-socket.on('gameover', (winOrLoss) => {
-  warn(winOrLoss == "win" ? "You win!" : "You lose!");
-})
-
-
 socket.on('ping', () => {
   socket.emit('pingReply');
 })
 
-socket.on('enemyDisconnected', () => {
-  warn('The enemy disconnected, You have won the game.')
+socket.on('gameover', (winOrLoss) => {
+  warn(winOrLoss == "win" ? "You win!" : "You lose!");
+  handleGameOver();
+})
+
+socket.on('disonnected', (winOrLoss) => {
+  warn(winOrLoss == "win" ? "Enemy gave up.. You won!" : "You lose due to disconnection!");
+  handleGameOver();
 })
 
 
