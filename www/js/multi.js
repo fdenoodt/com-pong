@@ -7,10 +7,6 @@ let me;
 let enemy;
 let ball;
 let lsBalls = [];
-let score = {
-  wins: 0,
-  losses: 0
-}
 
 const initMulti = () => {
   socket.emit('isReady');
@@ -109,11 +105,10 @@ const reset = () => {
 
 const showWarnMessage = (message) => {
   warn('Warning', message)
-  // document.getElementById('warning').innerHTML = message;
 }
+
 const updateScoreboard = () => {
   warn('Score', `Wins: ${score.wins} \nLosses: ${score.losses}`);
-  // document.getElementById('score').innerHTML = `Wins: ${score.wins} \nLosses: ${score.losses}`;
 }
 
 
@@ -171,14 +166,14 @@ socket.on('ballInit', (x, y, r) => {
 })
 let ballCounter = 0;
 socket.on('ball', (x, y) => {
-  ballCounter++;
-  if (lsBalls.length <= 50)
-    lsBalls.push(new Ball(x, y));
-  else {
+  // ballCounter++;
+  // if (lsBalls.length <= 50)
+  //   lsBalls.push(new Ball(x, y));
+  // else {
 
-    lsBalls.push(new Ball(x, y));
-    lsBalls.splice(0, 1);
-  }
+  //   lsBalls.push(new Ball(x, y));
+  //   lsBalls.splice(0, 1);
+  // }
 
   updateBall(x, y);
   updateCanvas();
@@ -196,9 +191,7 @@ socket.on('enemyX', (x) => {
 });
 
 socket.on('gameover', (winOrLoss) => {
-  winOrLoss == "win" ? score.wins++ : score.losses++;
-  updateScoreboard();
-  // document.getElementById('btnReset').style.display = 'block';
+  warn(winOrLoss == "win" ? "You win!" : "You lose!");
 })
 
 
@@ -207,9 +200,7 @@ socket.on('ping', () => {
 })
 
 socket.on('enemyDisconnected', () => {
-  score.wins++;
-  updateScoreboard();
-  showWarnMessage('The enemy disconnected, You have won the game.')
+  warn('The enemy disconnected, You have won the game.')
 })
 
 

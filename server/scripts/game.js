@@ -2,7 +2,6 @@ const Canvas = require('./canvas.js');
 const Player = require('./player.js');
 const BallDegrees = require('./ballDegrees.js');
 
-
 class Game {
   constructor(duoSocket) {
     this._canBeDeleted = false;
@@ -66,10 +65,10 @@ class Game {
         this.getOther(pl).Socket.emit('enemyX', pl.X);
       });
 
-      pl.Socket.on('reset', () => {
-        pl.WantsReset = true;
-        this.reset();
-      });
+      // pl.Socket.on('reset', () => {
+      //   pl.WantsReset = true;
+      //   this.reset();
+      // });
     }
   }
 
@@ -137,76 +136,43 @@ class Game {
   }
 
   sendBallLocation() {
-    this.Player1.Socket.emit('ball', this._ball.X, this._ball.Y);
-    this.Player2.Socket.emit('ball', this._ball.X, this._ball.Y);
+    for (const p of this._lsPlayers) {
+      this.sendData(p, 'ball', this._ball.X, this._ball.Y)
+    }
   }
 
   gameover(winner = null, loser = null) {
-    if (winner != null)
-      winner.Socket.emit('gameover', 'win');
-
-    if (loser != null)
-      loser.Socket.emit('gameover', 'loss');
-    this.canStart = false;
+    this.sendData(winner, 'gameover', 'win');
+    this.sendData(loser, 'gameover', 'loss');
+    this._canBeDeleted = true;
   }
 
-  reset() {
-    if (this.Player1.WantsReset && this.Player2.WantsReset) {
-      this.Player1.WantsReset = false;
-      this.Player2.WantsReset = false;
-      this.prepare();
-    }
-  }
-
-  setupPingReplies(pl) {
-
-  }
+  // reset() {
+  //   if (this.Player1.WantsReset && this.Player2.WantsReset) {
+  //     this._lsPlayers[0].WantsReset = false;
+  //     this._lsPlayers[1].WantsReset = false;
+  //     this.prepare();
+  //   }
+  // }
 
   trackConnections() {
-    if (this.Player1 != null) {
-      this.Player1.TimeWithoutResponse++;
+    for (const p of this._lsPlayers) {
+      p.TimeWithoutResponse++;
+      p.IsPresent = false;
+      if (p.TimeWithoutResponse >= 4)
+        this.gameover(this.getOther(p), p);
 
-      if (this.Player1.TimeWithoutResponse >= 3) {
-        this.Player1.IsPresent = false;
-        this.handleDisconnection(this.Player1, this.Player2);
-      }
+      this.sendPing(p);
     }
-
-    if (this.Player2 != null) {
-      this.Player2.TimeWithoutResponse++;
-
-      if (this.Player2.TimeWithoutResponse >= 3) {
-        this.Player2.IsPresent = false;
-        this.handleDisconnection(this.Player2, this.Player1); //2 = afker
-      }
-
-    }
-
-    this.sendPing();
   }
 
-  sendPing() {
-    if (this.Player1 != null)
-      this.Player1.Socket.emit('ping');
-
-    if (this.Player2 != null)
-      this.Player2.Socket.emit('ping');
+  sendPing(p) {
+    this.sendData(p, 'ping');
   }
 
   handlePingReply(p) {
     p.TimeWithoutResponse = 0;
   }
-
-  handleDisconnection(pAfk, pLeftOver) {
-    if (!this._canBeDeleted) {
-      console.log('Game is over due to afk');
-      this.gameover(pLeftOver, pAfk);
-      this._canBeDeleted = true;
-    }
-  }
-
-
 }
-
 
 module.exports = Game;

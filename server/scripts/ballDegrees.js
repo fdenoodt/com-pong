@@ -9,6 +9,7 @@ class BallDegrees {
     
     this.JumpSize = 0.5;
     this.Degrees = -110;
+    // this.JumpsPerMove = 1;
     this.JumpsPerMove = 10;
   }
 
