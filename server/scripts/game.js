@@ -151,7 +151,7 @@ class Game {
     if (b.Y + b.R >= p.Y && b.Y - b.R <= p.Y + Player.H)
       if (Math.floor(b.Y + b.R) == p.Y && isInXRangeOfPlayer())
         return true;
-      else if (Math.ceil(b.Y - b.R) == p.Y + Player.H)
+      else if (Math.ceil(b.Y - b.R) == p.Y + Player.H && isInXRangeOfPlayer())
         return true;
       else return false;
 
