@@ -15,6 +15,11 @@ let io = socket(server);
 const Game = require('./scripts/game.js');
 const Player = require('./scripts/player.js');
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+const someOtherPlaintextPassword = 'not_bacon';
+
 
 var firebase = require('firebase');
 
@@ -30,18 +35,6 @@ var config = {
 firebase.initializeApp(config);
 let database = firebase.database();
 
-// var firebaseapp = firebase.initializeApp({
-//   apiKey: "AIzaSyBuFsDmKYvJs9BSRVeUf-gGwELCkNstae0",
-//   authDomain: "world-of-pong.firebaseapp.com",
-//   databaseURL: "https://world-of-pong.firebaseio.com",
-//   projectId: "world-of-pong",
-//   storageBucket: "world-of-pong.appspot.com",
-//   messagingSenderId: "197805907925"
-// });
-
-// var database = firebaseapp.database();
-
-
 io.sockets.on('connection', newConnection);
 
 
@@ -56,26 +49,39 @@ function newConnection(socket) {
   }
 
   socket.on('findGame', addPersonToQueue);
-  socket.on('register', register)
+  socket.on('register', (...data) => {
+    register(socket, ...data);
+  })
 }
 
 
 
 
-function register(data) {
-  // console.log(data);
-  let userDatabase = database.ref('users');
-  let user = userDatabase.push(data, finished);
-  console.log("firebase generated key: " + user.key);
+function register(socket, email, username, password, date) {
+  let registerResponse = "";
 
-  function finished(err) {
-    if (err)
-      console.error("error: " + err)
-    else {
-      console.log("data saved");
+  bcrypt.genSalt(saltRounds, function (err, salt) {
+    bcrypt.hash(password, salt, function (err, hash) {
 
-    }
-  }
+      let userDatabase = database.ref('users');
+      const data = { email, username, hash, date };
+      let user = userDatabase.push(data, finished);
+
+      function finished(err) {
+        if (err) {
+          console.error("error: " + err);
+          registerResponse = "Registration failed, try again later.";
+        }
+        else {
+          console.log("data saved");
+          registerResponse = "Registration succeeded.";
+        }
+
+        socket.emit('registrationResponse', registerResponse);
+
+      }
+    });
+  });
 }
 
 
