@@ -57,31 +57,44 @@ function newConnection(socket) {
 
 
 
-function register(socket, email, username, password, date) {
-  let registerResponse = "";
+function register(socket, email, username, password) {
+  let registerResponse = "Something went wrong.";
+  if (validateInputs()) {
+    bcrypt.genSalt(saltRounds, function (err, salt) {
+      bcrypt.hash(password, salt, function (err, hash) {
+        let userDatabase = database.ref('users');
+        const data = { email, username, hash };
+        let user = userDatabase.push(data, finished);
 
-  bcrypt.genSalt(saltRounds, function (err, salt) {
-    bcrypt.hash(password, salt, function (err, hash) {
-
-      let userDatabase = database.ref('users');
-      const data = { email, username, hash, date };
-      let user = userDatabase.push(data, finished);
-
-      function finished(err) {
-        if (err) {
-          console.error("error: " + err);
-          registerResponse = "Registration failed, try again later.";
+        function finished(err) {
+          if (err) {
+            console.error("error: " + err);
+            registerResponse = "Registration failed, try again later.";
+          }
+          else {
+            console.log("data saved");
+            registerResponse = "Registration succeeded.";
+          }
+          socket.emit('registrationResponse', registerResponse);
         }
-        else {
-          console.log("data saved");
-          registerResponse = "Registration succeeded.";
-        }
-
-        socket.emit('registrationResponse', registerResponse);
-
-      }
+      });
     });
-  });
+  }
+  else {
+    registerResponse = "Incorrect username, email or password.";
+    socket.emit('registrationResponse', registerResponse);
+  }
+
+
+  function validateInputs() {
+    return username.length >= 0 && validateEmail(email) && password.length >= 8 ? true : false;
+  }
+
+  //method from: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+  function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
 }
 
 

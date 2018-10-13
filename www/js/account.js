@@ -11,7 +11,7 @@ const register = () => {
   else if (password.length <= 8) {
     warn('Warning', 'Password must at least contain 8 characters.');
   } else {
-    socket.emit('register', email, user, password, date);
+    socket.emit('register', email, user, password);
   }
 }
 
