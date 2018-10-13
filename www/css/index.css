@@ -48,18 +48,7 @@ nav {
 }
 
 .gameNav {
-  /* height: 400px; */
-  /* background-color: white; */
-  /* padding: 2em; */
-  /* position: absolute;
-  top: 10px; */
   position: relative;
-  /* color: white;
-   */
-  /* background-color: white; */
   top: 2.5vw;
   left: 2.5vw;
-
-  /* left: 1vw;
-  top: 1vw; */
 }

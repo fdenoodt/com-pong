@@ -13,7 +13,7 @@ const initMulti = () => {
 }
 
 const handleGameOver = () => {
-  goTo('waitinglobby');
+  goTo('home');
 }
 
 
@@ -199,12 +199,12 @@ socket.on('ping', () => {
 })
 
 socket.on('gameover', (winOrLoss) => {
-  warn(winOrLoss == "win" ? "You win!" : "You lose!");
+  warn('Warning', winOrLoss == "win" ? "You win!" : "You lose!");
   handleGameOver();
 })
 
 socket.on('disonnected', (winOrLoss) => {
-  warn(winOrLoss == "win" ? "Enemy gave up.. You won!" : "You lose due to disconnection!");
+  warn('Warning', winOrLoss == "win" ? "Enemy gave up.. You won!" : "You lose due to disconnection!");
   handleGameOver();
 })
 

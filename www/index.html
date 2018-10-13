@@ -115,15 +115,15 @@
         </div>
 
         <div class="row">
-          <input id="register_inp_username" type="text" class="validate redUnderline">
+          <input id="register_inp_username" type="text">
           <label class="active " for="register_inp_username">Username</label>
         </div>
         <div class="row">
-          <input id="register_inp_email" type="text" class="validate">
+          <input id="register_inp_email" type="email">
           <label class="active" for="register_inp_email">E-mail</label>
         </div>
         <div class="row">
-          <input id="register_inp_password" type="text" class="validate">
+          <input id="register_inp_password" type="password">
           <label class="active" for="register_inp_password">Passord</label>
         </div>
         <div class="row">
@@ -225,7 +225,7 @@
     </div>
   </div>
 
-  <div id="modal" class="modal">
+  <div id="modal" class="modal center-align">
     <div class="modal-content">
       <h4 class="warnTitle"></h4>
       <p class="warnMessage"></p>
@@ -247,6 +247,7 @@
   <!-- Web socket -->
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
+  <script type="text/javascript" src="js/account.js"></script>
   <script type="text/javascript" src="js/gameComponents/figure.js"></script>
   <script type="text/javascript" src="js/gameComponents/ball.js"></script>
   <script type="text/javascript" src="js/gameComponents/rect.js"></script>
