@@ -26,10 +26,9 @@ const handleRegistrationResponse = (message) => {
 }
 
 const login = () => {
-  const user = document.querySelector('#login_inp_username').value;
+  const email = document.querySelector('#login_inp_email').value;
   const password = document.querySelector('#login_inp_password').value;
-
-  console.log(user, password);
+  socket.emit('login', email, password);
 }
 
 
