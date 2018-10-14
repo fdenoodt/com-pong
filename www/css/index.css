@@ -52,3 +52,11 @@ nav {
   top: 2.5vw;
   left: 2.5vw;
 }
+
+#homeNotLoggedIn {
+  display: block;
+}
+
+#homeLoggedIn {
+  display: none;
+}

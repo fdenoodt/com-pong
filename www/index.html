@@ -38,6 +38,7 @@
       <a onclick="goTo('home')" class="brand-logo logo">WoP</a>
       <a data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
+        <li><a onclick="goTo('home')">Home</a></li>
         <li><a onclick="goTo('profile')">Profile</a></li>
         <li><a onclick="goTo('scoreboard')">Scoreboard</a></li>
         <li><a onclick=" goTo('solo')"">Solo</a></li>
@@ -47,6 +48,7 @@
   </nav>
 
   <ul class="sidenav" id="mobile-demo">
+    <li><a onclick="goTo('home')">Home</a></li>
     <li><a onclick="goTo('profile')">Profile</a></li>
     <li><a onclick="goTo('scoreboard')"">Scoreboard</a></li>
     <li><a onclick=" goTo('solo')"">Solo</a></li>
@@ -65,9 +67,16 @@
         </div>
         <div class="section">
           <div class="center-align">
-            <p>Please log in or create an account..</p>
-            <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('register')">Register</button>
-            <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('login')">Login</button>
+            <div id="homeNotLoggedIn">
+              <p>Please log in or create an account..</p>
+              <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('register')">Register</button>
+              <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('login')">Login</button>
+            </div>
+            <div id="homeLoggedIn">
+              <p>Please log in or create an account..</p>
+              <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('solo')">Solo</button>
+              <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('waitinglobby')">Multi</button>
+            </div>
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ const register = () => {
   } else if (!validateEmail(email)) {
     warn('Warning', 'Incorrect email');
   }
-  else if (password.length <= 8) {
+  else if (password.length < 8) {
     warn('Warning', 'Password must at least contain 8 characters.');
   } else {
     socket.emit('register', email, user, password);
@@ -21,9 +21,19 @@ const validateEmail = (email) => {
   return re.test(String(email).toLowerCase());
 }
 
-const handleRegistrationResponse = (message) => {
-  warn('Warning', message);
+const handleRegistrationResponse = (response) => {
+  warn('Warning', response.message);
+  if (response.isSuccessful)
+    goTo('home');
 }
+
+const handleAccountStateChange = (isLoggedIn) => {
+  const loggedInScreen = document.querySelector('#homeLoggedIn');
+  const loggedOutScreen = document.querySelector('#homeNotLoggedIn');
+  loggedInScreen.style.display = isLoggedIn ? 'block' : 'none';
+  loggedOutScreen.style.display = isLoggedIn ? 'none' : 'block';
+}
+
 
 const login = () => {
   const email = document.querySelector('#login_inp_email').value;
@@ -31,8 +41,12 @@ const login = () => {
   socket.emit('login', email, password);
 }
 
+const handleLoginResponse = (response) => {
+  warn('Warning', response.isLoggedIn ? 'Welcome XXX' : 'Email or password incorrect');
+}
 
 socket.on('registrationResponse', handleRegistrationResponse);
-socket.on('us', (data) => {
-  console.log(data);
-})
+socket.on('loginResponse', handleLoginResponse)
+socket.on('accountStateChange', handleAccountStateChange);
+
+handleAccountStateChange(false);

@@ -29,7 +29,7 @@ var config = {
 
 firebase.initializeApp(config);
 const auth = firebase.auth();
-let database = firebase.database();
+let fireDB = firebase.database();
 
 io.sockets.on('connection', newConnection);
 
@@ -37,6 +37,8 @@ io.sockets.on('connection', newConnection);
 
 let lsGames = [];
 let lsSocketsInQueue = [];
+const activeUsers = [];
+
 function newConnection(socket) {
 
   function addPersonToQueue() {
@@ -57,27 +59,59 @@ function newConnection(socket) {
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
   if (firebaseUser)
-    // firebaseUser.token
     console.log('logged in');
   else
     console.log('not logged in');
 })
 
 function registerWithEmailAndPassword(socket, email, username, password) {
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(function (res) {
-      console.log(res.user.uid, 'created');
-      socket.emit('us', res);
+  const promise = auth.createUserWithEmailAndPassword(email, password);
+  promise.then(function (res) {
+    const newUser = res.user;
+    handleLogin(socket, newUser);
+    activeUsers.push({ user: newUser, socket: socket });
+    fireDB.ref('users/' + newUser.uid).set({
+      username: username,
+      wins: 0,
+      losses: 0,
+      rankingPoings: 100
     })
-    .catch(ex => console.log(ex.message));
+      .then(() => {
+        socket.emit('registrationResponse', { isSuccessful: true, message: 'Registration successful' });
+      })
+      .catch((ex) => {
+        console.log(ex.message);
+        socket.emit('registrationResponse', { isSuccessful: false, message: ex.message });
+      })
+  })
 
-  //to log out: firebase.auth().signOut();
+  promise.catch(function (ex) {
+    console.log(ex.message);
+    socket.emit('registrationResponse', { isSuccessful: false, message: ex.message });
+  });
 }
 
 function loginWithEmailAndPassword(socket, email, password) {
-  const promise = auth.signInWithEmailAndPassword(email, password);
-  promise.catch(ex => console.log(ex.message));
+  auth.signInWithEmailAndPassword(email, password)
+    .then((res) => {
+      const user = res.user;
+      handleLogin(socket, user);
+      socket.emit('loginResponse', { isSuccessful: true, token: null });
+    })
+    .catch((ex) => {
+      console.log(ex.message)
+      socket.emit('loginResponse', { isSuccessful: false });
+    });
 }
+
+//TODO: this method should exist, but the loginResponse and registerResponse should be deleted
+function handleLogin(socket, user) {
+  activeUsers.push({ socket, user })
+  socket.emit('accountStateChange', true);
+}
+
+//to log out: firebase.auth().signOut();
+
 
 
 
