@@ -64,8 +64,12 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 })
 
 function registerWithEmailAndPassword(socket, email, username, password) {
-  const promise = auth.createUserWithEmailAndPassword(email, password);
-  promise.catch(ex => console.log(ex.message));
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(function (res) {
+      console.log(res.user.uid, 'created');
+      socket.emit('us', res);
+    })
+    .catch(ex => console.log(ex.message));
 
   //to log out: firebase.auth().signOut();
 }

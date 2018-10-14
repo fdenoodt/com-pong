@@ -33,3 +33,6 @@ const login = () => {
 
 
 socket.on('registrationResponse', handleRegistrationResponse);
+socket.on('us', (data) => {
+  console.log(data);
+})
