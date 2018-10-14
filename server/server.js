@@ -65,38 +65,38 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 })
 
 function registerWithEmailAndPassword(socket, email, username, password) {
-  const promise = auth.createUserWithEmailAndPassword(email, password);
-  promise.then(function (res) {
-    const newUser = res.user;
-    handleLogin(socket, newUser);
-    activeUsers.push({ user: newUser, socket: socket });
-    fireDB.ref('users/' + newUser.uid).set({
-      username: username,
-      wins: 0,
-      losses: 0,
-      rankingPoings: 100
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(function (res) {
+      const newUser = res.user;
+      handleLogin(socket, newUser);
+      activeUsers.push({ user: newUser, socket: socket });
+      fireDB.ref('users/' + newUser.uid).set({
+        username: username,
+        wins: 0,
+        losses: 0,
+        rankingPoings: 100
+      })
+        .then(() => {
+          socket.emit('registrationResponse', { isSuccessful: true, message: 'Registration successful' });
+        })
+        .catch((ex) => {
+          console.log(ex.message);
+          socket.emit('registrationResponse', { isSuccessful: false, message: ex.message });
+        })
     })
-      .then(() => {
-        socket.emit('registrationResponse', { isSuccessful: true, message: 'Registration successful' });
-      })
-      .catch((ex) => {
-        console.log(ex.message);
-        socket.emit('registrationResponse', { isSuccessful: false, message: ex.message });
-      })
-  })
-
-  promise.catch(function (ex) {
-    console.log(ex.message);
-    socket.emit('registrationResponse', { isSuccessful: false, message: ex.message });
-  });
+    .catch(function (ex) {
+      console.log(ex.message);
+      socket.emit('registrationResponse', { isSuccessful: false, message: ex.message });
+    });
 }
 
 function loginWithEmailAndPassword(socket, email, password) {
   auth.signInWithEmailAndPassword(email, password)
     .then((res) => {
+      console.log('logged in from login');
       const user = res.user;
       handleLogin(socket, user);
-      socket.emit('loginResponse', { isSuccessful: true, token: null });
+      socket.emit('loginResponse', { isSuccessful: true, userData: user });
     })
     .catch((ex) => {
       console.log(ex.message)

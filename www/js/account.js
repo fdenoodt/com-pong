@@ -42,11 +42,13 @@ const login = () => {
 }
 
 const handleLoginResponse = (response) => {
-  warn('Warning', response.isLoggedIn ? 'Welcome XXX' : 'Email or password incorrect');
+  const accesstoken = response.userData.stsTokenManager.accessToken
+  localStorage.setItem('wopToken', accesstoken);
+  warn('Warning', response.isSuccessful ? 'Welcome XXX' : 'Email or password incorrect');
 }
 
 socket.on('registrationResponse', handleRegistrationResponse);
-socket.on('loginResponse', handleLoginResponse)
+socket.on('loginResponse', handleLoginResponse);
 socket.on('accountStateChange', handleAccountStateChange);
 
 handleAccountStateChange(false);
