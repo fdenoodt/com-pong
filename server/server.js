@@ -9,6 +9,36 @@ let app = express();
 let server = app.listen(3000);
 app.use(express.static('public'));
 
+
+
+let mysql = require('mysql');
+var con = mysql.createConnection({
+  host: 'localhost',
+  user: "root",
+  password: "",
+  database: "world_of_pong"
+})
+
+con.connect(function (err) {
+  if (err) throw err;
+});
+
+
+const sql = 'select * from users';
+con.query(sql);
+con.query(sql, function (err, res) {
+  if (err) throw err;
+
+  console.log(res);
+})
+
+
+
+
+
+
+
+
 let socket = require('socket.io');
 let io = socket(server);
 
