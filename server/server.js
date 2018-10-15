@@ -33,8 +33,6 @@ let fireDB = firebase.database();
 
 io.sockets.on('connection', newConnection);
 
-
-
 let lsGames = [];
 let lsSocketsInQueue = [];
 const activeUsers = [];
@@ -47,8 +45,10 @@ function newConnection(socket) {
   }
 
   socket.on('findGame', addPersonToQueue);
+  socket.on('tokenLogin', (tok) => {
+
+  })
   socket.on('register', (...data) => {
-    // register(socket, ...data);
     registerWithEmailAndPassword(socket, ...data);
   })
 
@@ -102,6 +102,19 @@ function loginWithEmailAndPassword(socket, email, password) {
       console.log(ex.message)
       socket.emit('loginResponse', { isSuccessful: false });
     });
+}
+
+function loginWithToken(socket, tok) {
+  auth.signInWithCustomToken(tok)
+    .then((res) => {
+      const user = res.user;
+      handleLogin(socket, user);
+      socket.emit('loginResponse', { isSuccessful: true, userData: user });
+    })
+    .catch((ex) => {
+      console.log(ex.message)
+      socket.emit('loginResponse', { isSuccessful: false });
+    })
 }
 
 //TODO: this method should exist, but the loginResponse and registerResponse should be deleted

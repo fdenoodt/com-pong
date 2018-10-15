@@ -42,13 +42,24 @@ const login = () => {
 }
 
 const handleLoginResponse = (response) => {
-  const accesstoken = response.userData.stsTokenManager.accessToken
-  localStorage.setItem('wopToken', accesstoken);
+  const accesstoken = response.userData.stsTokenManager.accessToken;
+  localStorage.setItem('wopToken', response.isSuccessful ? accesstoken : null);
   warn('Warning', response.isSuccessful ? 'Welcome XXX' : 'Email or password incorrect');
 }
+
+
+//TODO: THIS MUST BE TESTED FROM CORDOVA APP
+const tryAutoLogin = () => {
+  const isOnline = true;
+  const token = localStorage.getItem('wopToken');
+  if (isOnline && token !== null) {
+    socket.emit('tokenLogin', token);
+  }
+}
+
 
 socket.on('registrationResponse', handleRegistrationResponse);
 socket.on('loginResponse', handleLoginResponse);
 socket.on('accountStateChange', handleAccountStateChange);
 
-handleAccountStateChange(false);
+// handleAccountStateChange(false);

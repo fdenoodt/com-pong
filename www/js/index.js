@@ -51,6 +51,8 @@ $(document).ready(function () {
   $('.sidenav').sidenav();
   $('.datepicker').datepicker();
   $('.modal').modal();
+
+  tryAutoLogin();
 });
 
 const warn = (title = "", message = "") => {

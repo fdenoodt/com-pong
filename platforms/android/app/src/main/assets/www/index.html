@@ -35,24 +35,26 @@
 
   <nav>
     <div class="nav-wrapper">
-      <a href="?page=home" class="brand-logo logo">WoP</a>
+      <a onclick="goTo('home')" class="brand-logo logo">WoP</a>
       <a data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="?page=profile">Profile</a></li>
-        <li><a href="?page=scoreboard">Scoreboard</a></li>
-        <li><a href="?page=solo">Solo</a></li>
-        <li><a href="?page=multi">Multiplayer</a></li>
+        <li><a onclick="goTo('home')">Home</a></li>
+        <li><a onclick="goTo('profile')">Profile</a></li>
+        <li><a onclick="goTo('scoreboard')">Scoreboard</a></li>
+        <li><a onclick=" goTo('solo')"">Solo</a></li>
+        <li><a onclick=" goTo('multi')"">Multiplayer</a></li>
       </ul>
     </div>
   </nav>
-  <ul class="sidenav" id="mobile-demo">
-    <li><a href="?page=profile">Profile</a></li>
-    <li><a href="?page=scoreboard">Scoreboard</a></li>
-    <li><a href="?page=solo">Solo</a></li>
-    <li><a href="?page=multi">Multiplayer</a></li>
-    <li><a href="?page=waitinglobby">waiting lobby</a></li>
-  </ul>
 
+  <ul class="sidenav" id="mobile-demo">
+    <li><a onclick="goTo('home')">Home</a></li>
+    <li><a onclick="goTo('profile')">Profile</a></li>
+    <li><a onclick="goTo('scoreboard')"">Scoreboard</a></li>
+    <li><a onclick=" goTo('solo')"">Solo</a></li>
+    <li><a onclick="goTo('multi')"">Multiplayer</a></li>
+    <li><a onclick=" goTo('waitinglobby')"">waiting lobby</a></li>
+  </ul>
 
   <div class="container">
 
@@ -65,9 +67,16 @@
         </div>
         <div class="section">
           <div class="center-align">
-            <p>Please log in or create an account..</p>
-            <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('register')">Register</button>
-            <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('login')">Login</button>
+            <div id="homeNotLoggedIn">
+              <p>Please log in or create an account..</p>
+              <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('register')">Register</button>
+              <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('login')">Login</button>
+            </div>
+            <div id="homeLoggedIn">
+              <p>Please log in or create an account..</p>
+              <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('solo')">Solo</button>
+              <button class="red lighten-1 waves-effect waves-light btn" onclick="goTo('waitinglobby')">Multi</button>
+            </div>
           </div>
         </div>
       </div>
@@ -87,11 +96,11 @@
         </div>
 
         <div class="row">
-          <input id="login_inp_username" type="text" class="validate redUnderline">
-          <label class="active " for="login_inp_username">Username</label>
+          <input id="login_inp_email" type="text" class="validate redUnderline">
+          <label class="active " for="login_inp_email">Email</label>
         </div>
         <div class="row">
-          <input id="login_inp_password" type="text" class="validate">
+          <input id="login_inp_password" type="password" class="validate">
           <label class="active" for="login_inp_password">Passord</label>
         </div>
         <!-- Add send icon -->
@@ -115,20 +124,16 @@
         </div>
 
         <div class="row">
-          <input id="register_inp_username" type="text" class="validate redUnderline">
+          <input id="register_inp_username" type="text">
           <label class="active " for="register_inp_username">Username</label>
         </div>
         <div class="row">
-          <input id="register_inp_email" type="text" class="validate">
+          <input id="register_inp_email" type="email">
           <label class="active" for="register_inp_email">E-mail</label>
         </div>
         <div class="row">
-          <input id="register_inp_password" type="text" class="validate">
+          <input id="register_inp_password" type="password">
           <label class="active" for="register_inp_password">Passord</label>
-        </div>
-        <div class="row">
-          <input type="text" id="register_inp_date" class="datepicker">
-          <label class="active" for="register_inp_date">Date of birth</label>
         </div>
         <!-- add arrow icon -->
         <div class="row center-align">
@@ -177,16 +182,6 @@
       </div>
     </div>
 
-    <div class="solo">
-      <div class="row">
-        <div class="col s12 center-align">
-          <div class="section">
-            <h5>Solo</h5>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="waitinglobby">
       <div class="row">
         <div class="col s12 center-align">
@@ -198,9 +193,11 @@
               <div class="spinner-layer spinner-red-only">
                 <div class="circle-clipper left">
                   <div class="circle"></div>
-                </div><div class="gap-patch">
+                </div>
+                <div class="gap-patch">
                   <div class="circle"></div>
-                </div><div class="circle-clipper right">
+                </div>
+                <div class="circle-clipper right">
                   <div class="circle"></div>
                 </div>
               </div>
@@ -212,33 +209,41 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="multi  center-align">
-      <div class="section">
-        <canvas id="myCanvas" class="myCanvas red lighten-2" width="1500" height="2500">
 
-        </canvas>
+  <div class="multi red lighten-2">
+    <canvas id="myCanvas" class="myCanvas red lighten-2" width="1500" height="2500">
+    </canvas>
+    <div class="gameNav">
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger gameNav"><i class="material-icons   white-text">menu</i></a>
+    </div>
+  </div>
+
+  <div class="solo">
+    <div class="row">
+      <div class="col s12 center-align">
+        <div class="section">
+          <h5>Solo</h5>
+        </div>
       </div>
     </div>
+  </div>
 
-
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <h4 class="warnTitle"></h4>
-        <p class="warnMessage"></p>
-      </div>
-      <div class="modal-footer">
-        <a class="modal-close waves-effect waves-red lighten-1 btn-flat">Ok</a>
-      </div>
+  <div id="modal" class="modal center-align">
+    <div class="modal-content">
+      <h4 class="warnTitle"></h4>
+      <p class="warnMessage"></p>
     </div>
-
-
+    <div class="modal-footer">
+      <a class="modal-close waves-effect waves-red lighten-1 btn-flat">Ok</a>
+    </div>
   </div>
 
 
-  </div>
 
-  </div>
+
+
 
   <!-- <script type="text/javascript" src="cordova.js"></script> -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
@@ -247,6 +252,14 @@
   <!-- Web socket -->
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
+  <script type="text/javascript" src="js/account.js"></script>
+  <script type="text/javascript" src="js/gameComponents/figure.js"></script>
+  <script type="text/javascript" src="js/gameComponents/ball.js"></script>
+  <script type="text/javascript" src="js/gameComponents/rect.js"></script>
+  <script type="text/javascript" src="js/multi.js"></script>
+
+
+  <script src="js/waitinglobby.js"></script>
   <script type="text/javascript" src="js/routing.js"></script>
 
 </body>
