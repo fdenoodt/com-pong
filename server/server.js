@@ -46,7 +46,7 @@ function newConnection(socket) {
   })
 
   socket.on('login', (email, password) => {
-    loginWithEmailAndPassword(socket, email, password);
+    login(socket, email, password);
   })
 
 }
@@ -93,18 +93,26 @@ function register(socket, email, username, password) {
   }
 }
 
-function loginWithEmailAndPassword(socket, email, password) {
-  auth.signInWithEmailAndPassword(email, password)
-    .then((res) => {
-      console.log('logged in from login');
-      const user = res.user;
-      handleLogin(socket, user);
-      socket.emit('loginResponse', { isSuccessful: true, userData: user });
-    })
-    .catch((ex) => {
-      console.log(ex.message)
-      socket.emit('loginResponse', { isSuccessful: false });
+function login(socket, email, password) {
+  const saltRounds = 10;
+  bcrypt.genSalt(saltRounds, function (err, salt) {
+    if (err) throw err;
+    bcrypt.hash(password, salt, function (err, hash) {
+      if (err) throw err;
+      const sql = `select * from users where email='${email}' and password='${hash}'`;
+      con.query(sql, function (err, result) {
+        if (err)
+          socket.emit('loginResponse', { isSuccessful: false, message: 'Error trying to login..' });
+
+        console.log(result);
+        socket.emit('registrationResponse', { isSuccessful: true, userData: result });
+      })
     });
+  });
+
+
+  // socket.emit('loginResponse', { isSuccessful: true, userData: user });
+  // socket.emit('loginResponse', { isSuccessful: false });
 }
 
 //TODO: this method should exist, but the loginResponse and registerResponse should be deleted
