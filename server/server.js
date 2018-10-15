@@ -24,13 +24,13 @@ con.connect(function (err) {
 });
 
 
-const sql = 'select * from users';
-con.query(sql);
-con.query(sql, function (err, res) {
-  if (err) throw err;
+// const sql = 'select * from users';
+// con.query(sql);
+// con.query(sql, function (err, res) {
+//   if (err) throw err;
 
-  console.log(res);
-})
+//   console.log(res);
+// })
 
 
 
@@ -46,20 +46,6 @@ const Game = require('./scripts/game.js');
 const Player = require('./scripts/player.js');
 
 const bcrypt = require('bcrypt');
-var firebase = require('firebase');
-
-var config = {
-  apiKey: "AIzaSyBuFsDmKYvJs9BSRVeUf-gGwELCkNstae0",
-  authDomain: "world-of-pong.firebaseapp.com",
-  databaseURL: "https://world-of-pong.firebaseio.com",
-  projectId: "world-of-pong",
-  storageBucket: "world-of-pong.appspot.com",
-  messagingSenderId: "197805907925"
-};
-
-firebase.initializeApp(config);
-const auth = firebase.auth();
-let fireDB = firebase.database();
 
 io.sockets.on('connection', newConnection);
 
@@ -75,50 +61,62 @@ function newConnection(socket) {
   }
 
   socket.on('findGame', addPersonToQueue);
-  socket.on('tokenLogin', (tok) => {
-
-  })
   socket.on('register', (...data) => {
-    registerWithEmailAndPassword(socket, ...data);
+    register(socket, ...data);
   })
 
   socket.on('login', (email, password) => {
     loginWithEmailAndPassword(socket, email, password);
   })
+
 }
 
-firebase.auth().onAuthStateChanged(firebaseUser => {
-  if (firebaseUser)
-    console.log('logged in');
-  else
-    console.log('not logged in');
-})
 
-function registerWithEmailAndPassword(socket, email, username, password) {
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(function (res) {
-      const newUser = res.user;
-      handleLogin(socket, newUser);
-      activeUsers.push({ user: newUser, socket: socket });
-      fireDB.ref('users/' + newUser.uid).set({
-        username: username,
-        wins: 0,
-        losses: 0,
-        rankingPoings: 100
-      })
-        .then(() => {
-          socket.emit('registrationResponse', { isSuccessful: true, message: 'Registration successful' });
+function register(socket, email, username, password) {
+  let registerResponse = "Something went wrong.";
+  if (validateInputs()) {
+    const saltRounds = 10;
+    bcrypt.genSalt(saltRounds, function (err, salt) {
+      if (err) throw err;
+
+      bcrypt.hash(password, salt, function (err, hash) {
+        if (err) throw err;
+
+        const wins = 0;
+        const losses = 0;
+        const rankingpoints = 0;
+        const sql = `insert into users values(null, '${email}', '${password}', '${username}', ${wins}, ${losses}, ${rankingpoints})`;
+        con.query(sql, function (err, result) {
+          if (err) throw err;
+
+          console.log('user added');
+          socket.emit('registrationResponse', { isSuccessful: true });
         })
-        .catch((ex) => {
-          console.log(ex.message);
-          socket.emit('registrationResponse', { isSuccessful: false, message: ex.message });
-        })
-    })
-    .catch(function (ex) {
-      console.log(ex.message);
-      socket.emit('registrationResponse', { isSuccessful: false, message: ex.message });
+      });
     });
+  }
+  else {
+    registerResponse = "Incorrect username, email or password.";
+    socket.emit('registrationResponse', registerResponse);
+  }
+
+  function validateInputs() {
+    return username.length >= 0 && validateEmail(email) && password.length >= 8 ? true : false;
+  }
+
+  //method from: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+  function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
 }
+
+
+
+// socket.emit('registrationResponse', { isSuccessful: true, message: 'Registration successful' });
+// socket.emit('registrationResponse', { isSuccessful: false, message: ex.message });
+// socket.emit('registrationResponse', { isSuccessful: false, message: ex.message });
+
 
 function loginWithEmailAndPassword(socket, email, password) {
   auth.signInWithEmailAndPassword(email, password)
@@ -134,19 +132,6 @@ function loginWithEmailAndPassword(socket, email, password) {
     });
 }
 
-function loginWithToken(socket, tok) {
-  auth.signInWithCustomToken(tok)
-    .then((res) => {
-      const user = res.user;
-      handleLogin(socket, user);
-      socket.emit('loginResponse', { isSuccessful: true, userData: user });
-    })
-    .catch((ex) => {
-      console.log(ex.message)
-      socket.emit('loginResponse', { isSuccessful: false });
-    })
-}
-
 //TODO: this method should exist, but the loginResponse and registerResponse should be deleted
 function handleLogin(socket, user) {
   activeUsers.push({ socket, user })
@@ -154,55 +139,6 @@ function handleLogin(socket, user) {
 }
 
 //to log out: firebase.auth().signOut();
-
-
-
-
-// function register(socket, email, username, password) {
-//   let registerResponse = "Something went wrong.";
-//   if (validateInputs()) {
-//     const saltRounds = 10;
-//     bcrypt.genSalt(saltRounds, function (err, salt) {
-//       bcrypt.hash(password, salt, function (err, hash) {
-//         let userDatabase = database.ref('users');
-//         const data = { email, username, hash };
-//         let user = userDatabase.push(data, finished);
-
-//         function finished(err) {
-//           if (err) {
-//             console.error("error: " + err);
-//             registerResponse = "Registration failed, try again later.";
-//           }
-//           else {
-//             console.log("data saved");
-//             registerResponse = "Registration succeeded.";
-//           }
-//           socket.emit('registrationResponse', registerResponse);
-//         }
-//       });
-//     });
-//   }
-//   else {
-//     registerResponse = "Incorrect username, email or password.";
-//     socket.emit('registrationResponse', registerResponse);
-//   }
-
-//   function validateInputs() {
-//     return username.length >= 0 && validateEmail(email) && password.length >= 8 ? true : false;
-//   }
-
-//   //method from: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-//   function validateEmail(email) {
-//     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//     return re.test(String(email).toLowerCase());
-//   }
-// }
-
-
-
-
-
-
 
 const timerTick = () => {
   ticks++;
