@@ -9,10 +9,14 @@ let app = express();
 let server = app.listen(3000);
 app.use(express.static('public'));
 
+const mysql = require('mysql');
+const bcrypt = require('bcrypt');
+const socket = require('socket.io');
+const io = socket(server);
+const Game = require('./scripts/game.js');
+const Player = require('./scripts/player.js');
 
-
-let mysql = require('mysql');
-var con = mysql.createConnection({
+let con = mysql.createConnection({
   host: 'localhost',
   user: "root",
   password: "",
@@ -22,30 +26,6 @@ var con = mysql.createConnection({
 con.connect(function (err) {
   if (err) throw err;
 });
-
-
-// const sql = 'select * from users';
-// con.query(sql);
-// con.query(sql, function (err, res) {
-//   if (err) throw err;
-
-//   console.log(res);
-// })
-
-
-
-
-
-
-
-
-let socket = require('socket.io');
-let io = socket(server);
-
-const Game = require('./scripts/game.js');
-const Player = require('./scripts/player.js');
-
-const bcrypt = require('bcrypt');
 
 io.sockets.on('connection', newConnection);
 
@@ -85,9 +65,11 @@ function register(socket, email, username, password) {
         const wins = 0;
         const losses = 0;
         const rankingpoints = 0;
-        const sql = `insert into users values(null, '${email}', '${password}', '${username}', ${wins}, ${losses}, ${rankingpoints})`;
+        const sql = `insert into users values(null, '${email}', '${hash}', '${username}', ${wins}, ${losses}, ${rankingpoints})`;
         con.query(sql, function (err, result) {
-          if (err) throw err;
+          if (err)
+            socket.emit('registrationResponse', { isSuccessful: false, message: err.message });
+
 
           console.log('user added');
           socket.emit('registrationResponse', { isSuccessful: true });
@@ -97,7 +79,7 @@ function register(socket, email, username, password) {
   }
   else {
     registerResponse = "Incorrect username, email or password.";
-    socket.emit('registrationResponse', registerResponse);
+    socket.emit('registrationResponse', { isSuccessful: false, message: registerResponse });
   }
 
   function validateInputs() {
@@ -110,13 +92,6 @@ function register(socket, email, username, password) {
     return re.test(String(email).toLowerCase());
   }
 }
-
-
-
-// socket.emit('registrationResponse', { isSuccessful: true, message: 'Registration successful' });
-// socket.emit('registrationResponse', { isSuccessful: false, message: ex.message });
-// socket.emit('registrationResponse', { isSuccessful: false, message: ex.message });
-
 
 function loginWithEmailAndPassword(socket, email, password) {
   auth.signInWithEmailAndPassword(email, password)
