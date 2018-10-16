@@ -1,7 +1,6 @@
 //projected started by typing:
 //node init (this made package.json file)
 //npm install express --save
-//npm i firebase
 
 console.log("running..");
 let express = require('express');
@@ -15,6 +14,9 @@ const socket = require('socket.io');
 const io = socket(server);
 const Game = require('./scripts/game.js');
 const Player = require('./scripts/player.js');
+const GameManager = require('./scripts/gameManager.js');
+const UserManager = require('./scripts/userManager.js');
+const User = require('./scripts/user.js').default;
 
 let con = mysql.createConnection({
   host: 'localhost',
@@ -22,6 +24,9 @@ let con = mysql.createConnection({
   password: "",
   database: "world_of_pong"
 })
+
+const userManager = new UserManager();
+const gameManager = new GameManager();
 
 con.connect(function (err) {
   if (err) throw err;
@@ -31,7 +36,6 @@ io.sockets.on('connection', newConnection);
 
 let lsGames = [];
 let lsSocketsInQueue = [];
-const activeUsers = [];
 
 function newConnection(socket) {
 
@@ -40,7 +44,11 @@ function newConnection(socket) {
     matchSockets();
   }
 
-  socket.on('findGame', addPersonToQueue);
+  //TODO: FIND GAME TEMP DISABLED BECAUSE THE LOGIN MUST WORK FIRST
+  // socket.on('findGame', () => {
+  //   gameManager.addPersonToQueue(socke)
+  // });
+
   socket.on('register', (...data) => {
     register(socket, ...data);
   })
