@@ -7,8 +7,12 @@ class User {
     this._losses = losses;
     this._wins = wins;
     this._rankingpoints = rankingpoints;
+    this.TimeWithoutResponse = 0;
   }
 
+  get TimeWithoutResponse() {
+    return this._timeWithoutResponse;
+  }
   get Id() {
     return this._id;
   }
@@ -51,6 +55,9 @@ class User {
   }
   set Socket(value) {
     this._socket = value;
+  }
+  set TimeWithoutResponse(value) {
+    this._timeWithoutResponse = value;;
   }
 
 }

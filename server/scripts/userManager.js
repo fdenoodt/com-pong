@@ -6,8 +6,6 @@ class UserManager {
   constructor() {
     this._users = [];
     this._saltRounds = 10;
-    console.log(this._users);
-    console.log('this is the user manager');
   }
 
   get Users() {
@@ -95,10 +93,49 @@ class UserManager {
           const userData = res ? { email, username, wins, losses, rankingpoints } : null;
           socket.emit('loginResponse', { isSuccessful: res, message: loginResponse, userData });
 
-          that._users.push(new User(socket, id, email, username, wins, losses, rankingpoints));
+          const newUser = new User(socket, id, email, username, wins, losses, rankingpoints);
+          newUser.Socket.on('pingReply', () => {
+            that.handlePingReply(newUser);
+          });
+          that._users.push(newUser);
+
         }
       });
     }
+  }
+
+  manageUsers() {
+    this.trackConnections();
+  }
+
+
+  trackConnections() {
+
+    if (this._users.length <= 0) {
+      return;
+    }
+
+    for (let i = this._users.length - 1; i >= 0; i--) {
+      const p = this._users[i];
+      p.TimeWithoutResponse++;
+      this.sendPing(p);
+      if (p.TimeWithoutResponse > 2) {
+        this._users.splice(i, 1);
+      }
+    }
+  }
+
+  sendPing(p) {
+    p.Socket.emit('ping');
+  }
+
+  // handleLogout(u) {
+  //   const index = this._users.indexOf(u)
+  //   this._users.splice(index, 1);
+  // }
+
+  handlePingReply(p) {
+    p.TimeWithoutResponse = 0;
   }
 }
 
