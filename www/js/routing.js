@@ -39,7 +39,9 @@ const updatePage = () => {
     initMulti();
   } else if (pageToDisplay == 'waitinglobby') {
     initWaitingLobby();
+  } else if (pageToDisplay == 'profile') {
+    initProfile();
   }
+  else if (pageToDisplay == 'home')
+    initHome();
 }
-
-updatePage();
