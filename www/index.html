@@ -96,11 +96,11 @@
         </div>
 
         <div class="row">
-          <input id="login_inp_email" type="text" class="validate redUnderline">
+          <input id="login_inp_email" type="text" class="validate redUnderline" value="rem@h.com">
           <label class="active " for="login_inp_email">Email</label>
         </div>
         <div class="row">
-          <input id="login_inp_password" type="password" class="validate">
+          <input id="login_inp_password" type="password" class="validate" value="1234567890">
           <label class="active" for="login_inp_password">Passord</label>
         </div>
         <!-- Add send icon -->
@@ -149,7 +149,7 @@
       <div class="row">
         <div class="col s12 center-align">
           <div class="section">
-            <h5><span class="logo">Hello</span> XXX</h5>
+            <h5><span class="logo">Hello</span> <span class="username">Loading</span></h5>
           </div>
         </div>
         <div class="section">
@@ -161,9 +161,9 @@
             <div class="col s6">
               <p>
                 <span class="logo">Statistics: </span> <br>
-                Ranking: <span class="logo">Silver</span> <br>
-                Wins: <span class="logo">0</span> <br>
-                Losses: <span class="logo">0</span>
+                Ranking: <span class="logo rankingpoints">Silver</span> <br>
+                Wins: <span class="logo wins">0</span> <br>
+                Losses: <span class="logo losses">0</span>
               </p>
             </div>
           </div>
@@ -253,6 +253,7 @@
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
   <script type="text/javascript" src="js/account.js"></script>
+  <script type="text/javascript" src="js/gameComponents/user.js"></script>
   <script type="text/javascript" src="js/gameComponents/figure.js"></script>
   <script type="text/javascript" src="js/gameComponents/ball.js"></script>
   <script type="text/javascript" src="js/gameComponents/rect.js"></script>

@@ -53,6 +53,8 @@ $(document).ready(function () {
   $('.modal').modal();
 
   tryAutoLogin();
+  updatePage();
+
 });
 
 const warn = (title = "", message = "") => {
@@ -61,4 +63,5 @@ const warn = (title = "", message = "") => {
   $('.modal').modal('open');
 }
 
+let user = null;
 const socket = io.connect('http://localhost:3000');
