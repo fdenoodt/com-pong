@@ -1,3 +1,26 @@
+const initHome = () => {
+  const loggedInScreen = document.querySelector('#homeLoggedIn');
+  const loggedOutScreen = document.querySelector('#homeNotLoggedIn');
+  loggedInScreen.style.display = user == null ? 'none' : 'block';
+  loggedOutScreen.style.display = user == null ? 'block' : 'none';
+}
+
+const initProfile = () => {
+  if (user == null) {
+    warn('Warning', 'You need to log before you can see your stats.');
+    goTo('home');
+  }
+  else {
+    document.querySelector('.username').innerHTML = user.Username;
+    document.querySelector('.rankingpoints').innerHTML = user.Rankingpoints;
+    document.querySelector('.wins').innerHTML = user.Wins;
+    document.querySelector('.losses').innerHTML = user.Losses;
+  }
+
+}
+
+
+
 const register = () => {
   const email = document.querySelector('#register_inp_email').value;
   const user = document.querySelector('#register_inp_username').value;
@@ -27,14 +50,6 @@ const handleRegistrationResponse = (response) => {
     goTo('home');
 }
 
-const handleAccountStateChange = (isLoggedIn) => {
-  const loggedInScreen = document.querySelector('#homeLoggedIn');
-  const loggedOutScreen = document.querySelector('#homeNotLoggedIn');
-  loggedInScreen.style.display = isLoggedIn ? 'block' : 'none';
-  loggedOutScreen.style.display = isLoggedIn ? 'none' : 'block';
-}
-
-
 const login = () => {
   const email = document.querySelector('#login_inp_email').value;
   const password = document.querySelector('#login_inp_password').value;
@@ -42,9 +57,12 @@ const login = () => {
 }
 
 const handleLoginResponse = (response) => {
-  const accesstoken = response.userData.stsTokenManager.accessToken;
-  localStorage.setItem('wopToken', response.isSuccessful ? accesstoken : null);
-  warn('Warning', response.isSuccessful ? 'Welcome XXX' : 'Email or password incorrect');
+  warn('Warning', response.message);
+  if (response.isSuccessful) {
+    const inputs = response.userData;
+    user = new User(inputs.email, inputs.username, inputs.wins, inputs.losses, inputs.rankingpoints);
+    goTo('home');
+  }
 }
 
 
@@ -60,6 +78,3 @@ const tryAutoLogin = () => {
 
 socket.on('registrationResponse', handleRegistrationResponse);
 socket.on('loginResponse', handleLoginResponse);
-socket.on('accountStateChange', handleAccountStateChange);
-
-// handleAccountStateChange(false);
