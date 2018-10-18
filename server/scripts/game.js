@@ -1,5 +1,6 @@
 const Canvas = require('./canvas.js');
 const Player = require('./player.js');
+const User = require('./user.js');
 const BallDegrees = require('./ballDegrees.js');
 
 class Game {

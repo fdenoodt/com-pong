@@ -1,4 +1,6 @@
-class Player {
+const User = require('./user.js');
+
+class Player extends User {
   constructor(socket) {
     this._socket = socket;
     this._id = undefined;
@@ -13,7 +15,6 @@ class Player {
   }
 
   static get H() {
-    // return 100;
     return 40;
   }
 

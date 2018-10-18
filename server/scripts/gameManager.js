@@ -1,9 +1,12 @@
 const User = require('./user.js');
+const Game = require('./game.js');
+const Player = require('./player.js');
 
 class GameManager {
   constructor() {
     this._lsGames = [];
-    this._lsSocketsInQueue = [];
+    // this._lsUsersInGame = [];
+    this._lsUsersInQueue = [];
   }
 
   manageGames() {
@@ -21,23 +24,24 @@ class GameManager {
   }
 
   createGame(duo) {
-    lsGames.push(new Game(duo));
+    this._lsGames.push(new Game(duo));
     console.log('creating game');
   }
 
-  addPersonToQueue() {
-    this._lsSocketsInQueue.push(socket);
-    matchSockets();
+  addUserToQueue(user) {
+    console.log('user added to queue');
+    this._lsUsersInQueue.push(user);
+    this.matchUsers();
   }
 
-  matchSockets() {
-    const queueCount = this._lsSocketsInQueue.length;
+  matchUsers() {
+    const queueCount = this._lsUsersInQueue.length;
     if (queueCount > 1) {
       for (let i = queueCount - 1; i > 0; i -= 2) {
-        const duo = [this._lsSocketsInQueue[i], this._lsSocketsInQueue[i - 1]]
-        createGame(duo);
-        this._lsSocketsInQueue.splice(i, 1);
-        this._lsSocketsInQueue.splice(i - 1, 1);
+        const duo = [this._lsUsersInQueue[i], this._lsUsersInQueue[i - 1]]
+        this.createGame(duo);
+        this._lsUsersInQueue.splice(i, 1);
+        this._lsUsersInQueue.splice(i - 1, 1);
       }
     }
   }
