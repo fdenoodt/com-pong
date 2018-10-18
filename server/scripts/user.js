@@ -11,6 +11,8 @@ class User {
     this.Rankingpoints = rankingpoints;
     this.TimeWithoutResponse = 0;
 
+    this.InGameState = null;
+
     this.Socket.on('pingReply', () => {
       this.UserManager.handlePingReply(this);
     });
@@ -51,6 +53,9 @@ class User {
   get Socket() {
     return this._socket;
   }
+  get InGameState() {
+    return this._inGameState;
+  }
 
   set Id(value) {
     this._id = value;
@@ -81,6 +86,9 @@ class User {
   }
   set GameManager(value) {
     this._gameManager = value;
+  }
+  set InGameState(value) {
+    this._inGameState = value;
   }
 
 }

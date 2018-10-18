@@ -4,12 +4,12 @@ const User = require('./user.js');
 const BallDegrees = require('./ballDegrees.js');
 
 class Game {
-  constructor(duoSocket) {
+  constructor(userDuo) {
     this._isOver = false;
     this._lsPlayers = [];
     this._ball = new BallDegrees();
 
-    this.createPlayers(duoSocket);
+    this.createPlayers(userDuo);
     this.givePlayersValues();
     this.sendInitalValues();
     this.setupMessageReplies();
@@ -19,9 +19,9 @@ class Game {
     return this._isOver;
   }
 
-  createPlayers(duoSocket) {
-    for (const person of duoSocket) {
-      const pl = new Player(person);
+  createPlayers(userDuo) {
+    for (const user of userDuo) {
+      const pl = new Player(user);
       this._lsPlayers.push(pl);
       this.sendData(pl, 'foundGame');
     }
