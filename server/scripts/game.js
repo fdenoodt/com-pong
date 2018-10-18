@@ -102,10 +102,6 @@ class Game {
     }
   }
 
-  afkTick() {
-    this.trackConnections();
-  }
-
   boarderCollissionCheck() {
     if (this._ball.Y - this._ball.R <= 0)
       this.gameover('gameover', this._lsPlayers[1], this._lsPlayers[0]);
@@ -180,25 +176,6 @@ class Game {
     this.sendData(winner, reason, 'win');
     this.sendData(loser, reason, 'loss');
     this._isOver = true;
-  }
-
-  trackConnections() {
-    for (const p of this._lsPlayers) {
-      p.TimeWithoutResponse++;
-      p.IsPresent = false;
-      if (p.TimeWithoutResponse >= 4)
-        this.gameover('disonnected', this.getOther(p), p)
-
-      this.sendPing(p);
-    }
-  }
-
-  sendPing(p) {
-    this.sendData(p, 'ping');
-  }
-
-  handlePingReply(p) {
-    p.TimeWithoutResponse = 0;
   }
 }
 
