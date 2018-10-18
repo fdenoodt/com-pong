@@ -104,7 +104,7 @@ class UserManager {
         }
       });
     }
-  }
+  } 
 
   manageUsers() {
     this.trackConnections();

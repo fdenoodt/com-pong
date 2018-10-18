@@ -1,3 +1,6 @@
+const UserGameState = require('./userGameState.js');
+
+
 class User {
   constructor(userManager, gameManager, socket, id, email, username, wins, losses, rankingpoints) {
     this.UserManager = userManager;
@@ -11,18 +14,20 @@ class User {
     this.Rankingpoints = rankingpoints;
     this.TimeWithoutResponse = 0;
 
-    this.InGameState = null;
+    this.UserGameState = null;
 
     this.Socket.on('pingReply', () => {
       this.UserManager.handlePingReply(this);
     });
 
     this.Socket.on('findGame', () => {
-      console.log('looking for a game :)');
-      console.log(this.GameManager.addUserToQueue());
+      this.GameManager.addUserToQueue(this);
     })
   }
 
+  get UserGameState() {
+    return this._userGameState;
+  }
   get UserManager() {
     return this._userManager;
   }
@@ -89,6 +94,9 @@ class User {
   }
   set InGameState(value) {
     this._inGameState = value;
+  }
+  set UserGameState(value) {
+    this._userGameState = value;
   }
 
 }
