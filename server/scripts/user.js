@@ -1,15 +1,32 @@
 class User {
-  constructor(socket, id, email, username, wins, losses, rankingpoints) {
-    this._socket = socket;
-    this._id = id;
-    this._username = username;
-    this._email = email;
-    this._losses = losses;
-    this._wins = wins;
-    this._rankingpoints = rankingpoints;
+  constructor(userManager, gameManager, socket, id, email, username, wins, losses, rankingpoints) {
+    this.UserManager = userManager;
+    this.GameManager = gameManager;
+    this.Socket = socket;
+    this.Id = id;
+    this.Username = username;
+    this.Email = email;
+    this.Losses = losses;
+    this.Wins = wins;
+    this.Rankingpoints = rankingpoints;
     this.TimeWithoutResponse = 0;
+
+    this.Socket.on('pingReply', () => {
+      this.UserManager.handlePingReply(this);
+    });
+
+    this.Socket.on('findGame', () => {
+      console.log('looking for a game :)');
+      console.log(this.GameManager.addUserToQueue());
+    })
   }
 
+  get UserManager() {
+    return this._userManager;
+  }
+  get GameManager() {
+    return this._gameManager;
+  }
   get TimeWithoutResponse() {
     return this._timeWithoutResponse;
   }
@@ -57,7 +74,13 @@ class User {
     this._socket = value;
   }
   set TimeWithoutResponse(value) {
-    this._timeWithoutResponse = value;;
+    this._timeWithoutResponse = value;
+  }
+  set UserManager(value) {
+    this._userManager = value;
+  }
+  set GameManager(value) {
+    this._gameManager = value;
   }
 
 }
