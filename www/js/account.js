@@ -16,7 +16,6 @@ const initProfile = () => {
     document.querySelector('.wins').innerHTML = user.Wins;
     document.querySelector('.losses').innerHTML = user.Losses;
   }
-
 }
 
 
@@ -65,6 +64,16 @@ const handleLoginResponse = (response) => {
   }
 }
 
+const requestLogout = () => {
+  socket.emit('requestLogOut');
+}
+
+const handleLogOut = () => {
+  warn(null, 'Successfully signed out.');
+  user = null;
+  goTo('home');
+}
+
 
 //TODO: THIS MUST BE TESTED FROM CORDOVA APP
 const tryAutoLogin = () => {
@@ -78,3 +87,4 @@ const tryAutoLogin = () => {
 
 socket.on('registrationResponse', handleRegistrationResponse);
 socket.on('loginResponse', handleLoginResponse);
+socket.on('logOutResponse', handleLogOut)

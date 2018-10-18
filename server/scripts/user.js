@@ -23,6 +23,11 @@ class User {
     this.Socket.on('findGame', () => {
       this.GameManager.addUserToQueue(this);
     })
+
+    this.Socket.on('requestLogOut', () => {
+      this.UserManager.handleLogout(this);
+    })
+
   }
 
   get UserGameState() {

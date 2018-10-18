@@ -169,18 +169,11 @@ class Game {
   }
 
   gameover(reason, winner = null, loser = null) {
-    console.log('its gameover');
     this.sendData(winner, reason, 'win');
     this.sendData(loser, reason, 'loss');
     winner.Wins++;
     loser.losses++;
     this._isOver = true;
-
-    //delete existing state from users, as it isn't neede anymore.
-    // for (const user of this._lsPlayers) {
-    //   user.UserGameState = null;
-    // }
-
     //TODO: update user stats in database. (don't have to send to client, cause he already knows)
 
   }

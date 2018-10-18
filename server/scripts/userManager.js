@@ -93,23 +93,27 @@ class UserManager {
 
 
           const res = thehash == thePw;
-          loginResponse = res ? `Welcome ${username}!` : "Incorrect email or password.";
+          if (res) {
+            loginResponse = `Welcome ${username}!`;
+          }
+          else {
+            loginResponse = "Incorrect email or password.";
+          }
           const userData = res ? { email, username, wins, losses, rankingpoints } : null;
           socket.emit('loginResponse', { isSuccessful: res, message: loginResponse, userData });
 
-
+          //TODO: CHECK IF USER ALREADY LOGGED IN AND LOG OUTER PERSON OUT.
           const newUser = new User(that, that._gameManager, socket, id, email, username, wins, losses, rankingpoints);
           that._users.push(newUser);
 
         }
       });
     }
-  } 
+  }
 
   manageUsers() {
     this.trackConnections();
   }
-
 
   trackConnections() {
 
@@ -131,10 +135,11 @@ class UserManager {
     p.Socket.emit('ping');
   }
 
-  // handleLogout(u) {
-  //   const index = this._users.indexOf(u)
-  //   this._users.splice(index, 1);
-  // }
+  handleLogout(u) {
+    u.Socket.emit('logOutResponse');
+    const index = this._users.indexOf(u);
+    this._users.splice(index, 1);
+  }
 
   handlePingReply(p) {
     p.TimeWithoutResponse = 0;
