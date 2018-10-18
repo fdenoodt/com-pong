@@ -16,9 +16,13 @@ const GameManager = require('./scripts/gameManager.js');
 const UserManager = require('./scripts/userManager.js');
 const User = require('./scripts/user.js');
 
-const userManager = new UserManager();
 const gameManager = new GameManager();
+const userManager = new UserManager(gameManager);
 
+
+function getGameManager() {
+  return gameManager;
+}
 
 io.sockets.on('connection', newConnection);
 
@@ -42,7 +46,7 @@ const timerTick = () => {
   ticks++;
   if (ticks % 1000 == 0)
     userManager.manageUsers();
-    gameManager.manageGames();
+  gameManager.manageGames();
 }
 
 let ticks = 0;

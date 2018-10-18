@@ -1,9 +1,13 @@
 const User = require('./user.js');
+const MainSript = require('../server.js');
 const bcrypt = require('bcrypt');
 const con = require('./con.js')
 
+// const gameManager = MainSript.gameManager;
+
 class UserManager {
-  constructor() {
+  constructor(gameManager) {
+    this._gameManager = gameManager;
     this._users = [];
     this._saltRounds = 10;
   }
@@ -93,10 +97,8 @@ class UserManager {
           const userData = res ? { email, username, wins, losses, rankingpoints } : null;
           socket.emit('loginResponse', { isSuccessful: res, message: loginResponse, userData });
 
-          const newUser = new User(socket, id, email, username, wins, losses, rankingpoints);
-          newUser.Socket.on('pingReply', () => {
-            that.handlePingReply(newUser);
-          });
+
+          const newUser = new User(that, that._gameManager, socket, id, email, username, wins, losses, rankingpoints);
           that._users.push(newUser);
 
         }
