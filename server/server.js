@@ -27,10 +27,6 @@ function getGameManager() {
 io.sockets.on('connection', newConnection);
 
 function newConnection(socket) {
-  //TODO: FIND GAME TEMP DISABLED BECAUSE THE LOGIN MUST WORK FIRST
-  // socket.on('findGame', () => {
-  //   gameManager.addPersonToQueue(socke)
-  // });
 
   socket.on('register', (...data) => {
     userManager.register(socket, ...data);
