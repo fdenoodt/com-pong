@@ -15,8 +15,10 @@ const initMulti = () => {
   socket.emit('isReady');
 }
 
-const handleGameOver = () => {
+const handleGameOver = (winOrLoss) => {
+  winOrLoss == "win" ? user.Wins++ : user.Losses++;
   goTo('home');
+
 }
 
 
@@ -202,12 +204,12 @@ socket.on('ping', () => {
 
 socket.on('gameover', (winOrLoss) => {
   warn('Warning', winOrLoss == "win" ? "You win!" : "You lose!");
-  handleGameOver();
+  handleGameOver(winOrLoss);
 })
 
 socket.on('disonnected', (winOrLoss) => {
   warn('Warning', winOrLoss == "win" ? "Enemy gave up.. You won!" : "You lose due to disconnection!");
-  handleGameOver();
+  handleGameOver(winOrLoss);
 })
 
 

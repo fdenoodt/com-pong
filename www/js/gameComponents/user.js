@@ -16,11 +16,23 @@ class User {
   get Losses() {
     return this._losses;
   }
+
   get Rankingpoints() {
     return this._rankingpoints;
   }
   get Email() {
     return this._email;
+  }
+
+  set Wins(value) {
+    this._wins = value;
+  }
+  set Losses(value) {
+    this._losses = value;
+  }
+
+  set Rankingpoints(value) {
+    this._rankingpoints = value;
   }
 
 }

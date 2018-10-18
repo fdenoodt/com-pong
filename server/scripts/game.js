@@ -88,7 +88,8 @@ class Game {
   playTick() {
     for (let i = 0; i < this._ball.JumpsPerMove; i++) {
       this._ball.move();
-      this.boarderCollissionCheck();
+      if (!this.IsOver)
+        this.boarderCollissionCheck();
       for (const pl of this._lsPlayers) {
         this.playerCollissionCheck(pl);
       }
@@ -123,7 +124,6 @@ class Game {
     function isInYRangeOfPlayer() {
       return b.Y + b.R >= p.Y && b.Y - b.R <= p.Y + UserGameState.H ? true : false;
     }
-
     if (Math.floor(b.X + b.R) == p.X && isInYRangeOfPlayer()) //left side bounce
       return true;
     else if (Math.ceil(b.X - b.R) == p.X + UserGameState.W && isInYRangeOfPlayer()) //right side bounce
@@ -169,9 +169,20 @@ class Game {
   }
 
   gameover(reason, winner = null, loser = null) {
+    console.log('its gameover');
     this.sendData(winner, reason, 'win');
     this.sendData(loser, reason, 'loss');
+    winner.Wins++;
+    loser.losses++;
     this._isOver = true;
+
+    //delete existing state from users, as it isn't neede anymore.
+    // for (const user of this._lsPlayers) {
+    //   user.UserGameState = null;
+    // }
+
+    //TODO: update user stats in database. (don't have to send to client, cause he already knows)
+
   }
 }
 
