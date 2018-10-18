@@ -5,17 +5,12 @@ const Player = require('./player.js');
 class GameManager {
   constructor() {
     this._lsGames = [];
-    // this._lsUsersInGame = [];
     this._lsUsersInQueue = [];
   }
 
   manageGames() {
     for (let i = this._lsGames.length - 1; i >= 0; i--) {
       this._lsGames[i].playTick();
-
-      if (ticks % 100 == 0) {
-        this._lsGames[i].afkTick();
-      }
 
       if (this._lsGames[i].IsOver) {
         this._lsGames.splice(i, 1); // Game deleted
@@ -25,11 +20,9 @@ class GameManager {
 
   createGame(duo) {
     this._lsGames.push(new Game(duo));
-    console.log('creating game');
   }
 
   addUserToQueue(user) {
-    console.log('user added to queue');
     this._lsUsersInQueue.push(user);
     this.matchUsers();
   }

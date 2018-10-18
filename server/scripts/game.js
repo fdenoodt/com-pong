@@ -1,6 +1,6 @@
 const Canvas = require('./canvas.js');
-const Player = require('./player.js');
 const User = require('./user.js');
+const UserGameState = require('./userGameState.js');
 const BallDegrees = require('./ballDegrees.js');
 
 class Game {
@@ -21,26 +21,28 @@ class Game {
 
   createPlayers(userDuo) {
     for (const user of userDuo) {
-      const pl = new Player(user);
-      this._lsPlayers.push(pl);
-      this.sendData(pl, 'foundGame');
+      const gameState = new UserGameState();
+      user.UserGameState = gameState;
+      this._lsPlayers.push(user);
+      this.sendData(user, 'foundGame');
     }
   }
 
   givePlayersValues() {
-    this._lsPlayers[0].X = Canvas.W / 2 - Player.W;
-    this._lsPlayers[0].Y = 20;
 
-    this._lsPlayers[1].X = Canvas.W / 2 - Player.W;
-    this._lsPlayers[1].Y = Canvas.H - Player.H - 20;
+    this._lsPlayers[0].UserGameState.X = Canvas.W / 2 - UserGameState.W;
+    this._lsPlayers[0].UserGameState.Y = 20;
+
+    this._lsPlayers[1].UserGameState.X = Canvas.W / 2 - UserGameState.W;
+    this._lsPlayers[1].UserGameState.Y = Canvas.H - UserGameState.H - 20;
   }
 
   sendInitalValues() {
-    for (const p of this._lsPlayers) {
-      this.sendData(p, 'meInit', p.X, p.Y, Player.W, Player.H);
-      this.sendData(p, 'ballInit', this._ball.X, this._ball.Y, this._ball.R);
-      const other = this.getOther(p);
-      this.sendData(p, 'enemyInit', other.X, other.Y, Player.W, Player.H);
+    for (const u of this._lsPlayers) {
+      this.sendData(u, 'meInit', u.UserGameState.X, u.UserGameState.Y, UserGameState.W, UserGameState.H);
+      this.sendData(u, 'ballInit', this._ball.X, this._ball.Y, this._ball.R);
+      const other = this.getOther(u);
+      this.sendData(u, 'enemyInit', other.UserGameState.X, other.UserGameState.Y, UserGameState.W, UserGameState.H);
     }
   }
 
@@ -54,34 +56,26 @@ class Game {
 
   setupMessageReplies() {
     for (const pl of this._lsPlayers) {
-      pl.Socket.on('pingReply', () => {
-        this.handlePingReply(pl);
-      });
-
       pl.Socket.on('move', (isLeft) => {
         this.movePlayer(pl, isLeft);
-        pl.Socket.emit('meX', pl.X);
-        this.getOther(pl).Socket.emit('enemyX', pl.X);
+        pl.Socket.emit('meX', pl.UserGameState.X);
+        this.getOther(pl).Socket.emit('enemyX', pl.UserGameState.X);
       });
 
       pl.Socket.on('preciseMove', (x) => {
         pl.X = x;
         pl.Socket.emit('meX', pl.X);
-        this.getOther(pl).Socket.emit('enemyX', pl.X);
+        this.getOther(pl).Socket.emit('enemyX', pl.UserGameState.X);
       });
-
-      // pl.Socket.on('reset', () => {
-      //   pl.WantsReset = true;
-      //   this.reset();
-      // });
     }
   }
 
   movePlayer(player, isLeft) {
-    let JumpsPerMove = player.JumpsPerMove;
-    for (let i = 0; i < JumpsPerMove; i++) {
+    const jumpsPerMove = UserGameState.JumpsPerMove;
+    const jumpsize = UserGameState.JumpSize;
+    for (let i = 0; i < jumpsPerMove; i++) {
       if (!this.isTouchingBall(player)) {
-        isLeft ? player.X -= player.JumpSize : player.X += player.JumpSize;
+        isLeft ? player.UserGameState.X -= jumpsize : player.UserGameState.X += jumpsize;
 
         for (const pl of this._lsPlayers) {
           this.playerCollissionCheck(pl);
@@ -123,43 +117,45 @@ class Game {
       this._ball.bounceVertically();
   }
 
-  isTouchingSide(p) {
+  isTouchingSide(user) {
     const b = this._ball;
-
+    const p = user.UserGameState;
     function isInYRangeOfPlayer() {
-      return b.Y + b.R >= p.Y && b.Y - b.R <= p.Y + Player.H ? true : false;
+      return b.Y + b.R >= p.Y && b.Y - b.R <= p.Y + UserGameState.H ? true : false;
     }
 
     if (Math.floor(b.X + b.R) == p.X && isInYRangeOfPlayer()) //left side bounce
       return true;
-    else if (Math.ceil(b.X - b.R) == p.X + Player.W && isInYRangeOfPlayer()) //right side bounce
+    else if (Math.ceil(b.X - b.R) == p.X + UserGameState.W && isInYRangeOfPlayer()) //right side bounce
       return true;
     else
       return false;
   }
 
-  isTouchingVertically(p) {
+  isTouchingVertically(user) {
     const b = this._ball;
+    const p = user.UserGameState;
 
     function isInXRangeOfPlayer() {
-      return b.X + b.R >= p.X && b.X - b.R <= p.X + Player.W ? true : false;
+      return b.X + b.R >= p.X && b.X - b.R <= p.X + UserGameState.W ? true : false;
     }
 
-    if (b.Y + b.R >= p.Y && b.Y - b.R <= p.Y + Player.H)
+    if (b.Y + b.R >= p.Y && b.Y - b.R <= p.Y + UserGameState.H)
       if (Math.floor(b.Y + b.R) == p.Y && isInXRangeOfPlayer())
         return true;
-      else if (Math.ceil(b.Y - b.R) == p.Y + Player.H && isInXRangeOfPlayer())
+      else if (Math.ceil(b.Y - b.R) == p.Y + UserGameState.H && isInXRangeOfPlayer())
         return true;
       else return false;
 
   }
 
-  isTouchingBall(player) {
-    if (this._ball.X >= player.X && this._ball.X <= player.X + Player.W
-      && this._ball.Y + this._ball.R >= player.Y && this._ball.Y - this._ball.R <= player.Y + Player.H) {
+  isTouchingBall(user) {
+    const player = user.UserGameState;
+    if (this._ball.X >= player.X && this._ball.X <= player.X + UserGameState.W
+      && this._ball.Y + this._ball.R >= player.Y && this._ball.Y - this._ball.R <= player.Y + UserGameState.H) {
       return true;
-    } else if (this._ball.X + this._ball.R >= player.X - 2 && this._ball.X - this._ball.R <= player.X + Player.W + 2 &&
-      this._ball.Y + this._ball.R > player.Y && this._ball.Y - this._ball.R <= player.Y + Player.H
+    } else if (this._ball.X + this._ball.R >= player.X - 2 && this._ball.X - this._ball.R <= player.X + UserGameState.W + 2 &&
+      this._ball.Y + this._ball.R > player.Y && this._ball.Y - this._ball.R <= player.Y + UserGameState.H
     ) {
       return true;
     }

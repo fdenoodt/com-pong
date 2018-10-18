@@ -9,6 +9,9 @@ let ball;
 let lsBalls = [];
 
 const initMulti = () => {
+  if (user == null) {
+    goTo('home');
+  }
   socket.emit('isReady');
 }
 
@@ -119,7 +122,6 @@ const updateScoreboard = () => {
 
 window.onkeydown = function (e) {
   let key = e.keyCode ? e.keyCode : e.which;
-
   if (key == 39) {
     // me.move(false); //right
     right = true;
@@ -127,11 +129,11 @@ window.onkeydown = function (e) {
     // me.move(true); //left
     left = true;
   }
+
 }
 
 window.onkeyup = function (e) {
   let key = e.keyCode ? e.keyCode : e.which;
-
   if (key == 39) {
     // me.move(false); //right
     right = false;
