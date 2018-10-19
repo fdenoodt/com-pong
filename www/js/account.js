@@ -7,7 +7,7 @@ const initHome = () => {
 
 const initProfile = () => {
   if (user == null) {
-    warn('Warning', 'You need to log before you can see your stats.');
+    warn('Warning', 'You need to log in before you can see your stats.');
     goTo('home');
   }
   else {
