@@ -43,15 +43,14 @@ var app = {
 };
 app.initialize();
 
-
-
-
 //Materializercss: make navbar swipe + datepicker on registration
 $(document).ready(function () {
   $('.sidenav').sidenav();
   $('.datepicker').datepicker();
   $('.modal').modal();
 
+  navigator.vibrate(3000);
+  alert('oi');
   tryAutoLogin();
   updatePage();
 
@@ -65,3 +64,10 @@ const warn = (title = "", message = "") => {
 
 let user = null;
 const socket = io.connect('http://localhost:3000');
+
+const vibrate = () => {
+  navigator.vibrate(1000);
+  setTimeout(() => {
+    navigator.vibrate(0);
+  }, 100);
+}
