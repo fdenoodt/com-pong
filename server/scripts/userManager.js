@@ -104,12 +104,24 @@ class UserManager {
 
           //TODO: CHECK IF USER ALREADY LOGGED IN AND LOG OUTER PERSON OUT.
           const newUser = new User(that, that._gameManager, socket, id, email, username, wins, losses, rankingpoints);
+          const potentiallyAlreadyLoggedInUser = that.searchUserByUserName(newUser.Username);
+          if (potentiallyAlreadyLoggedInUser != undefined) {
+            that.handleLogout(potentiallyAlreadyLoggedInUser);
+          }
           that._users.push(newUser);
-
         }
       });
     }
   }
+
+  searchUserByUserName(username) {
+    for (const u of this._users) {
+      if (u.Username == username) {
+        return u;
+      }
+    }
+  }
+
 
   manageUsers() {
     this.trackConnections();
