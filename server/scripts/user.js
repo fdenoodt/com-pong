@@ -28,6 +28,10 @@ class User {
       this.UserManager.handleLogout(this);
     })
 
+    this.Socket.on('cancelQueue', () => {
+      this.GameManager.removeUserFromQueue(this);
+    })
+
   }
 
   get UserGameState() {

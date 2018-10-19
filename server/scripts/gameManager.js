@@ -27,6 +27,11 @@ class GameManager {
     this.matchUsers();
   }
 
+  removeUserFromQueue(user) {
+    const index = this._lsUsersInQueue.indexOf(user);
+    this._lsUsersInQueue.splice(index, 1);
+  }
+
   matchUsers() {
     const queueCount = this._lsUsersInQueue.length;
     if (queueCount > 1) {
