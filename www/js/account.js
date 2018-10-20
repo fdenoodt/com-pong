@@ -85,6 +85,14 @@ const tryAutoLogin = () => {
 }
 
 
+const handleQuickVibration = () => {
+  navigator.vibrate(1000);
+  setTimeout(() => {
+    navigator.vibrate(0);
+  }, 100);
+}
+
 socket.on('registrationResponse', handleRegistrationResponse);
 socket.on('loginResponse', handleLoginResponse);
 socket.on('logOutResponse', handleLogOut)
+socket.on('quickVibrate', handleQuickVibration)

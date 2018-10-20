@@ -49,8 +49,6 @@ $(document).ready(function () {
   $('.datepicker').datepicker();
   $('.modal').modal();
 
-  navigator.vibrate(3000);
-  alert('oi');
   tryAutoLogin();
   updatePage();
 

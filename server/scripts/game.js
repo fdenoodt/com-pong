@@ -25,6 +25,7 @@ class Game {
       user.UserGameState = gameState;
       this._lsPlayers.push(user);
       this.sendData(user, 'foundGame');
+      this.emitQuickVibrate(user);
     }
   }
 
@@ -111,11 +112,15 @@ class Game {
   }
 
   playerCollissionCheck(player) {
-    if (this.isTouchingSide(player))
+    if (this.isTouchingSide(player)) {
       this._ball.bounceSideways();
+      this.emitQuickVibrate(player)
+    }
 
-    if (this.isTouchingVertically(player))
+    if (this.isTouchingVertically(player)) {
       this._ball.bounceVertically();
+      this.emitQuickVibrate(player)
+    }
   }
 
   isTouchingSide(user) {
@@ -161,6 +166,13 @@ class Game {
     }
     else return false;
   }
+
+
+  emitQuickVibrate(player) {
+    console.log('sending vibration');
+    this.sendData(player, 'quickVibrate')
+  }
+
 
   sendBallLocation() {
     for (const p of this._lsPlayers) {
