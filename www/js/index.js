@@ -62,3 +62,8 @@ const warn = (title = "", message = "") => {
 
 let user = null;
 const socket = io.connect('http://localhost:3000');
+
+
+const doSomething = () => {
+  console.log('test');
+}

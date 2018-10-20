@@ -7,10 +7,12 @@ let me;
 let enemy;
 let ball;
 let lsBalls = [];
+const screenWidth = screen.width;
 
 const initMulti = () => {
   if (user == null) {
     goTo('home');
+    warn('Warning', 'You must be logged in to play a game.');
   }
   socket.emit('isReady');
 }
@@ -157,6 +159,22 @@ const move = () => {
 }
 
 let timer = setInterval(move, 20);
+
+
+// Create touchstart handler.
+//event handler from: 
+//https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
+const multiScr = document.querySelector('.multi');
+multiScr.addEventListener('touchstart', function (ev) {
+  const x = ev.touches[0].clientX;
+  x < screenWidth / 2 ? left = true : right = true;
+}, false);
+
+multiScr.addEventListener('touchend', function (ev) {
+  const x = ev.changedTouches[0].clientX;
+  x < screenWidth / 2 ? left = false : right = false;
+}, false);
+
 
 socket.on('meInit', (x, y, w, h) => {
   initPlayer(me, x, y, h, w);
