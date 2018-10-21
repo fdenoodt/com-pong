@@ -23,8 +23,12 @@ class GameManager {
   }
 
   addUserToQueue(user) {
-    this._lsUsersInQueue.push(user);
-    this.matchUsers();
+    if (!this._lsUsersInQueue.includes(user)) {
+      console.log('adding user');
+      
+      this._lsUsersInQueue.push(user);
+      this.matchUsers();
+    }
   }
 
   removeUserFromQueue(user) {
