@@ -1,62 +1,76 @@
-.logo {
-  font-family: 'Russo One', sans-serif;
-  font-weight: bold;
-}
+ body {
+   /* ervoor zorgen dat ze niets kunnen selecteren, die blauwe kleur is vervelend. */
+   -webkit-touch-callout: none;
+   /* iOS Safari */
+   -webkit-user-select: none;
+   /* Safari */
+   -khtml-user-select: none;
+   /* Konqueror HTML */
+   -moz-user-select: none;
+   /* Firefox */
+   -ms-user-select: none;
+   /* Internet Explorer/Edge */
+   user-select: none;
+ }
 
-.profile, .login, .register, .home, .solo, .multi, .scoreboard, .waitinglobby {
-  display: none;
-}
+ .logo {
+   font-family: 'Russo One', sans-serif;
+   font-weight: bold;
+ }
 
-#warning {
-  color: tomato;
-}
+ .profile, .login, .register, .home, .solo, .multi, .scoreboard, .waitinglobby {
+   display: none;
+ }
 
-#btnReset {
-  display: none;
-}
+ #warning {
+   color: tomato;
+ }
 
-body {
-  margin: 0;
-  padding: 0;
-}
+ #btnReset {
+   display: none;
+ }
 
-.multi {
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
+ body {
+   margin: 0;
+   padding: 0;
+ }
 
-}
+ .multi {
+   height: 100vh;
+   overflow: hidden;
+   position: relative;
+ }
 
-.myCanvas {
-  max-width: 100%;
-  /* 4px: 2 white lines on canvas, 2px each */
-  max-height: calc(100vh - 4px);
-  /* code for vertically center from stackoverflow
+ .myCanvas {
+   max-width: 100%;
+   /* 4px: 2 white lines on canvas, 2px each */
+   max-height: calc(100vh - 4px);
+   /* code for vertically center from stackoverflow
   but lost url. */
-  /* border-top: solid 2px white; */
-  /* border-bottom: solid 2px white; */
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-}
+   /* border-top: solid 2px white; */
+   /* border-bottom: solid 2px white; */
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   margin: auto;
+ }
 
-nav {
-  height: 4em;
-}
+ nav {
+   height: 4em;
+ }
 
-.gameNav {
-  position: relative;
-  top: 2.5vw;
-  left: 2.5vw;
-}
+ .gameNav {
+   position: relative;
+   top: 2.5vw;
+   left: 2.5vw;
+ }
 
-#homeNotLoggedIn {
-  display: block;
-}
+ #homeNotLoggedIn {
+   display: block;
+ }
 
-#homeLoggedIn {
-  display: none;
-}
+ #homeLoggedIn {
+   display: none;
+ }

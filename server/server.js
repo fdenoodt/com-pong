@@ -19,11 +19,6 @@ const User = require('./scripts/user.js');
 const gameManager = new GameManager();
 const userManager = new UserManager(gameManager);
 
-
-function getGameManager() {
-  return gameManager;
-}
-
 io.sockets.on('connection', newConnection);
 
 function newConnection(socket) {

@@ -61,11 +61,10 @@ const warn = (title = "", message = "") => {
 }
 
 let user = null;
-const socket = io.connect('http://localhost:3000');
+const socket = io.connect('http://192.168.0.148:3000/');
+// const socket = io.connect('http://localhost:3000');
 
-const vibrate = () => {
-  navigator.vibrate(1000);
-  setTimeout(() => {
-    navigator.vibrate(0);
-  }, 100);
+
+const doSomething = () => {
+  console.log('test');
 }
