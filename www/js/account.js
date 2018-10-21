@@ -71,7 +71,11 @@ const requestLogout = () => {
 const handleLogOut = () => {
   warn(null, 'Successfully signed out.');
   user = null;
-  goTo('home');
+  location.reload();
+  // goTo('home');
+  // location.href = '/home'
+  // location.href = '/#page=' + 'home'
+
 }
 
 
