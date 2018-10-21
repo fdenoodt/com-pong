@@ -169,7 +169,6 @@ class Game {
 
 
   emitQuickVibrate(player) {
-    console.log('sending vibration');
     this.sendData(player, 'quickVibrate')
   }
 

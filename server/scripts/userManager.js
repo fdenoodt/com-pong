@@ -148,6 +148,7 @@ class UserManager {
   }
 
   handleLogout(u) {
+    this._gameManager.removeUserFromQueue(u);
     u.Socket.emit('logOutResponse');
     const index = this._users.indexOf(u);
     this._users.splice(index, 1);
