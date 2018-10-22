@@ -11,20 +11,13 @@ class Rect extends Figure {
     this.id = value;
   }
 
-  static set H(value) {
-    this.h = value;
-  }
-
   static get H() {
-    return this.h;
+    return 30;
   }
 
-  static set W(value) {
-    this.w = value;
-  }
 
   static get W() {
-    return this.w;
+    return 300;
   }
 
   preciseMove(x) {
