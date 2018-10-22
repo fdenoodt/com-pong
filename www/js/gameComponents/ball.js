@@ -3,12 +3,8 @@ class Ball extends Figure {
     super(x, y);
   }
 
-  static set R(value) {
-    this.r = value;
-  }
-
   static get R() {
-    return this.r;
+    return 30;
   }
 
   static get RColor() { return 255 /*230*/ }
