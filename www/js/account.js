@@ -1,3 +1,5 @@
+const screenWidth = screen.width;
+
 const initHome = () => {
   const loggedInScreen = document.querySelector('#homeLoggedIn');
   const loggedOutScreen = document.querySelector('#homeNotLoggedIn');
@@ -73,9 +75,6 @@ const handleLogOut = () => {
   user = null;
   location.reload();
   // goTo('home');
-  // location.href = '/home'
-  // location.href = '/#page=' + 'home'
-
 }
 
 

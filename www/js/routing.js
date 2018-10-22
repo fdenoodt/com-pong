@@ -44,4 +44,6 @@ const updatePage = () => {
   }
   else if (pageToDisplay == 'home')
     initHome();
+  else if (pageToDisplay == 'solo')
+    initSolo();
 }

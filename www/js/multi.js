@@ -7,7 +7,6 @@ let me;
 let enemy;
 let ball;
 let lsBalls = [];
-const screenWidth = screen.width;
 
 const initMulti = () => {
   if (user == null) {
