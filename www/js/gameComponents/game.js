@@ -1,9 +1,8 @@
 class Game {
   constructor() {
     this._ball = new MovingBall(1000, 500, 60);
-    this._player = new Rect(40, 20);
+    this._player = new SmartRect(40, 20, this._ball);
     this._canvas = new Canvas(this._player);
-
   }
 
   playTick() {

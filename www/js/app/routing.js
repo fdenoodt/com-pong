@@ -3,7 +3,6 @@ const goTo = (page) => {
   location.href = '#page=' + page
   updatePage();
   $('.sidenav').sidenav();
-
 }
 
 //Method copied from online and changed "? into #"
