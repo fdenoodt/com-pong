@@ -16,19 +16,30 @@ class SmartRect extends Rect {
 
     const w = Canvas.W;
     const h = Canvas.H;
-
     const rad = this.degToRad(direction);
+
+
+
     //Formula:
     //https://www.google.be/search?q=sinus+formule&tbm=isch&source=iu&ictx=1&fir=PMWFjKKR2PjCIM%253A%252CSPS6U1f2fHzYLM%252C_&usg=AI4_-kQEuwYiDtODyuGNHz_fQLaV2lrHpQ&sa=X&ved=2ahUKEwjCp4zkxJreAhVQC-wKHeLuCoIQ9QEwBnoECAUQDA#imgrc=I1JuEGwr4_TDnM:
-    const sinB = Math.sin(rad);
+    // const sinB = Math.sin(rad);
     const tanB = Math.tan(rad);
     const opposite = Math.abs(w - x);
-    const adj = opposite / tanB;
-    const nextY = y - adj;
-    const nextX = w;
+    let adj = opposite / tanB;
+    let nextY = y - adj;
+    let nextX = w;
+
+    if (nextY < 30) {
+      // const next;
+      adj = y;
+      let opposite = tanB * adj;
+      nextX = x + opposite;
+      nextY = 30;
+    }
+
 
     //temporary set player there
-    console.log(nextY, nextX);
+    console.log(Math.floor(nextY), Math.floor(nextX));
     this.Y = nextY;
     this.X = nextX - 100;
 
