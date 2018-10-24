@@ -16,21 +16,31 @@ class SmartRect extends Rect {
 
     const w = Canvas.W;
     const h = Canvas.H;
-    const rad = this.degToRad(direction);
+    const simplifiedDirection = this.simplifyDegrees(direction);
+    const rad = this.degToRad(simplifiedDirection);
 
-
+    let nextX;
+    let nextY;
+    let adj;
 
     //Formula:
     //https://www.google.be/search?q=sinus+formule&tbm=isch&source=iu&ictx=1&fir=PMWFjKKR2PjCIM%253A%252CSPS6U1f2fHzYLM%252C_&usg=AI4_-kQEuwYiDtODyuGNHz_fQLaV2lrHpQ&sa=X&ved=2ahUKEwjCp4zkxJreAhVQC-wKHeLuCoIQ9QEwBnoECAUQDA#imgrc=I1JuEGwr4_TDnM:
-    // const sinB = Math.sin(rad);
     const tanB = Math.tan(rad);
-    const opposite = Math.abs(w - x);
-    let adj = opposite / tanB;
-    let nextY = y - adj;
-    let nextX = w;
-
+    if (simplifiedDirection > 180) {
+      const opposite = x;
+      adj = opposite / tanB;
+      nextY = y + adj;
+      nextX = 0;
+    }
+    else {
+      const opposite = w - x;
+      adj = opposite / tanB;
+      nextY = y - adj;
+      nextX = w;
+    }
+    
+    //if ball will not bounce on wall, but on player 
     if (nextY < 30) {
-      // const next;
       adj = y;
       let opposite = tanB * adj;
       nextX = x + opposite;
@@ -39,10 +49,18 @@ class SmartRect extends Rect {
 
 
     //temporary set player there
-    console.log(Math.floor(nextY), Math.floor(nextX));
     this.Y = nextY;
     this.X = nextX - 100;
 
+  }
+
+  simplifyDegrees(degrees) {
+    if (degrees > 360)
+      return this.simplifyDegrees(degrees - 360)
+    else if (degrees < 0)
+      return this.simplifyDegrees(degrees + 360)
+    else
+      return degrees;
   }
 
   move() {
