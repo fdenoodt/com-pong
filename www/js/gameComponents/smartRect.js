@@ -6,18 +6,24 @@ class SmartRect extends Rect {
   }
 
   think() {
-    this.calculateWhereBallWillArrive()
-  }
-
-  calculateWhereBallWillArrive() {
     const direction = this._ball.Degrees;
     const x = this._ball.X;
     const y = this._ball.Y;
+    const nextX = this.calculateWhereBallWillArrive(direction, x, y);
+    //temporary set player there
+    this.Y = 30 - Rect.H;
+    this.X = nextX - Rect.W;
+
+  }
+
+  calculateWhereBallWillArrive(direction, x, y) {
+    console.log(direction, x, y);
 
     const w = Canvas.W;
     const h = Canvas.H;
     const simplifiedDirection = this.simplifyDegrees(direction);
     const rad = this.degToRad(simplifiedDirection);
+    const tanB = Math.tan(rad);
 
     let nextX;
     let nextY;
@@ -25,33 +31,31 @@ class SmartRect extends Rect {
 
     //Formula:
     //https://www.google.be/search?q=sinus+formule&tbm=isch&source=iu&ictx=1&fir=PMWFjKKR2PjCIM%253A%252CSPS6U1f2fHzYLM%252C_&usg=AI4_-kQEuwYiDtODyuGNHz_fQLaV2lrHpQ&sa=X&ved=2ahUKEwjCp4zkxJreAhVQC-wKHeLuCoIQ9QEwBnoECAUQDA#imgrc=I1JuEGwr4_TDnM:
-    const tanB = Math.tan(rad);
-    if (simplifiedDirection > 180) {
+    if (simplifiedDirection > 180) { //left bounce
       const opposite = x;
       adj = opposite / tanB;
       nextY = y + adj;
       nextX = 0;
     }
-    else {
+    else { //right bounce
       const opposite = w - x;
       adj = opposite / tanB;
       nextY = y - adj;
       nextX = w;
     }
-    
+
     //if ball will not bounce on wall, but on player 
     if (nextY < 30) {
       adj = y;
       let opposite = tanB * adj;
       nextX = x + opposite;
       nextY = 30;
+      return nextX;
     }
-
-
-    //temporary set player there
-    this.Y = nextY;
-    this.X = nextX - 100;
-
+    else {
+      const newDirection = 180 + (180 - simplifiedDirection);
+      return this.calculateWhereBallWillArrive(newDirection, nextX, nextY);
+    }
   }
 
   simplifyDegrees(degrees) {

@@ -1,6 +1,6 @@
 class Game {
   constructor() {
-    this._ball = new MovingBall(1000, 500, -150);
+    this._ball = new MovingBall(1000, 500, 85);
     this._player = new SmartRect(40, 20, this._ball);
     this._canvas = new Canvas(this._player);
   }
