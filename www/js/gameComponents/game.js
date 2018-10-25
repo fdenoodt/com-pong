@@ -8,6 +8,7 @@ class Game {
   playTick() {
     for (let i = 0; i < this._ball.JumpsPerMove; i++) {
       this._ball.move();
+      this._player.think();
       this.boarderCollissionCheck();
       this.playerCollissionCheck();
     }

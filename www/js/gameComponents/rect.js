@@ -11,6 +11,9 @@ class Rect extends Figure {
     this.id = value;
   }
 
+  static get JumpsPerMove() { return 5; }
+  static get JumpSize() { return 0.5 }
+
   static get H() {
     return 30;
   }
@@ -20,11 +23,10 @@ class Rect extends Figure {
     return 300;
   }
 
-  preciseMove(x) {
-    socket.emit('preciseMove', x);
-  }
-
   move(isLeft) {
-    socket.emit('move', isLeft);
+        for (let i = 0; i < Rect.JumpsPerMove; i++) {
+      isLeft ? this.X -= Rect.JumpSize : this.X += Rect.JumpSize;
+
+    }
   }
 }
