@@ -12,7 +12,7 @@ class SmartRect extends Rect {
     const nextX = this.calculateWhereBallWillArrive(direction, x, y);
     //temporary set player there
     this.Y = 30 - Rect.H;
-    this.X = nextX - Rect.W;
+    this.X = nextX - (Rect.W / 2);
 
   }
 
@@ -22,6 +22,11 @@ class SmartRect extends Rect {
     const w = Canvas.W;
     const h = Canvas.H;
     const simplifiedDirection = this.simplifyDegrees(direction);
+    if (simplifiedDirection >= 89 && simplifiedDirection <= 271) {
+      simplifiedDirection;      
+      return 600;
+
+    }
     const rad = this.degToRad(simplifiedDirection);
     const tanB = Math.tan(rad);
 
