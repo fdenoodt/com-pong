@@ -28,8 +28,8 @@ context = canvas.getContext('2d');
 cw = canvas.width;
 ch = canvas.height;
 
-me = new Rect();
-enemy = new Rect();
+me = new MultiRect();
+enemy = new MultiRect();
 ball = new Ball();
 
 const updateCanvas = () => {
