@@ -2,18 +2,24 @@ class SmartRect extends Rect {
   constructor(x, y, ball) {
     super(x, y);
     this._ball = ball;
-    this.think()
+    this._xOBjective = null;
   }
 
   think() {
-    const direction = this._ball.Degrees;
-    const x = this._ball.X;
-    const y = this._ball.Y;
-    const nextX = this.calculateWhereBallWillArrive(direction, x, y);
-    //temporary set player there
-    this.Y = 30 - Rect.H;
-    this.X = nextX - (Rect.W / 2);
 
+    if (this._xOBjective == null) {
+      const direction = this._ball.Degrees;
+      const x = this._ball.X;
+      const y = this._ball.Y;
+      this._xOBjective = (this.calculateWhereBallWillArrive(direction, x, y)) - (Rect.W / 2);
+    }
+
+    if (this.X  < this._xOBjective) {
+      this.move(false)
+    }
+    else if (this.X > this._xOBjective) {
+      this.move(true)
+    }
   }
 
   calculateWhereBallWillArrive(direction, x, y) {
@@ -23,7 +29,7 @@ class SmartRect extends Rect {
     const h = Canvas.H;
     const simplifiedDirection = this.simplifyDegrees(direction);
     if (simplifiedDirection >= 89 && simplifiedDirection <= 271) {
-      simplifiedDirection;      
+      simplifiedDirection;
       return 600;
 
     }
@@ -70,20 +76,6 @@ class SmartRect extends Rect {
       return this.simplifyDegrees(degrees + 360)
     else
       return degrees;
-  }
-
-  move() {
-    let rad = this.degToRad(this.Degrees);
-    let hypotenuse = this.JumpSize;
-
-    //Sin(20 Deg) = x/0.7
-    let opposite = Math.sin(rad) * hypotenuse;
-
-    //Cos(20 deg) = adjacent / hypotenuse
-    let adjacent = Math.cos(rad) * hypotenuse;
-
-    this.Y -= adjacent;
-    this.X += opposite;
   }
 
   degToRad(degrees) {
