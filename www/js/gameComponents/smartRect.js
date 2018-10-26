@@ -6,12 +6,11 @@ class SmartRect extends Rect {
   }
 
   think() {
-
     if (this._xOBjective == null) {
       const direction = this._ball.Degrees;
       const x = this._ball.X;
       const y = this._ball.Y;
-      this._xOBjective = (this.calculateWhereBallWillArrive(direction, x, y)) - (Rect.W / 2);
+      this._xOBjective = Math.round((this.calculateWhereBallWillArrive(direction, x, y)) - (Rect.W / 2));
     }
 
     if (this.X  < this._xOBjective) {

@@ -1,14 +1,19 @@
 class Game {
   constructor() {
     this._ball = new MovingBall(1000, 500, 30);
-    this._player = new SmartRect(40, 20, this._ball);
-    this._canvas = new Canvas(this._player);
+    this._bot = new SmartRect(Canvas.W / 2 - Rect.W / 2, 20, this._ball);
+    this._player = new Rect(Canvas.W / 2 - Rect.W / 2, Canvas.H - Rect.H - 20)
+    this._canvas = new Canvas();
   }
 
   playTick() {
-    for (let i = 0; i < this._ball.JumpsPerMove; i++) {
+    //  console.log(MovingBall.JumpsPerMove);
+    for (let i = 0; i < MovingBall.JumpsPerMove; i++) {
       this._ball.move();
-      this._player.think();
+
+      for (let i = 0; i < Rect.JumpsPerMove; i++)
+        this._bot.think();
+
       this.boarderCollissionCheck();
       this.playerCollissionCheck();
     }
@@ -35,7 +40,7 @@ class Game {
   }
 
   displayState() {
-    this._canvas.updateScreen(this._player, this._ball);
+    this._canvas.updateScreen(this._bot, this._player, this._ball);
   }
 
 
