@@ -24,9 +24,7 @@ class Rect extends Figure {
   }
 
   move(isLeft) {
-        for (let i = 0; i < Rect.JumpsPerMove; i++) {
-      isLeft ? this.X -= Rect.JumpSize : this.X += Rect.JumpSize;
-
-    }
+    isLeft ? this.X -= Rect.JumpSize : this.X += Rect.JumpSize;
   }
+
 }

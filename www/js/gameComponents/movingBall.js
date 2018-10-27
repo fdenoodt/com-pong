@@ -1,23 +1,17 @@
 class MovingBall extends Ball {
   constructor(x, y, degrees) {
     super(x, y);
-    this.JumpSize = 1;
     this.Degrees = degrees;
-    this.JumpsPerMove = 3;
   }
 
-  get JumpSize() { return this._jumpSize };
-  get JumpsPerMove() { return this._jumpsPerMove };
+  static get JumpSize() { return 1 };
+  static get JumpsPerMove() { return 3 }
   get Degrees() { return this._degrees; }
-
-
-  set JumpSize(value) { this._jumpSize = value }
-  set JumpsPerMove(value) {this._jumpsPerMove = value}
   set Degrees(value) { this._degrees = value }
 
   move() {
     let rad = this.degToRad(this.Degrees);
-    let hypotenuse = this.JumpSize;
+    let hypotenuse = MovingBall.JumpSize;
 
     //Sin(20 Deg) = x/0.7
     let opposite = Math.sin(rad) * hypotenuse;

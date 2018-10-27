@@ -2,13 +2,13 @@ class Canvas {
   constructor(pl) {
     this._canvas = document.querySelector('#soloCanvas');
     this._context = this._canvas.getContext('2d');
-    this.player = pl;
   }
 
 
-  updateScreen(player, ball) {
+  updateScreen(player1, player2, ball) {
     this._context.clearRect(0, 0, Canvas.W, Canvas.H);
-    this.updatePlayer(player);
+    this.updatePlayer(player1);
+    this.updatePlayer(player2);
     this.updateBall(ball);
   }
 
