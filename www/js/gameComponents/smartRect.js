@@ -5,6 +5,14 @@ class SmartRect extends Rect {
     this._xOBjective = null;
   }
 
+  get XObjective() {
+    return this._xOBjective;
+  }
+
+  set XObjective(value) {
+    this._xOBjective = value;
+  }
+
   think() {
     if (this._xOBjective == null) {
       const direction = this._ball.Degrees;
@@ -13,14 +21,14 @@ class SmartRect extends Rect {
       this._xOBjective = Math.round((this.calculateWhereBallWillArrive(direction, x, y)) - (Rect.W / 2));
     }
 
-    if (this.X  < this._xOBjective) {
+    if (this.X < this._xOBjective) {
       this.move(false)
     }
     else if (this.X > this._xOBjective) {
       this.move(true)
     }
   }
-
+  
   calculateWhereBallWillArrive(direction, x, y) {
     console.log(direction, x, y);
 

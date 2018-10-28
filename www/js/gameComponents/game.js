@@ -8,14 +8,13 @@ class Game {
   }
 
   playTick() {
-    //  console.log(MovingBall.JumpsPerMove);
     for (let i = 0; i < MovingBall.JumpsPerMove; i++) {
       this._ball.move();
       this.boarderCollissionCheck();
       this.playerCollissionCheck(this._bot);
       this.playerCollissionCheck(this._player);
     }
-    
+
     for (let i = 0; i < Rect.JumpsPerMove; i++)
       this._bot.think();
 
@@ -42,12 +41,14 @@ class Game {
   playerCollissionCheck(player) {
     if (this.isTouchingSide(player)) {
       this._ball.bounceSideways();
+      this._bot.XObjective = null;
       handleQuickVibration();
     }
 
 
     if (this.isTouchingVertically(player)) {
       this._ball.bounceVertically();
+      this._bot.XObjective = null;
       handleQuickVibration();
     }
   }

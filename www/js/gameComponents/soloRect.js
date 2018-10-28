@@ -12,8 +12,6 @@ class SoloRect extends Rect {
     soloScr.addEventListener('touchstart', function (ev) {
       const x = ev.touches[0].clientX;
       x < screenWidth / 2 ? that._left = true : that._right = true;
-      console.log(that._right, that._left);
-
     }, false);
 
     soloScr.addEventListener('touchend', function (ev) {
