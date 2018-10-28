@@ -21,23 +21,32 @@ class UserManager {
 
     let registerResponse = "Something went wrong.";
     if (validateInputs()) {
-      console.log(thePw + ' testing purpose of getting pw');
-      // bcrypt.hash(thePw, saltRounds, function (err, theHash) {
-      const wins = 0;
-      const losses = 0;
-      const rankingpoints = 0;
-      const sql = `insert into users values(null, '${thePw}', '${username}', ${wins}, ${losses}, ${rankingpoints})`;
-      con.query(sql, function (err, result) {
-        let registerRes = { isSuccessful: true, message: 'Registration successful' };
-        if (err)
-          registerRes = { isSuccessful: false, message: err.message }
+      bcrypt.hash(thePw, saltRounds, function (err, theHash) {
+        if (err) {
+          socket.emit('registrationResponse', { isSuccessful: false, message: registerResponse });
+        }
+        else {
+          const wins = 0;
+          const losses = 0;
+          const rankingpoints = 0;
+          const sql = `insert into users values(null, '${theHash}', '${username}', ${wins}, ${losses}, ${rankingpoints})`;
+          con.query(sql, function (err, result) {
+            if (err) {
+              socket.emit('registrationResponse', { isSuccessful: false, message: registerResponse });
+            }
+            else {
+              let registerRes = { isSuccessful: true, message: 'Registration successful' };
+              if (err)
+                registerRes = { isSuccessful: false, message: err.message }
 
-        if (result == undefined)
-          registerRes = { isSuccessful: false, message: 'Username already in use' }
+              if (result == undefined)
+                registerRes = { isSuccessful: false, message: 'Username already in use' }
 
-        socket.emit('registrationResponse', registerRes);
-      })
-      // });
+              socket.emit('registrationResponse', registerRes);
+            }
+          })
+        }
+      });
     }
     else {
       registerResponse = "Incorrect username or password.";
@@ -70,33 +79,29 @@ class UserManager {
         const wins = row.wins;
         const losses = row.losses;
         const rankingpoints = row.ranking_points; //TODO: FIX RANKING POINTS IN DB
-        const thehash = row.password;
+        const theHash = row.password;
 
-        // setTimeout(() => {
-        //   bcrypt.compare(thePw, thehash, function (err, res) {
-        //     // res == true
-        //     console.log(res, ' fhcjk;ldas');
-        //   });
-        // }, 5000)
-
-
-        const res = thehash == thePw;
-        if (res) {
-          loginResponse = `Welcome ${username}!`;
-        }
-        else {
-          loginResponse = "Incorrect username or password.";
-        }
-        const userData = res ? { username, wins, losses, rankingpoints } : null;
-        socket.emit('loginResponse', { isSuccessful: res, message: loginResponse, userData });
-
-        //TODO: CHECK IF USER ALREADY LOGGED IN AND LOG OUTER PERSON OUT.
-        const newUser = new User(that, that._gameManager, socket, id, username, wins, losses, rankingpoints);
-        const potentiallyAlreadyLoggedInUser = that.searchUserByUserName(newUser.Username);
-        if (potentiallyAlreadyLoggedInUser != undefined) {
-          that.handleLogout(potentiallyAlreadyLoggedInUser);
-        }
-        that._users.push(newUser);
+        bcrypt.compare(thePw, theHash, function (err, res) {
+          if (err) {
+            loginResponse = "Something went wrong, try again.";
+          }
+          else {
+            if (res) {
+              loginResponse = `Welcome ${username}!`;
+              const newUser = new User(that, that._gameManager, socket, id, username, wins, losses, rankingpoints);
+              const potentiallyAlreadyLoggedInUser = that.searchUserByUserName(newUser.Username);
+              if (potentiallyAlreadyLoggedInUser != undefined) {
+                that.handleLogout(potentiallyAlreadyLoggedInUser);
+              }
+              that._users.push(newUser);
+            }
+            else {
+              loginResponse = "Incorrect username or password.";
+            }
+            const userData = res ? { username, wins, losses, rankingpoints } : null;
+            socket.emit('loginResponse', { isSuccessful: res, message: loginResponse, userData });
+          }
+        });
       }
     });
   }
