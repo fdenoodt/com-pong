@@ -35,26 +35,29 @@
    padding: 0;
  }
 
- .multi {
+ .multi, .solo {
    height: 100vh;
    overflow: hidden;
    position: relative;
  }
 
- .myCanvas {
-   max-width: 100%;
+ .myCanvas, .soloCanavs {
+   max-width: calc(100% + 2px);
    /* 4px: 2 white lines on canvas, 2px each */
    max-height: calc(100vh - 4px);
    /* code for vertically center from stackoverflow
   but lost url. */
    /* border-top: solid 2px white; */
    /* border-bottom: solid 2px white; */
+   border-left: solid 1px white;
+   border-right: solid 1px white;
    position: absolute;
    top: 0;
    bottom: 0;
-   left: 0;
-   right: 0;
+   left: -1px;
+   right: 1px;
    margin: auto;
+
  }
 
  nav {
