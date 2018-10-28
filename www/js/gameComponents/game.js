@@ -5,10 +5,14 @@ class Game {
     this._player = new SoloRect(Canvas.W / 2 - Rect.W / 2, Canvas.H - Rect.H - 20)
     this._canvas = new Canvas();
     this._score = 0;
+    this.LastUpdate = new Date().getTime();
   }
 
   playTick() {
-    for (let i = 0; i < MovingBall.JumpsPerMove; i++) {
+    const newUpdate = new Date().getTime();
+    const diff = newUpdate - this.LastUpdate;
+
+    for (let i = 0; i < (MovingBall.JumpsPerMove * diff) / 5; i++) {
       this._ball.move();
       this.boarderCollissionCheck();
       this.playerCollissionCheck(this._bot);
@@ -24,6 +28,8 @@ class Game {
 
     this.displayState();
     this._score++;
+    this.LastUpdate = newUpdate;
+
   }
 
   boarderCollissionCheck() {

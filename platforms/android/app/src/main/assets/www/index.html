@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+<!-- testing if changes go through -->
 <head>
   <!--
         Customize this policy to fit your own app's needs. For more guidance, see:
@@ -55,7 +55,6 @@
   </ul>
 
   <div class="container">
-
     <div class="home">
       <div class="row">
         <div class="col s12 center-align">
@@ -221,7 +220,15 @@
     </div>
   </div>
 
-  <div class="solo">
+  <div class="solo red lighten-2">
+    <canvas id="soloCanvas" class="myCanvas red lighten-2" width="1500" height="2500">
+    </canvas>
+    <div class="gameNav">
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger gameNav"><i class="material-icons   white-text">menu</i></a>
+    </div>
+  </div>
+
+  <!-- <div class="solo">
     <div class="row">
       <div class="col s12 center-align">
         <div class="section">
@@ -229,7 +236,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div id="modal" class="modal center-align">
     <div class="modal-content">
@@ -247,22 +254,27 @@
 
 
   <!-- <script type="text/javascript" src="cordova.js"></script> -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/materialize/materialize.min.js"></script>
 
   <!-- Web socket -->
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
-  <script type="text/javascript" src="js/account.js"></script>
+  <script type="text/javascript" src="js/app/account.js"></script>
   <script type="text/javascript" src="js/gameComponents/user.js"></script>
   <script type="text/javascript" src="js/gameComponents/figure.js"></script>
   <script type="text/javascript" src="js/gameComponents/ball.js"></script>
+  <script type="text/javascript" src="js/gameComponents/movingBall.js"></script>
   <script type="text/javascript" src="js/gameComponents/rect.js"></script>
-  <script type="text/javascript" src="js/multi.js"></script>
+  <script type="text/javascript" src="js/gameComponents/smartRect.js"></script>
+  <script type="text/javascript" src="js/gameComponents/multiRect.js"></script>
+  <script type="text/javascript" src="js/gameComponents/soloRect.js"></script>
+  <script type="text/javascript" src="js/gameComponents/canvas.js"></script>
+  <script type="text/javascript" src="js/app/multi.js"></script>
+  <script type="text/javascript" src="js/app/solo.js"></script>
+  <script type="text/javascript" src="js/gameComponents/game.js"></script>
 
-
-  <script src="js/waitinglobby.js"></script>
-  <script type="text/javascript" src="js/routing.js"></script>
+  <script src="js/app/waitinglobby.js"></script>
+  <script type="text/javascript" src="js/app/routing.js"></script>
 
 </body>
 
