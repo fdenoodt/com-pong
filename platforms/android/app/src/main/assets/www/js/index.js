@@ -61,10 +61,8 @@ const warn = (title = "", message = "") => {
 }
 
 let user = null;
-const socket = io.connect('http://192.168.0.148:3000/');
-// const socket = io.connect('http://localhost:3000');
+// const ipDest = 'http://192.168.0.148:3000/';
+const ipDest = 'http://localhost:3000/';
+let socket = io.connect(ipDest);
 
 
-const doSomething = () => {
-  console.log('test');
-}

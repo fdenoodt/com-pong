@@ -2,7 +2,7 @@ class Game {
   constructor() {
     this._ball = new MovingBall(1000, 500, 30);
     this._bot = new SmartRect(Canvas.W / 2 - Rect.W / 2, 20, this._ball);
-    this._player = new Rect(Canvas.W / 2 - Rect.W / 2, Canvas.H - Rect.H - 20)
+    this._player = new SoloRect(Canvas.W / 2 - Rect.W / 2, Canvas.H - Rect.H - 20)
     this._canvas = new Canvas();
     this._score = 0;
   }
@@ -11,14 +11,18 @@ class Game {
     //  console.log(MovingBall.JumpsPerMove);
     for (let i = 0; i < MovingBall.JumpsPerMove; i++) {
       this._ball.move();
-
-      for (let i = 0; i < Rect.JumpsPerMove; i++)
-        this._bot.think();
-
       this.boarderCollissionCheck();
       this.playerCollissionCheck(this._bot);
       this.playerCollissionCheck(this._player);
     }
+    
+    for (let i = 0; i < Rect.JumpsPerMove; i++)
+      this._bot.think();
+
+    for (let i = 0; i < Rect.JumpsPerMove; i++)
+      this._player.move();
+
+
     this.displayState();
     this._score++;
   }
@@ -104,7 +108,7 @@ class Game {
     clearInterval(soloTimer);
     warn("Game Over", `You achieved a score of: ${Math.round(this._score / 100)}`);
     // goTo("home");
-
+    soloGame = null;
   }
 }
 
