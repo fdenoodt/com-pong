@@ -14,7 +14,7 @@ const getUrlVars = () => {
   return vars;
 }
 
-const lsPages = ['home', 'login', 'register', 'profile', 'scoreboard', 'solo', 'multi', 'waitinglobby'];
+const lsPages = ['home', 'login', 'register', 'profile', 'scoreboard', 'solo', 'multi', 'waitinglobby', 'offline'];
 
 const updatePage = () => {
   lsPages.forEach(element => {
