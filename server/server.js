@@ -27,8 +27,8 @@ function newConnection(socket) {
     userManager.register(socket, ...data);
   })
 
-  socket.on('login', (email, password) => {
-    userManager.login(socket, email, password);
+  socket.on('login', (username, password) => {
+    userManager.login(socket, username, password);
   })
 
 }

@@ -2,13 +2,12 @@ const UserGameState = require('./userGameState.js');
 
 
 class User {
-  constructor(userManager, gameManager, socket, id, email, username, wins, losses, rankingpoints) {
+  constructor(userManager, gameManager, socket, id, username, wins, losses, rankingpoints) {
     this.UserManager = userManager;
     this.GameManager = gameManager;
     this.Socket = socket;
     this.Id = id;
     this.Username = username;
-    this.Email = email;
     this.Losses = losses;
     this.Wins = wins;
     this.Rankingpoints = rankingpoints;
@@ -52,10 +51,7 @@ class User {
   get Username() {
     return this._username;
   }
-  get Email() {
-    return this._email;
-  }
-  get Losses() {
+    get Losses() {
     return this._losses;
   }
   get Wins() {
@@ -76,9 +72,6 @@ class User {
   }
   set Username(value) {
     this._username = value;
-  }
-  set Email(value) {
-    this._email = value;
   }
   set Losses(value) {
     this._losses = value;

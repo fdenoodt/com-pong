@@ -1,6 +1,5 @@
 class User {
-  constructor(email, username, wins, losses, rankingpoints) {
-    this._email = email;
+  constructor(username, wins, losses, rankingpoints) {
     this._username = username;
     this._wins = wins;
     this._losses = losses;
@@ -20,10 +19,6 @@ class User {
   get Rankingpoints() {
     return this._rankingpoints;
   }
-  get Email() {
-    return this._email;
-  }
-
   set Wins(value) {
     this._wins = value;
   }
