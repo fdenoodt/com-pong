@@ -78,7 +78,7 @@ class UserManager {
         const username = row.username;
         const wins = row.wins;
         const losses = row.losses;
-        const rankingpoints = row.ranking_points; //TODO: FIX RANKING POINTS IN DB
+        const rankingpoints = row.rankingpoints;
         const theHash = row.password;
 
         bcrypt.compare(thePw, theHash, function (err, res) {
