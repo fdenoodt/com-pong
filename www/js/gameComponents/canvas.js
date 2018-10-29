@@ -1,5 +1,5 @@
 class Canvas {
-  constructor(pl) {
+  constructor() {
     this._canvas = document.querySelector('#soloCanvas');
     this._context = this._canvas.getContext('2d');
   }
@@ -13,6 +13,9 @@ class Canvas {
   }
 
   updateBall(ball) {
+    this._context.shadowBlur = 100;
+    this._context.shadowColor = `rgb(${Ball.RColor},${Ball.GColor},${Ball.BColor})`;
+
     this._context.beginPath();
     this._context.arc(ball.X, ball.Y, MovingBall.R, 0, 2 * Math.PI);
     this._context.lineWidth = 1;
@@ -20,9 +23,13 @@ class Canvas {
     this._context.stroke();
     this._context.fillStyle = `rgb(${Ball.RColor},${Ball.GColor},${Ball.BColor})`;
     this._context.fill();
+
+
   }
 
   updatePlayer(player) {
+    this._context.shadowBlur = 0;
+
     this._context.beginPath();
     this._context.rect(player.x, player.y, Rect.W, Rect.H);
 
@@ -33,6 +40,7 @@ class Canvas {
 
     this._context.fillStyle = 'rgb(100, 255, 200)';
     this._context.fill();
+
   }
 
   // updateGenerationCount(count) {

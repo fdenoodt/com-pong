@@ -114,7 +114,7 @@ class Game {
   gameover() {
     clearInterval(soloTimer);
     warn("Game Over", `You achieved a score of: ${Math.round(this._score / 100)}`);
-    // goTo("home");
+    goTo("home");
     soloGame = null;
   }
 }
