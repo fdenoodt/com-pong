@@ -12,12 +12,14 @@ const socket = require('socket.io');
 const io = socket(server);
 const Game = require('./scripts/game.js');
 const Player = require('./scripts/player.js');
+const DataManager = require('./scripts/dataManager.js');
 const GameManager = require('./scripts/gameManager.js');
 const UserManager = require('./scripts/userManager.js');
 const User = require('./scripts/user.js');
 
-const gameManager = new GameManager();
-const userManager = new UserManager(gameManager);
+const dataManager = new DataManager();
+const gameManager = new GameManager(dataManager);
+const userManager = new UserManager(gameManager, dataManager);
 
 io.sockets.on('connection', newConnection);
 

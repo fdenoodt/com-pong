@@ -3,13 +3,11 @@ const MainSript = require('../server.js');
 const bcrypt = require('bcrypt');
 const con = require('./con.js')
 
-// const gameManager = MainSript.gameManager;
-
 class UserManager {
-  constructor(gameManager) {
+  constructor(gameManager, dataManager) {
     this._gameManager = gameManager;
+    this._dataManager = dataManager;
     this._users = [];
-    this._saltRounds = 10;
   }
 
   get Users() {
@@ -17,6 +15,7 @@ class UserManager {
   }
 
   register(socket, username, thePw) {
+    const that = this;
     const saltRounds = 10;
 
     let registerResponse = "Something went wrong.";
@@ -30,21 +29,22 @@ class UserManager {
           const losses = 0;
           const rankingpoints = 0;
           const sql = `insert into users values(null, '${theHash}', '${username}', ${wins}, ${losses}, ${rankingpoints})`;
-          con.query(sql, function (err, result) {
-            if (err) {
-              socket.emit('registrationResponse', { isSuccessful: false, message: registerResponse });
-            }
-            else {
+
+          that._dataManager.retreive(sql)
+            .then((res) => {
               let registerRes = { isSuccessful: true, message: 'Registration successful' };
-              if (err)
-                registerRes = { isSuccessful: false, message: err.message }
-
-              if (result == undefined)
-                registerRes = { isSuccessful: false, message: 'Username already in use' }
-
               socket.emit('registrationResponse', registerRes);
-            }
-          })
+            })
+            .catch((error) => {
+              if (error.code == 'ER_DUP_ENTRY')
+                registerResponse = 'Username already in use.'
+
+              socket.emit('registrationResponse',
+                {
+                  isSuccessful: false,
+                  message: registerResponse
+                });
+            })
         }
       });
     }
