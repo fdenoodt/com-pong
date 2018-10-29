@@ -62,31 +62,27 @@ class UserManager {
     let loginResponse = "";
     const that = this;
     const sql = `select * from users where username='${username}'`;
-    con.query(sql, function (err, result) {
-      if (err) {
-        console.log(err, result);
-        loginResponse = "Something went wrong trying to log in... Try again later.";
-        socket.emit('loginResponse', { isSuccessful: false, message: loginResponse });
-      }
-      else if (result.length <= 0) {
-        loginResponse = "Incorrect username or password.";
-        socket.emit('loginResponse', { isSuccessful: false, message: loginResponse });
-      }
-      else {
-        const row = result[0];
-        const id = row.id;
-        const username = row.username;
-        const wins = row.wins;
-        const losses = row.losses;
-        const rankingpoints = row.rankingpoints;
-        const theHash = row.password;
 
-        bcrypt.compare(thePw, theHash, function (err, res) {
-          if (err) {
-            loginResponse = "Something went wrong, try again.";
-          }
-          else {
-            if (res) {
+    that._dataManager.retreive(sql)
+      .then((result) => {
+        if (result.length <= 0) {
+          loginResponse = "Incorrect username or password.";
+          socket.emit('loginResponse', { isSuccessful: false, message: loginResponse });
+        }
+        else {
+          const row = result[0];
+          const id = row.id;
+          const username = row.username;
+          const wins = row.wins;
+          const losses = row.losses;
+          const rankingpoints = row.rankingpoints;
+          const theHash = row.password;
+
+          bcrypt.compare(thePw, theHash, function (err, res) {
+            if (err) {
+              loginResponse = "Something went wrong, try again.";
+            }
+            else if (res) {
               loginResponse = `Welcome ${username}!`;
               const newUser = new User(that, that._gameManager, socket, id, username, wins, losses, rankingpoints);
               const potentiallyAlreadyLoggedInUser = that.searchUserByUserName(newUser.Username);
@@ -98,12 +94,18 @@ class UserManager {
             else {
               loginResponse = "Incorrect username or password.";
             }
+
             const userData = res ? { username, wins, losses, rankingpoints } : null;
             socket.emit('loginResponse', { isSuccessful: res, message: loginResponse, userData });
-          }
-        });
-      }
-    });
+          });
+
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        loginResponse = "Something went wrong trying to log in... Try again later.";
+        socket.emit('loginResponse', { isSuccessful: false, message: loginResponse });
+      })
   }
 
   searchUserByUserName(username) {
