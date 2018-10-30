@@ -3,7 +3,8 @@ const Game = require('./game.js');
 const Player = require('./player.js');
 
 class GameManager {
-  constructor() {
+  constructor(dataManager) {
+    this._dataManager = dataManager;
     this._lsGames = [];
     this._lsUsersInQueue = [];
   }
@@ -19,13 +20,13 @@ class GameManager {
   }
 
   createGame(duo) {
-    this._lsGames.push(new Game(duo));
+    this._lsGames.push(new Game(duo, this._dataManager));
   }
 
   addUserToQueue(user) {
     if (!this._lsUsersInQueue.includes(user)) {
       console.log('adding user');
-      
+
       this._lsUsersInQueue.push(user);
       this.matchUsers();
     }

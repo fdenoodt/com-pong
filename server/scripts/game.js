@@ -4,10 +4,11 @@ const UserGameState = require('./userGameState.js');
 const BallDegrees = require('./ballDegrees.js');
 
 class Game {
-  constructor(userDuo) {
+  constructor(userDuo, dataManager) {
     this._isOver = false;
     this._lsPlayers = [];
     this._ball = new BallDegrees();
+    this._dataManager = dataManager;
 
     this.createPlayers(userDuo);
     this.givePlayersValues();
@@ -30,7 +31,6 @@ class Game {
   }
 
   givePlayersValues() {
-
     this._lsPlayers[0].UserGameState.X = Canvas.W / 2 - UserGameState.W;
     this._lsPlayers[0].UserGameState.Y = 20;
 
@@ -182,11 +182,24 @@ class Game {
   gameover(reason, winner = null, loser = null) {
     this.sendData(winner, reason, 'win');
     this.sendData(loser, reason, 'loss');
-    winner.Wins++;
-    loser.losses++;
+    this.updateStats(winner, true);
+    this.updateStats(loser, false);
     this._isOver = true;
-    //TODO: update user stats in database. (don't have to send to client, cause he already knows)
+  }
 
+  updateStats(user, isWin) {
+    //https://stackoverflow.com/questions/973380/sql-how-to-increase-or-decrease-one-for-a-int-column-in-one-command
+    const sql = `
+    UPDATE users SET ${isWin ? 'wins' : 'losses'} = ${isWin ? 'wins' : 'losses'}  + 1 
+    WHERE username = '${user.Username}'`;
+
+    this._dataManager.retreive(sql)
+      .then((res) => {
+        isWin ? user.Wins++ : user.Losses++;
+      })
+      .catch((error) => {
+        console.log(`something went wrong updating stats. ${error}. User: ${user}`);
+      })
   }
 }
 
