@@ -45,4 +45,6 @@ const updatePage = () => {
     initHome();
   else if (pageToDisplay == 'solo')
     initSolo();
+  else if (pageToDisplay == 'scoreboard')
+    initScoreboard();
 }
