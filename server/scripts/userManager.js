@@ -4,9 +4,10 @@ const bcrypt = require('bcrypt');
 const con = require('./con.js')
 
 class UserManager {
-  constructor(gameManager, dataManager) {
+  constructor(gameManager, dataManager, scoreboard) {
     this._gameManager = gameManager;
     this._dataManager = dataManager;
+    this._scoreboard = scoreboard;
     this._users = [];
   }
 
@@ -84,7 +85,7 @@ class UserManager {
             }
             else if (res) {
               loginResponse = `Welcome ${username}!`;
-              const newUser = new User(that, that._gameManager, socket, id, username, wins, losses, rankingpoints);
+              const newUser = new User(that, that._gameManager, socket, id, username, wins, losses, rankingpoints, this._scoreboard);
               const potentiallyAlreadyLoggedInUser = that.searchUserByUserName(newUser.Username);
               if (potentiallyAlreadyLoggedInUser != undefined) {
                 that.handleLogout(potentiallyAlreadyLoggedInUser);

@@ -16,10 +16,12 @@ const DataManager = require('./scripts/dataManager.js');
 const GameManager = require('./scripts/gameManager.js');
 const UserManager = require('./scripts/userManager.js');
 const User = require('./scripts/user.js');
+const Scoreboard = require('./scripts/scoreboard.js')
 
 const dataManager = new DataManager();
+const scoreboard = new Scoreboard(dataManager);
 const gameManager = new GameManager(dataManager);
-const userManager = new UserManager(gameManager, dataManager);
+const userManager = new UserManager(gameManager, dataManager, scoreboard);
 
 io.sockets.on('connection', newConnection);
 
@@ -32,7 +34,6 @@ function newConnection(socket) {
   socket.on('login', (username, password) => {
     userManager.login(socket, username, password);
   })
-
 }
 
 const timerTick = () => {

@@ -1,8 +1,10 @@
 const initScoreboard = () => {
-  console.log('scoreb');
-  
-    // document.querySelector('.username').innerHTML = user.Username;
-    // document.querySelector('.rankingpoints').innerHTML = user.Rankingpoints;
-    // document.querySelector('.wins').innerHTML = user.Wins;
-    // document.querySelector('.losses').innerHTML = user.Losses;
+  if (user == null) {
+    warn('Warning', 'You need to log in before you can see the scoreboard.');
+    goTo('home');
+  }
+  else {
+    socket.emit('scoreboard');
+  }
+
 }

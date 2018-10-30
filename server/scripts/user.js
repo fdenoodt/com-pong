@@ -2,7 +2,7 @@ const UserGameState = require('./userGameState.js');
 
 
 class User {
-  constructor(userManager, gameManager, socket, id, username, wins, losses, rankingpoints) {
+  constructor(userManager, gameManager, socket, id, username, wins, losses, rankingpoints, scoreboard) {
     this.UserManager = userManager;
     this.GameManager = gameManager;
     this.Socket = socket;
@@ -12,6 +12,8 @@ class User {
     this.Wins = wins;
     this.Rankingpoints = rankingpoints;
     this.TimeWithoutResponse = 0;
+
+    this._scoreboard = scoreboard;
 
     this.UserGameState = null;
 
