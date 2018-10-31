@@ -33,6 +33,14 @@ class User {
       this.GameManager.removeUserFromQueue(this);
     })
 
+    this.Socket.on('scoreboard', () => {
+      // console.log(this._scoreboard.getHighScores());
+
+      this._scoreboard.getHighScores().then((data) => {
+        this.Socket.emit('scoreboardResponse', { data })
+      })
+    })
+
   }
 
   get UserGameState() {
@@ -53,7 +61,7 @@ class User {
   get Username() {
     return this._username;
   }
-    get Losses() {
+  get Losses() {
     return this._losses;
   }
   get Wins() {
