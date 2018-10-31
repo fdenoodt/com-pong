@@ -8,3 +8,21 @@ const initScoreboard = () => {
   }
 
 }
+
+const handleScoreboardResponse = (data) => {
+  console.log(data);
+  if (data.isSuccessful) {
+    const lsUsers = data.result;
+    for (const user of lsUsers) {
+
+    }
+    //tblWins
+  }
+  else {
+    warn('Warning', 'Something went wrong.. try again later.');
+    goTo('home');
+  }
+
+}
+
+socket.on('scoreboardResponse', handleScoreboardResponse);
