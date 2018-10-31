@@ -12,7 +12,8 @@ class Game {
     const newUpdate = new Date().getTime();
     const diff = newUpdate - this.LastUpdate;
 
-    for (let i = 0; i < (MovingBall.JumpsPerMove * diff) / 5; i++) {
+    for (let i = 0; i < (1 * diff); i++) {
+      // for (let i = 0; i < (MovingBall.JumpsPerMove * diff) / 5; i++) {
       this._ball.move();
       this.boarderCollissionCheck();
       this.playerCollissionCheck(this._bot);
@@ -24,7 +25,6 @@ class Game {
 
     for (let i = 0; i < (Rect.JumpsPerMove * diff) / 5; i++)
       this._player.move();
-
 
     this.displayState();
     this._score++;

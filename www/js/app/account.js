@@ -68,12 +68,11 @@ const handleLogOut = () => {
   localStorage.setItem('wopLogin', null);
   user = null;
   warn('Warning', 'Successfully signed out.');
+  goTo('home');
   location.reload();
-  // goTo('home');
 }
 
 
-//TODO: THIS MUST BE TESTED FROM CORDOVA APP
 const tryAutoLogin = () => {
   const data = JSON.parse(localStorage.getItem('wopLogin'));
   if (data != null) {
