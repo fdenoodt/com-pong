@@ -1,12 +1,26 @@
 class Scoreboard {
 
-  constructor(dataManger) {
-    this._dataManager = dataManger;
+  constructor(dataManager) {
+    this._dataManager = dataManager;
   }
 
-  getScore() {
-    const sql = `select username, wins, losses from users order by num wins first 3 rows only;`
-    dataManger.retreive(sql);
+  getHighScores() {
+    const that = this;
+    const sql = `
+    select username, wins, losses from users 
+    order by wins desc
+    limit 3`;
+
+    return that._dataManager.retreive(sql)
+      .then((result) => {
+        return { isSuccessful: true, result };
+      })
+      .catch((err) => {
+        console.log(err);
+        return { isSuccessful: false };
+      })
+
+
   }
 
 }

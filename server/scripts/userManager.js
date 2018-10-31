@@ -85,7 +85,7 @@ class UserManager {
             }
             else if (res) {
               loginResponse = `Welcome ${username}!`;
-              const newUser = new User(that, that._gameManager, socket, id, username, wins, losses, rankingpoints, this._scoreboard);
+              const newUser = new User(that, that._gameManager, socket, id, username, wins, losses, rankingpoints, that._scoreboard);
               const potentiallyAlreadyLoggedInUser = that.searchUserByUserName(newUser.Username);
               if (potentiallyAlreadyLoggedInUser != undefined) {
                 that.handleLogout(potentiallyAlreadyLoggedInUser);
