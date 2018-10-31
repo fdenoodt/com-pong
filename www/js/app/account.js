@@ -32,6 +32,7 @@ const register = () => {
   else if (password.length < 8) {
     warn('Warning', 'Password must at least contain 8 characters.');
   } else {
+    warn('Warning', 'Loading..');
     socket.emit('register', user, password);
   }
 }
@@ -45,6 +46,8 @@ const handleRegistrationResponse = (response) => {
 const login = () => {
   const username = document.querySelector('#login_inp_username').value;
   const password = document.querySelector('#login_inp_password').value;
+  localStorage.setItem('wopLogin', JSON.stringify({ username, password }));
+  warn('Warning', 'Logging in..');
   socket.emit('login', username, password);
 }
 
@@ -62,8 +65,9 @@ const requestLogout = () => {
 }
 
 const handleLogOut = () => {
-  warn(null, 'Successfully signed out.');
+  localStorage.setItem('wopLogin', null);
   user = null;
+  warn('Warning', 'Successfully signed out.');
   location.reload();
   // goTo('home');
 }
@@ -71,10 +75,10 @@ const handleLogOut = () => {
 
 //TODO: THIS MUST BE TESTED FROM CORDOVA APP
 const tryAutoLogin = () => {
-  const isOnline = true;
-  const token = localStorage.getItem('wopToken');
-  if (isOnline && token !== null) {
-    socket.emit('tokenLogin', token);
+  const data = JSON.parse(localStorage.getItem('wopLogin'));
+  if (data != null) {
+    warn('Warning', 'Logging in..');
+    socket.emit('login', data.username, data.password);
   }
 }
 
