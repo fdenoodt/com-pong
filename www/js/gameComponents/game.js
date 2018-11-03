@@ -20,10 +20,10 @@ class Game {
       this.playerCollissionCheck(this._player);
     }
 
-    for (let i = 0; i < (Rect.JumpsPerMove * diff) / 5; i++)
+    for (let i = 0; i < (Rect.JumpsPerMove * diff) / 2; i++)
       this._bot.think();
 
-    for (let i = 0; i < (Rect.JumpsPerMove * diff) / 5; i++)
+    for (let i = 0; i < (Rect.JumpsPerMove * diff) / 2; i++)
       this._player.move();
 
     this.displayState();

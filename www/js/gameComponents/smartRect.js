@@ -32,13 +32,12 @@ class SmartRect extends Rect {
       this.move(true)
     }
 
-    if (new Date().getTime() >= this._expectedTime) {
-      if (this._testCounter == 0) {
-        alert('done')
-        this._testCounter++;
-      }
-
-    }
+    // if (new Date().getTime() >= this._expectedTime) {
+    //   if (this._testCounter == 0) {
+    //     alert('done')
+    //     this._testCounter++;
+    //   }
+    // }
   }
 
   calculateWhereBallWillArrive(direction, x, y) {
