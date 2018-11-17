@@ -39,15 +39,18 @@ Technologies used:
 ## Week 5 - 4 uur
  * database classe die state bijhoudt v users (4u)
 
-## Week 6 - 1u uur
+## Week 6 - 11u uur
  * solo mode met unbeatable AI (1u)
+ 
+## Vakantie - 10u uur
  * movement adhv tijd, dus maakt niet uit of je een trage gsm hebt. (30 min)
-
-## Week 7 - 10u uur
  * multiplayer mode waar berkeningen niet door server gebeuren, maar door de client (10u)
  * Verwijder dit gedeelte omdat het te veel tijd in neemt.
  Problemen: 
  Ik kon de client wel ales laten berekenen, en laten verieferen door server, enkel eind locatie berekend. maar het is moeilijk om met delays om te gaan.
+
+## Week 7 - 1u uur
+* poging om project online te plaaten, samen met mysql cleardb.. maar bij het runnen ontstaat er telkens een fout met weinig info. Dus ik zit in beetje vast :/ (1u)
 
 
 
