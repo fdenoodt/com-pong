@@ -12,3 +12,48 @@ Technologies used:
   o js
   
   o mysql
+
+
+# Logboek Mi3 - Fabian Denoodt
+## Week 1 - 10 uur
+* install + kennismaking react-native. 
+  Ontzettend veel problemen met installatie, emulator niet deftig werken.
+
+## Week 2 - 4 uur
+* installatie + kennismaking flutter. Werkte goed, maar ik websockets wouden niet werken dus ben ik hier mee gestopt + poging tot single player machine learning bot
+
+## Week 3 - 6 uur
+* base cordova project + routing + design (materializercss)
+
+## Week 4 - 26 uur
+* kennismaking firebase + login, registreren (8u)
+* give up firebase (2u)
+* aanmaking databank (2u)
+* inloggen, registreren (2u)
+* maken v usermanager, gamemanager en user class (2u)
+* profile page (2u)
+* afk user tracking (2u)
+* testing on phone (30 min)
+* solo mode: bot die berekent waar bal zal landen
+
+## Week 5 - 4 uur
+ * database classe die state bijhoudt v users (4u)
+
+## Week 6 - 1u uur
+ * solo mode met unbeatable AI (1u)
+ * movement adhv tijd, dus maakt niet uit of je een trage gsm hebt. (30 min)
+
+## Week 7 - 10u uur
+ * multiplayer mode waar berkeningen niet door server gebeuren, maar door de client (10u)
+ * Verwijder dit gedeelte omdat het te veel tijd in neemt.
+ Problemen: 
+ Ik kon de client wel ales laten berekenen, en laten verieferen door server, enkel eind locatie berekend. maar het is moeilijk om met delays om te gaan.
+
+
+
+
+
+
+
+
+# Totale duur : 55 uur
