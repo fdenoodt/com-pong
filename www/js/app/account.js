@@ -14,9 +14,14 @@ const initProfile = () => {
   }
   else {
     document.querySelector('.username').innerHTML = user.Username;
-    document.querySelector('.rankingpoints').innerHTML = user.Rankingpoints;
+    // document.querySelector('.rankingpoints').innerHTML = user.Rankingpoints;
     document.querySelector('.wins').innerHTML = user.Wins;
     document.querySelector('.losses').innerHTML = user.Losses;
+    const wins = user.Wins;
+    const losses = user.Losses;
+    const ratio = wins / losses == Infinity || (wins == 0 && losses == 0) ? '-' : Math.round((wins / losses) * 100) / 100;
+    document.querySelector('.ratio').innerHTML = ratio;
+
   }
 }
 
