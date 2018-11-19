@@ -41,7 +41,7 @@
         <li><a onclick="goTo('profile')">Profile</a></li>
         <li><a onclick="goTo('scoreboard')">Scoreboard</a></li>
         <li><a onclick=" goTo('solo')">Solo</a></li>
-        <li><a onclick=" goTo('multi')">Multiplayer</a></li>
+        <li><a onclick="goTo('waitinglobby')">Multiplayer</a></li>
       </ul>
     </div>
   </nav>
@@ -51,8 +51,7 @@
     <li><a onclick="goTo('profile')">Profile</a></li>
     <li><a onclick="goTo('scoreboard')">Scoreboard</a></li>
     <li><a onclick=" goTo('solo')">Solo</a></li>
-    <li><a onclick="goTo('multi')">Multiplayer</a></li>
-    <li><a onclick=" goTo('waitinglobby')">waiting lobby</a></li>
+    <li><a onclick="goTo('waitinglobby')">Multiplayer</a></li>
   </ul>
 
   <div class="container">
@@ -146,9 +145,10 @@
             <div class="col s6">
               <p>
                 <span class="logo">Statistics: </span> <br>
-                Ranking: <span class="logo rankingpoints">Silver</span> <br>
+                <!-- Ranking: <span class="logo rankingpoints">Silver</span> <br> -->
                 Wins: <span class="logo wins">0</span> <br>
-                Losses: <span class="logo losses">0</span>
+                Losses: <span class="logo losses">0</span><br>
+                Ratio: <span class="logo ratio">-</span>
               </p>
 
               <div class="row center-align">
@@ -289,7 +289,7 @@
 
 
 
-  <!-- <script type="text/javascript" src="cordova.js"></script> -->
+  <script type="text/javascript" src="cordova.js"></script>
   <script type="text/javascript" src="js/materialize/materialize.min.js"></script>
 
   <!-- Web socket -->
@@ -314,5 +314,4 @@
   <script type="text/javascript" src="js/app/routing.js"></script>
 
 </body>
-
 </html>
