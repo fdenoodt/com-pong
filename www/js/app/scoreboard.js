@@ -15,6 +15,7 @@ const handleScoreboardResponse = (res) => {
   if (data.isSuccessful) {
     const lsUsers = data.result;
     const table = document.querySelector('.tblWins');
+    clearTable(table);
     let rankState = 1;
     for (const user of lsUsers) {
       const row = table.insertRow(table.rows.length);
@@ -28,7 +29,7 @@ const handleScoreboardResponse = (res) => {
       const username = user.username;
       const wins = user.wins;
       const losses = user.losses;
-      const ratio = wins / losses == Infinity || (wins == 0 && losses == 0) ? '-' : wins / losses;
+      const ratio = wins / losses == Infinity || (wins == 0 && losses == 0) ? '-' : Math.round((wins / losses) * 100) / 100;
       rowRank.innerHTML = rankState++;
       rowUsername.innerHTML = username;
       rowWins.innerHTML = wins;
@@ -41,6 +42,13 @@ const handleScoreboardResponse = (res) => {
     goTo('home');
   }
 
+}
+
+const clearTable = (table) => {
+  var rowCount = table.rows.length;
+  for (var x = rowCount - 1; x > 1; x--) {
+    table.deleteRow(x);
+  }
 }
 
 socket.on('scoreboardResponse', handleScoreboardResponse);
