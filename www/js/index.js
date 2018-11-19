@@ -62,7 +62,9 @@ const warn = (title = "", message = "") => {
 
 let user = null;
 // const ipDest = 'http://192.168.0.148:3000/';
-const ipDest = 'http://localhost:3000/';
+// const ipDest = 'http://localhost:3000/';
+// const ipDest = 'https://worldofpong.herokuapp.com/:5000/';
+const ipDest = 'http://	94.224.169.52:3000';
 let socket = io.connect(ipDest);
 
 
