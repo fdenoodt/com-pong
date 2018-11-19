@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <!-- testing if changes go through -->
+
 <head>
   <!--
         Customize this policy to fit your own app's needs. For more guidance, see:
@@ -39,8 +40,8 @@
         <li><a onclick="goTo('home')">Home</a></li>
         <li><a onclick="goTo('profile')">Profile</a></li>
         <li><a onclick="goTo('scoreboard')">Scoreboard</a></li>
-        <li><a onclick=" goTo('solo')"">Solo</a></li>
-        <li><a onclick=" goTo('multi')"">Multiplayer</a></li>
+        <li><a onclick=" goTo('solo')">Solo</a></li>
+        <li><a onclick=" goTo('multi')">Multiplayer</a></li>
       </ul>
     </div>
   </nav>
@@ -48,10 +49,10 @@
   <ul class="sidenav" id="mobile-demo">
     <li><a onclick="goTo('home')">Home</a></li>
     <li><a onclick="goTo('profile')">Profile</a></li>
-    <li><a onclick="goTo('scoreboard')"">Scoreboard</a></li>
-    <li><a onclick=" goTo('solo')"">Solo</a></li>
-    <li><a onclick="goTo('multi')"">Multiplayer</a></li>
-    <li><a onclick=" goTo('waitinglobby')"">waiting lobby</a></li>
+    <li><a onclick="goTo('scoreboard')">Scoreboard</a></li>
+    <li><a onclick=" goTo('solo')">Solo</a></li>
+    <li><a onclick="goTo('multi')">Multiplayer</a></li>
+    <li><a onclick=" goTo('waitinglobby')">waiting lobby</a></li>
   </ul>
 
   <div class="container">
@@ -78,11 +79,6 @@
       </div>
     </div>
 
-
-
-
-
-
     <div class="login">
       <div class="row">
         <div class="col s12 center-align">
@@ -92,12 +88,12 @@
         </div>
 
         <div class="row">
-          <input id="login_inp_email" type="text" class="validate redUnderline" value="rem@h.com">
-          <label class="active " for="login_inp_email">Email</label>
+          <input id="login_inp_username" type="text" class="validate redUnderline" value="Remember me">
+          <label class="active " for="login_inp_username">Username</label>
         </div>
         <div class="row">
-          <input id="login_inp_password" type="password" class="validate" value="1234567890">
-          <label class="active" for="login_inp_password">Passord</label>
+          <input id="login_inp_password" type="password" class="validate" value="qwertyuiop">
+          <label class="active" for="login_inp_password">Password</label>
         </div>
         <!-- Add send icon -->
         <div class="row center-align">
@@ -105,11 +101,6 @@
         </div>
       </div>
     </div>
-
-
-
-
-
 
     <div class="register">
       <div class="row">
@@ -124,16 +115,14 @@
           <label class="active " for="register_inp_username">Username</label>
         </div>
         <div class="row">
-          <input id="register_inp_email" type="email">
-          <label class="active" for="register_inp_email">E-mail</label>
-        </div>
-        <div class="row">
-          <input id="register_inp_password" type="password">
-          <label class="active" for="register_inp_password">Passord</label>
-        </div>
-        <!-- add arrow icon -->
-        <div class="row center-align">
-          <button class="red lighten-1 waves-effect waves-light btn" onclick="register()">Send</button>
+          <div class="row">
+            <input id="register_inp_password" type="password">
+            <label class="active" for="register_inp_password">Passord</label>
+          </div>
+          <!-- add arrow icon -->
+          <div class="row center-align">
+            <button class="red lighten-1 waves-effect waves-light btn" onclick="register()">Send</button>
+          </div>
         </div>
       </div>
     </div>
@@ -176,7 +165,47 @@
       <div class="row">
         <div class="col s12 center-align">
           <div class="section">
-            <h5>Scoreboard</h5>
+            <!-- Creater of image -->
+            <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors Market</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div> -->
+            <img width="30%" src="./img/trophy.png" alt="image of trophy">
+            <table class="tblWins" >
+              <tr class="logo">
+                <td class="center-align" colspan="5">
+                  Most Wins:
+                </td>
+              </tr>
+              <tr class="logo">
+                <td>Rank</td>
+                <td>Name</td>
+                <td>Wins</td>
+                <td>Losses</td>
+                <td>Ratio</td>
+              </tr>
+            </table>
+          </div>
+          <div class="section">
+            <!-- Maybe to add later. -->
+            <!-- <table class="tblRatio">
+              <tr class="logo">
+                <td class="center-align" colspan="5">
+                  Win/Loss Ratio:
+                </td>
+              </tr>
+              <tr class="logo">
+                <td>Rank</td>
+                <td>Name</td>
+                <td>Wins</td>
+                <td>Losses</td>
+                <td>Ratio</td>
+              </tr>
+              <tr>
+                <td>1.</td>
+                <td>oFabian</td>
+                <td>400</td>
+                <td>304</td>
+                <td>60%</td>
+              </tr>
+            </table> -->
           </div>
         </div>
       </div>
@@ -209,6 +238,23 @@
         </div>
       </div>
     </div>
+
+    <div class="offline">
+      <div class="row">
+        <div class="col s12 center-align">
+          <div class="section">
+            <h5>You are offline..</h5>
+          </div>
+          <div class="section grey-text text-darken-2">
+            <i class="material-icons medium">cloud_off</i>
+          </div>
+          <div class="section">
+            <p><button class="red lighten-1 waves-effect waves-light btn" onclick="location.reload();">Reconnect</button></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 
@@ -228,16 +274,6 @@
     </div>
   </div>
 
-  <!-- <div class="solo">
-    <div class="row">
-      <div class="col s12 center-align">
-        <div class="section">
-          <h5>Solo</h5>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
   <div id="modal" class="modal center-align">
     <div class="modal-content">
       <h4 class="warnTitle"></h4>
@@ -253,13 +289,14 @@
 
 
 
-  <!-- <script type="text/javascript" src="cordova.js"></script> -->
+  <script type="text/javascript" src="cordova.js"></script>
   <script type="text/javascript" src="js/materialize/materialize.min.js"></script>
 
   <!-- Web socket -->
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
   <script type="text/javascript" src="js/app/account.js"></script>
+  <script type="text/javascript" src="js/app/scoreboard.js"></script>
   <script type="text/javascript" src="js/gameComponents/user.js"></script>
   <script type="text/javascript" src="js/gameComponents/figure.js"></script>
   <script type="text/javascript" src="js/gameComponents/ball.js"></script>
