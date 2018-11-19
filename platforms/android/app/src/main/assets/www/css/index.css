@@ -18,7 +18,7 @@
    font-weight: bold;
  }
 
- .profile, .login, .register, .home, .solo, .multi, .scoreboard, .waitinglobby {
+ .profile, .login, .register, .home, .solo, .multi, .scoreboard, .waitinglobby, .offline {
    display: none;
  }
 
