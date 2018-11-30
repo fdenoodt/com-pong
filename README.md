@@ -66,4 +66,4 @@ Technologies used:
 
 
 
-# Totale duur : 57.5 uur
+# Totale duur : 67.5 uur
