@@ -15,17 +15,20 @@ Technologies used:
 
 
 # Logboek Mi3 - Fabian Denoodt
-## Week 1 - 10 uur
+## Week 1 - 12 uur
 * install + kennismaking react-native. 
   Ontzettend veel problemen met installatie, emulator niet deftig werken.
+ * Les volgen (2u)
 
-## Week 2 - 4 uur
+## Week 2 - 6 uur
 * installatie + kennismaking flutter. Werkte goed, maar ik websockets wouden niet werken dus ben ik hier mee gestopt + poging tot single player machine learning bot
+* Les volgen (2u)
 
-## Week 3 - 6 uur
+## Week 3 - 8 uur
 * base cordova project + routing + design (materializercss)
+* Les volgen (2u)
 
-## Week 4 - 26 uur
+## Week 4 - 28 uur
 * kennismaking firebase + login, registreren (8u)
 * give up firebase (2u)
 * aanmaking databank (2u)
@@ -35,9 +38,11 @@ Technologies used:
 * afk user tracking (2u)
 * testing on phone (30 min)
 * solo mode: bot die berekent waar bal zal landen
+* Les volgen (2u)
 
-## Week 5 - 4 uur
- * database classe die state bijhoudt v users (4u)
+## Week 5 - 6 uur
+* database classe die state bijhoudt v users (4u)
+* Les volgen (2u)
 
 ## Week 6 - 11 uur
  * solo mode met unbeatable AI (1u)
