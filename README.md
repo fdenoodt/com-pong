@@ -62,8 +62,9 @@ Technologies used:
  * Port forwarden van thuis uit om zo project online te plaatsen. (20 min)
  * Afwerking v profiel pagina, scoreboard, navigatie (10 min)
 
+## Examen Periode - 6 uur
+* Powerpoint maken (6u)
 
 
 
-
-# Totale duur : 67.5 uur
+# Totale duur : 73.5 uur
